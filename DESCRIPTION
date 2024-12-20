@@ -3,9 +3,9 @@ Type: Package
 Title: MDC Help
 Version: 0.1.0
 Author: Tim Lyons
-Maintainer: The package maintainer <yourself@somewhere.net>
+Maintainer: Tim Lyons <timothy.lyons@mdc.mo.gov>
 Description: Data sets, functions, and examples that may be useful for MDC biometrics, or others
-License: What license is it under?
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/tlyons253/MDChelp
@@ -13,3 +13,5 @@ BugReports: https://github.com/tlyons253/MDChelp/issues
 Depends: 
     R (>= 2.10)
 RoxygenNote: 7.3.2
+VignetteBuilder: knitr
+Suggests: knitr, rmarkdown
