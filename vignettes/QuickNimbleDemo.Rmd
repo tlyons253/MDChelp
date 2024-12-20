@@ -1,8 +1,8 @@
 ---
-title: "myvignette"
+title: "QuickNimbleDemo"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{myvignette}
+  %\VignetteIndexEntry{QuickNimbleDemo}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
