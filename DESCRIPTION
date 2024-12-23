@@ -8,7 +8,7 @@ Description: Data sets, functions, and examples that may be useful for MDC biome
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/tlyons253/MDChelp, https://tlyons253.github.io/MDChelp/index.html
+URL: https://github.com/tlyons253/MDChelp, https://tlyons253.github.io/MDChelp/index.html, https://tlyons253.github.io/MDChelp/
 BugReports: https://github.com/tlyons253/MDChelp/issues
 Depends: 
     R (>= 2.10)
