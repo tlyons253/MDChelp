@@ -3,10 +3,20 @@
 \docType{data}
 \name{nlcd.pct.tab}
 \alias{nlcd.pct.tab}
-\title{#' NLCD land cover by percent of county area for each county in MO
+\title{NLCD land cover by percent of county area for each county in MO
 odd numbered years 2001-2023.}
 \format{
-
+\describe{
+   \item{cty}{county name}
+   \item{yr}{4 digit year}
+   \item{crop.pct}{percent area of crop}
+   \item{develop.pct}{percent area of developed}
+   \item{forest.pct}{percent area of forest}
+   \item{grass.pct}{percent area of grass}
+   \item{water.pct}{percent area of water}
+   \item{wetland.pct}{percent area of wetland}
+   \item{other.pct}{percent area  of all other landcover types present}
+}
 }
 \usage{
 nlcd.pct.tab
@@ -20,7 +30,7 @@ reprojected to NAD83 UTM 15 N before areal calculations.
 Cropping performed with terra::crop
 
 Area converted to square km based on a 30x30m cell size and summing all
-all pixels with in a given class. No other processing occured.
+all pixels with in a given class. No other processing occurred.
 }
 \examples{
 \dontrun{

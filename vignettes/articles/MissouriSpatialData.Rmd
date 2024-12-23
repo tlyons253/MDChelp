@@ -1,0 +1,84 @@
+---
+title: "Missouri Spatial Data"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MDChelp)
+```
+
+I am generally trying to avoid including actual spatial data sets (e.g. sf or terra objects) in with the **MDChelp** package to minimize the package size. Still, if there is some spatial data that can be expressed in tabular form and you don't need the explicit geometry information, I can try to add it in. 
+
+The only spatial objects included in the package are an sf object call **counties.mo** which is a spatial layer of all Missouri counties, and **state.mo** which is a single polygon of the state border. They are projected in NAD83 UTM 15N. Two NLCD data sets are also included as tabular data. They are the % and total area (square km) of several cover classes in each county. Cover classes are modified from the original data. See the help sections for each data set to see what changes were made. 
+
+Most other types of spatial data can either be obtained from outside sources. Two R pacakges that facilitate this are **tigris** and **FedData**. Tigris lets you download sf objects of files from the national TIGER data set, while FedData lets you download spatial data from a variety of sources (NHD, NLCD, NASS, SSUGO, etc.) Your best bet is to look at those reference manuals, but I give a few quick examples here.
+
+### Plotting the Missouri spatial boundaries
+
+Tis can be done easily with ggplot
+```{r,eval=FALSE}
+
+#not run
+
+data(counties.mo, state.mo,package='MDChelp')
+
+ggplot(counties.mo)+
+  geom_sf()
+
+ggplot(state.mo)+
+  geom_sf()
+```
+
+
+### Extracting spatial data from **tigris**
+
+```{r,eval=FALSE}
+#not run
+tigris::counties(state='MO')->counties.mo # census blocks
+
+tigris::blocks(state=29))->blocks.mo
+
+
+# school district boundaries
+# see tigris documentation
+
+tigris::school_districts(state=29)->schools.mo
+
+
+```
+
+### Extracting spatial data from **FedData**
+
+There are a number of spatial, landcover, and weather data sets you can pull from. Definitley read the reference manual for this package to get a comprehensive idea of what data are available.
+
+```{r,eval=FALSE}
+# need a boundary shape. If it's not a rectangle or a square, one will be created internal to the function before extracting the data. The bounding area will be extracted from the min/max X and Y coordinates of the polygon.
+data(state.mo,package='MDChelp')
+
+
+#get NASS Cropland data layer data
+FedData::get_cdl(template=state.mo,
+                 label='MO',
+                 year=2023)->cdl.mo
+# returns a SpatRaster, a terra raster object class
+#get NHD data
+FedData::get_nhd(template=state.mo,
+                 label='MO',   #for use if writing the data to file vs storing in memory.
+                 nhdplus=TRUE)->nhd.mo
+
+#Returns a list with 5 sf objects: Points,lines, flowlines, areas (streams and lakes), and water bodies.
+
+# get HUC12 data (the only scale available in FedData)
+
+FedData::get_wbd(template=state.mo,label='MO')->huc.mo
+
+#returns a sf object
+
+```
+

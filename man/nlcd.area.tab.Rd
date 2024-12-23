@@ -31,7 +31,7 @@ See vignettes for examples on how to batch process
  Cropping performed with terra::crop
 
 Area converted to square km based on a 30x30m cell size and summing all
-all pixels with in a given class. No other processing occured.
+all pixels with in a given class. No other processing occurred.
 }
 \examples{
 \dontrun{

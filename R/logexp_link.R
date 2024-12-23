@@ -4,7 +4,6 @@
 #' It is sourced from Ben Bolker's website : https://rpubs.com/bbolker/logregexp
 #' @param exposure The length of time. defaults to 1 unit.
 #' @export
-#' logexp()
 
 logexp <- function(exposure = 1) {
   ## hack to help with visualization, post-prediction etc etc
