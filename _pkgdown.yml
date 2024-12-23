@@ -1,14 +1,4 @@
 url: https://tlyons253.github.io/MDChelp/
 template:
   bootstrap: 5
-reference:
-- title: Functions
-  contents:
-  - logexp
-  - logexp.sim.simple
-- title: Data
-  contents:
-  - counties.mo
-  - state.mo
-  - starts_with("nlcd")
 
