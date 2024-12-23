@@ -2,3 +2,18 @@ url: https://tlyons253.github.io/MDChelp/
 template:
   bootstrap: 5
 
+reference:
+- title: "Functions"
+  desc: >
+    Functions within the MDChelp package
+  contents:
+  - logexp.sim.simple
+  - logexp
+
+- titles: "Data objects"
+  desc: >
+    Data objects included within the MDChelp package
+  contents:
+  - state.mo
+  - counties.mo
+  - starts_with("nlcd")
