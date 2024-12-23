@@ -10,7 +10,7 @@ reference:
   - logexp.sim.simple
   - logexp
 
-- titles: "Data objects"
+- title: "Data objects"
   desc: >
     Data objects included within the MDChelp package
   contents:
