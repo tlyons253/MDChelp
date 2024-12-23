@@ -64,7 +64,7 @@ glm(obs~1,
 
 broom::tidy(mod1)%>%
   pull(estimate)%>%plogis(.) # should match S.int
-#> [1] 0.9406024
+#> [1] 0.9379698
 ```
 
 ``` r
@@ -78,8 +78,8 @@ broom::tidy(mod2)
 #> # A tibble: 2 × 5
 #>   term        estimate std.error statistic  p.value
 #>   <chr>          <dbl>     <dbl>     <dbl>    <dbl>
-#> 1 (Intercept)   3.21      0.355       9.04 1.50e-19
-#> 2 time         -0.0377    0.0250     -1.51 1.31e- 1
+#> 1 (Intercept)   3.22      0.349       9.22 3.05e-20
+#> 2 time         -0.0411    0.0238     -1.73 8.37e- 2
 ```
 
 ``` r
