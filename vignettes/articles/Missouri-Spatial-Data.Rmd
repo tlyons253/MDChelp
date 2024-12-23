@@ -1,5 +1,5 @@
 ---
-title: "MissouriSpatialData"
+title: "Accessing spatial data for Missouri"
 ---
 
 ```{r, include = FALSE}

@@ -1,0 +1,70 @@
+---
+date: "Last updated `r Sys.Date()`"
+output: github_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# MDChelp
+
+The goal of MDChelp is to provide routine functions and datasets for MDC
+biometricians and scientists and provide help/demonstrations of functions, analysis, or workflows as well as background on analysis methods that may be useful when developing projects.
+
+## Installation
+You can install the MDChelp from [GitHub](https://github.com/) with:
+``` r
+# install.packages("devtools")
+devtools::install_github("tlyons253/MDChelp")
+```
+## Examples
+
+Look in the reference section and the articles to see what is currently
+contained in the package. The example below uses a simple logistic exposure analysis simulation (`logexp.sim.simple()`) and the anlysis using `GLM`. A custom link function, created by Ben Bolker is included in this package as well. 
+
+This is for us plebes who still use MLE to solve models and don't do Bayesian everything...
+
+```{r}
+# using MDChelp:: in front of functions is just a more explicit way to call the 
+# function and avoids conflicts with other packages.
+
+library(tidyverse)
+
+
+MDChelp::logexp.sim.simple(S.int=0.95,
+                           nind=50,
+                           ntime=25,
+                           p.obs=0.5,
+                           obs.start = TRUE,
+                           r.censor = FALSE,
+                           logexp=TRUE)->sim.dat
+
+
+
+glm(obs~1,
+    family=binomial(
+      link=MDChelp::logexp(exposure=sim.dat$exposure)),
+    data=sim.dat)->mod1
+
+broom::tidy(mod1)%>%
+  pull(estimate)%>%plogis(.) # should match S.int
+
+glm(obs~time, # not in the data-generating process
+    family=binomial(
+      link=MDChelp::logexp(exposure=sim.dat$exposure)),
+    data=sim.dat)->mod2
+
+broom::tidy(mod2)
+
+# can also use it in a mixed model but won't work with the simple simulation data
+
+
+```
+
+
