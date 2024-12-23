@@ -4,11 +4,11 @@ template:
 
 reference:
 - title: "functions"
- contents:
- - logexp
- - logexp.sim.simple
+  contents:
+  - logexp
+  - logexp.sim.simple
 
- - title: "data"
+- title: "data"
   contents:
   - ends_with('.mo')
   - starts_with('nlcd')
