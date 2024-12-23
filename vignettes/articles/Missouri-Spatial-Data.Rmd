@@ -17,7 +17,7 @@ Most other types of spatial data can either be obtained from outside sources. Tw
 
 ### Plotting the Missouri spatial boundaries
 
-Tis can be done easily with ggplot
+This can be done easily with ggplot
 ```{r,eval=FALSE}
 
 #not run
