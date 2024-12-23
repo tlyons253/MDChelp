@@ -26,7 +26,8 @@ Tis can be done easily with ggplot
 
 #not run
 
-data(counties.mo, state.mo,package='MDChelp')
+MDChelp::counties.mo->counties.mo
+MDChelp::state.mo->state.mo
 
 ggplot(counties.mo)+
   geom_sf()
