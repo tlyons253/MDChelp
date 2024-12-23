@@ -9,10 +9,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(MDChelp)
-```
-
 I am generally trying to avoid including actual spatial data sets (e.g. sf or terra objects) in with the **MDChelp** package to minimize the package size. Still, if there is some spatial data that can be expressed in tabular form and you don't need the explicit geometry information, I can try to add it in. 
 
 The only spatial objects included in the package are an sf object call **counties.mo** which is a spatial layer of all Missouri counties, and **state.mo** which is a single polygon of the state border. They are projected in NAD83 UTM 15N. Two NLCD data sets are also included as tabular data. They are the % and total area (square km) of several cover classes in each county. Cover classes are modified from the original data. See the help sections for each data set to see what changes were made. 
