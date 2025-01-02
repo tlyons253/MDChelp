@@ -1,3 +1,3 @@
-# MDChelp 0.1.0
+# MDChelp 0.0.1-1
 
-* Initial CRAN submission.
+* Moved spatial data to MDCSpatialData package
