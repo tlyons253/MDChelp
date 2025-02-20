@@ -1,9 +1,33 @@
-#' logistic exposure link function
+#' logistic exposure link function.
 #'
 #' This is the logistic exposure link to use with glm's in R
 #' It is sourced from Ben Bolker's website : https://rpubs.com/bbolker/logregexp
 #'
 #' @param exposure The length of time. defaults to 1 unit.
+#' @examples
+#' \dontrun{
+#'
+#' # create dummy data
+#' n.ind<-30 # number of individuals X intervals
+#' dsr<-0.9 # simulated daily survival rate
+#' expose<-sample(c(1,2,3),n.ind,replace=TRUE) # simulate the exposure interval length
+#'
+#' Y<-rbinom(n.ind,1,dsr^expose) #observed survival
+#'
+#' demo.dat<-data.frame(Y=Y,expose=expose)
+#'
+#'
+#' mod<-glm(Y~1,
+#'         family=binomial(link=MDChelp::logexp(demo.dat$expose)),
+#'         data=demo.dat)
+#'
+#'
+#'  predict.dat<-data.frame(Y=1,expose=1)
+#'
+#'
+#'  predict(mod,predict.dat,type='link',se.fit=TRUE)
+#'  # doesn't work with type='response' and 'newdat'
+#'}
 #' @export
 logexp<- function(exposure = 1) {
   ## hack to help with visualization, post-prediction etc etc
@@ -32,36 +56,11 @@ logexp<- function(exposure = 1) {
                  name = link),
             class = "link-glm")
 }
-#' @examples
-#' \dontrun{
-#'
-#' # create dummy data
-#' n.ind<-30 # number of individuals X intervals
-#' dsr<-0.9 # simulated daily survival rate
-#' expose<-sample(c(1,2,3),n.ind,replace=TRUE) # simulate the exposure interval length
-#'
-#' Y<-rbinom(n.ind,1,dsr^expose) #observed survival
-#'
-#' demo.dat<-data.frame(Y=Y,expose=expose)
-#'
-#'
-#' mod<-glm(Y~1,
-#'         family=binomial(link=MDChelp::logexp(demo.dat$expose)),
-#'         data=demo.dat)
-#'
-#'
-#'  predict.dat<-data.frame(Y=1,expose=1)
-#'
-#'
-#'  predict(mod,predict.dat,type='link',se.fit=TRUE)
-#'  # doesn't work with type='response' and 'newdat'
-#'}
 
 
 
 
-
-#' A simple survival simulation
+#' A simple logistic exposure survival simulation.
 #'
 #' simulate logistic exposure survival data, returns a "long"
 #' object with n.individuals X n observations rows or a 'wide' object for
@@ -86,17 +85,24 @@ logexp<- function(exposure = 1) {
 #'            for use in a bayesian frameowrk
 #' @param logexp of TRUE, returns a data frame of rows of individual observation
 #'                 intervals for use in glm or similar
+#' @returns with logexp = TRUE, a data frame of nest-visits with the interval between
+#'    visits in a separate column.
+#' @examples
+#' \dontrun{
+#' logexp_sim1(r.censor=TRUE,p.censor=0.2)->test
+#' data.frame(test)
+#' }
 #' @export
 logexp_sim1<-function(S.int=0.95,
-                            nind=10,
-                            ntime=10,
-                            p.obs=0.5,
-                            obs.start=TRUE,
-                            r.censor=FALSE,
-                            p.censor=0.1,
-                            t.censor=0.8,
-                            cjs=FALSE,
-                            logexp=TRUE){
+                      nind=10,
+                      ntime=10,
+                      p.obs=0.5,
+                      obs.start=TRUE,
+                      r.censor=FALSE,
+                      p.censor=0.1,
+                      t.censor=0.8,
+                      cjs=FALSE,
+                      logexp=TRUE){
   library(tidyverse)
   S.mat<-matrix(NA,
                 nrow=nind,
@@ -160,10 +166,5 @@ logexp_sim1<-function(S.int=0.95,
     return(cjs.mat)
   }
 }
-#' @examples
-#' \dontrun{
-#' logexp_sim1(r.censor=TRUE,p.censor=0.2)->test
-#' data.frame(test)
-#' }
 
 
