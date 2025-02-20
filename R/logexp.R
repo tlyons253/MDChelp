@@ -8,7 +8,7 @@
 logexp<- function(exposure = 1) {
   ## hack to help with visualization, post-prediction etc etc
   get_exposure <- function() {
-    if (exists("..exposure", env=.GlobalEnv))
+    if (exists("..exposure", envir=.GlobalEnv))
       return(get("..exposure", envir=.GlobalEnv))
     exposure
   }
@@ -58,6 +58,9 @@ logexp<- function(exposure = 1) {
 #'           }
 
 
+
+
+
 #' A simple survival simulation
 #'
 #' simulate logistic exposure survival data, returns a "long"
@@ -84,9 +87,7 @@ logexp<- function(exposure = 1) {
 #' @param logexp of TRUE, returns a data frame of rows of individual observation
 #'                 intervals for use in glm or similar
 #' @export
-#'
-
-logexp.sim.simple<-function(S.int=0.95,
+logexp_sim_1<-function(S.int=0.95,
                             nind=10,
                             ntime=10,
                             p.obs=0.5,
