@@ -14,6 +14,9 @@ This is the logistic exposure link to use with glm's in R
 It is sourced from Ben Bolker's website : https://rpubs.com/bbolker/logregexp
 }
 \examples{
+
+# Simulate binomial survival data and estimate dsr
+
 \dontrun{
 
 # create dummy data
@@ -36,5 +39,6 @@ mod<-glm(Y~1,
 
  predict(mod,predict.dat,type='link',se.fit=TRUE)
  # doesn't work with type='response' and 'newdat'
+
 }
 }

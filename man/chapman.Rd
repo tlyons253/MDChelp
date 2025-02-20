@@ -26,8 +26,9 @@ Uses Chapman's modified version of the Lincoln-Petersen estimator for a
 two-sample closed population abundance estimator.
 }
 \examples{
+# Use simulation code to generate data and analyze it
 \dontrun{
- # Use simulation code to generate data
+
 
  LP.sim(N=5E4, mark=300, recap=0.2,sample.fixed=TRUE)->sim.dat
 

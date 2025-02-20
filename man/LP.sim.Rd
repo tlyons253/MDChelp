@@ -31,9 +31,12 @@ A list containing:
 Simulate data for a closed, 2-sample mark/recapture study
 }
 \examples{
+# Two examples if capture is simulated as a fixed number of individuals, or a probability
 \dontrun{
- LP.sim(N=5E4, mark=300, recap=0.2,sample.fixed=TRUE)
 
- LP.sim(N=5E4, mark=0.3 recap=0.2,sample.fixed=FALSE)
+
+  LP.sim(N=5E4, mark=300, recap=0.2, sample.fixed=TRUE)->sim1
+
+  LP.sim(N=5E4, mark=0.3, recap=0.2, sample.fixed=FALSE)->sim2
 }
 }

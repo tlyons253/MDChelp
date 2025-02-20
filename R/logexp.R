@@ -4,8 +4,11 @@
 #' It is sourced from Ben Bolker's website : https://rpubs.com/bbolker/logregexp
 #'
 #' @param exposure The length of time. defaults to 1 unit.
-#' @importFrom stats plogis qlogis
+#'
 #' @examples
+#'
+#' # Simulate binomial survival data and estimate dsr
+#'
 #' \dontrun{
 #'
 #' # create dummy data
@@ -28,7 +31,8 @@
 #'
 #'  predict(mod,predict.dat,type='link',se.fit=TRUE)
 #'  # doesn't work with type='response' and 'newdat'
-#'}
+#'
+#' }
 #' @export
 logexp<- function(exposure = 1) {
   ## hack to help with visualization, post-prediction etc etc
@@ -66,8 +70,6 @@ logexp<- function(exposure = 1) {
 #' simulate logistic exposure survival data, returns a "long"
 #' object with n.individuals X n observations rows or a 'wide' object for
 #' a different analysis method. permits right censoring
-#' @importFrom stats rbinom
-#' @import dplyr
 #' @param S.int the interval survival probability
 #' @param nind the number of individuals
 #' @param ntime the length of the encounter histories
@@ -90,9 +92,11 @@ logexp<- function(exposure = 1) {
 #' @returns with logexp = TRUE, a data frame of nest-visits with the interval between
 #'    visits in a separate column.
 #' @examples
+#' # Show a long-format survival data set using the above defaults
 #' \dontrun{
-#' logexp_sim1(r.censor=TRUE,p.censor=0.2)->test
-#' data.frame(test)
+#'
+#' logexp_sim1(r.censor=TRUE,p.censor=0.2)->sim.dat
+#'
 #' }
 #' @export
 logexp_sim1<-function(S.int=0.95,
@@ -105,7 +109,7 @@ logexp_sim1<-function(S.int=0.95,
                       t.censor=0.8,
                       cjs=FALSE,
                       logexp=TRUE){
-  library(tidyverse)
+  library(dplyr)
   S.mat<-matrix(NA,
                 nrow=nind,
                 ncol=ntime)

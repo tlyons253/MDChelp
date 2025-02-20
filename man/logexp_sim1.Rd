@@ -57,8 +57,10 @@ object with n.individuals X n observations rows or a 'wide' object for
 a different analysis method. permits right censoring
 }
 \examples{
+# Show a long-format survival data set using the above defaults
 \dontrun{
-logexp_sim1(r.censor=TRUE,p.censor=0.2)->test
-data.frame(test)
+
+logexp_sim1(r.censor=TRUE,p.censor=0.2)->sim.dat
+
 }
 }

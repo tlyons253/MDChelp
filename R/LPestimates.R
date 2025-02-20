@@ -18,31 +18,33 @@
 #'
 #'  \item{m}{the number of previously marked individuals in the second sample.}
 #'
-#' @export
-#'
 #' @examples
-#'\dontrun{
-#'  LP.sim(N=5E4, mark=300, recap=0.2,sample.fixed=TRUE)
+#' # Two examples if capture is simulated as a fixed number of individuals, or a probability
+#' \dontrun{
 #'
-#'  LP.sim(N=5E4, mark=0.3 recap=0.2,sample.fixed=FALSE)
-#'}
+#'
+#'   LP.sim(N=5E4, mark=300, recap=0.2, sample.fixed=TRUE)->sim1
+#'
+#'   LP.sim(N=5E4, mark=0.3, recap=0.2, sample.fixed=FALSE)->sim2
+#' }
+#' @export
 LP.sim<-function(N,mark,recap,sample.fixed=FALSE){
 
   if(sample.fixed==FALSE){
-  r<-rbinom(N,1,mark)
-  n<-rbinom(N,1,recap)
-  r.out<-sum(r)
-  n.out<-sum(n)
-  m.out<-sum(r*n)
+  r1<-rbinom(N,1,mark)
+  n1<-rbinom(N,1,recap)
+  r.out<-sum(r1)
+  n.out<-sum(n1)
+  m.out<-sum(r1*n1)
   }
 
   if(sample.fixed==TRUE){
-    r<-c(rep(1,mark),rep(0,N-mark))
-    n<-rbinom(N,1,recap)
-    m.out<-sum(r*n)
+    r2<-c(rep(1,mark),rep(0,N-mark))
+    n2<-rbinom(N,1,recap)
+    m.out<-sum(r2*n2)
 
     r.out<-mark
-    n.out<-sum(n)
+    n.out<-sum(n2)
   }
 
   out<-list(r=r.out,
@@ -69,10 +71,10 @@ return(out)
 #'
 #'  \item{SE}{the standard error of the abundance estimate}
 #'
-#' @export
 #' @examples
-#'\dontrun{
-#'  # Use simulation code to generate data
+#' # Use simulation code to generate data and analyze it
+#' \dontrun{
+#'
 #'
 #'  LP.sim(N=5E4, mark=300, recap=0.2,sample.fixed=TRUE)->sim.dat
 #'
@@ -80,7 +82,8 @@ return(out)
 #'  chapman(r=sim.dat$r,
 #'           n=sim.dat$n,
 #'           m=sim.dat$m)
-#'}
+#' }
+#' @export
 chapman<-function(r,n,m){
 
   SE.chap<-sqrt(((r+1)*(n+1)*(r-m)*(n-m))/(((m+1)^2)*(m+2)))
