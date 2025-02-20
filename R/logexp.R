@@ -1,9 +1,8 @@
-#' logexp
-#'
 #' logistic exposure link function
 #'
 #' This is the logistic exposure link to use with glm's in R
 #' It is sourced from Ben Bolker's website : https://rpubs.com/bbolker/logregexp
+#'
 #' @param exposure The length of time. defaults to 1 unit.
 #' @export
 logexp<- function(exposure = 1) {
@@ -57,13 +56,8 @@ logexp<- function(exposure = 1) {
 #'  predict(mod,predict.dat,type='link',se.fit=TRUE)
 #'  # doesn't work with type='response' and 'newdat'
 #'           }
-'logexp'
 
 
-
-#' logexp.sim.simple
-#'
-#'
 #' A simple survival simulation
 #'
 #' simulate logistic exposure survival data, returns a "long"
@@ -170,5 +164,5 @@ logexp.sim.simple<-function(S.int=0.95,
 #' logexp.sim.simple(r.censor=TRUE,p.censor=0.2)->test
 #' data.frame(test)
 #' }
-#'
-'logexp.sim.simple'
+
+

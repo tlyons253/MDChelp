@@ -12,11 +12,11 @@
 #'
 #' @returns A list containing:
 #'
-#'  \item{r} {the number of individuals marked in the first sample period}
+#'  \item{r}{the number of individuals marked in the first sample period}
 #'
-#'  \item{n} {the number of individuals in the second sample.}
+#'  \item{n}{the number of individuals in the second sample.}
 #'
-#'  \item{m} {the number of previously marked individuals in the second sample.}
+#'  \item{m}{the number of previously marked individuals in the second sample.}
 #'
 #' @export
 #'
@@ -65,9 +65,9 @@ return(out)
 #'
 #' @returns A list containing:
 #'
-#'  \item{N.hat} {the abundance estimate}
+#'  \item{N.hat}{the abundance estimate}
 #'
-#'  \item{SE} {the standard error of the abundance estimate}
+#'  \item{SE}{the standard error of the abundance estimate}
 #'
 #' @export
 #' @examples

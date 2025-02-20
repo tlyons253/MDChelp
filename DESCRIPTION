@@ -2,11 +2,11 @@ Package: MDChelp
 Title: Help With Environmental Statistical Methods
 Version: 0.0.0.9000
 Authors@R: 
-    person("Tim", "Lyons" , "timothy.lyons@mdc.mo.gov", role = c("aut", "cre"),
+    person("Tim", "Lyons", , "timothy.lyons@mdc.mo.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6327-9799"))
 Description: Functions and articles to help individuals understand/apply 
       statistical methods common in ecological research.
-License:use_gpl3_license()
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
