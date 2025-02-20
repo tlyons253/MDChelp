@@ -55,7 +55,7 @@ logexp<- function(exposure = 1) {
 #'
 #'  predict(mod,predict.dat,type='link',se.fit=TRUE)
 #'  # doesn't work with type='response' and 'newdat'
-#'           }
+#'}
 
 
 
@@ -87,7 +87,7 @@ logexp<- function(exposure = 1) {
 #' @param logexp of TRUE, returns a data frame of rows of individual observation
 #'                 intervals for use in glm or similar
 #' @export
-logexp_sim_1<-function(S.int=0.95,
+logexp_sim1<-function(S.int=0.95,
                             nind=10,
                             ntime=10,
                             p.obs=0.5,
@@ -162,7 +162,7 @@ logexp_sim_1<-function(S.int=0.95,
 }
 #' @examples
 #' \dontrun{
-#' logexp.sim.simple(r.censor=TRUE,p.censor=0.2)->test
+#' logexp_sim1(r.censor=TRUE,p.censor=0.2)->test
 #' data.frame(test)
 #' }
 
