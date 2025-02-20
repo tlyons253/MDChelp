@@ -1,6 +1,7 @@
 url: https://tlyons253.github.io/MDChelp/
 template:
   bootstrap: 5
+  math-rendering: mathjax
 
 reference:
 - title: data simulation
