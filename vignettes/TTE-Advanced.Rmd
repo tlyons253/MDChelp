@@ -212,7 +212,7 @@ and what it looks like if we used a proportional hazards model
 $$ TTE\ or\ Continuous\ Time-Proportional Hazards\\S_{1|n}=exp(-\sum_{t=1}^{N}{exp(X\beta}))$$
 
 It doesn't look like much different, but it makes some math things easier. Particularly, as mentioned before, comparing the effect of a covariate on the outcome at a different unit than what you initially measured $t$ on. It also becomes easier to model a wider of nonlinear effects time or age on survival than is typically available in a GLM (e.g. linear, quadratic, cubic...).
-The figure to the right demonstrates that. It comes from a TTE workshop at the TWS meeting in Reno in 2019, though the data are on a long-term deer survival study in northern MN. [You can access all the workshop materials here.](https://github.com/tlyons253/StatsMethods/tree/master/TTE/TWS2019)
+The figure to the right demonstrates that. It comes from a TTE workshop at the TWS meeting in Reno in 2019, though the data are on a long-term deer survival study in northern MN.
 
 ```{r, out.width='100%'}
 knitr::include_graphics('./images/hazard_surv.jpg')
@@ -375,7 +375,7 @@ load('./tte.rda')
 This is what the TTE data look like from one realization of the simulated data. Left is the date a nest was discovered, right is the last day it was monitored, and censor refers to if the nest survived that interval. Note how nests that failed at some point have two rows, one representing the interval of time that the nest was known to be alive, and another for the interval that the nest failed. This data is formatted for use in a nimble model specified below.
 
 ```{r,echo=FALSE}
- flextable::flextable(tte.dat)%>%
+ flextable::flextable(tte.dat[1:15,])%>%
 flextable::set_caption(flextable::as_paragraph(flextable::as_b('Table 1.'), 
                                     " Time to event data format"),
                        align_with_table = FALSE)%>%
@@ -807,7 +807,11 @@ samples.time<-nimble::runMCMC(time.mcmc,
 # 
 # post.parms
 # 
- MCMCvis::MCMCtrace(samples.time,pdf=FALSE)
+ MCMCvis::MCMCtrace(samples.time,
+                     ISB=FALSE,
+                     exact=TRUE,
+                  params=c('gamma0','S0[1]','S0[3]','S0[25]'),
+                  pdf=FALSE)
 
 
 
@@ -815,14 +819,12 @@ post.parms%>%
   rownames_to_column(var='parm')%>%
   filter(str_detect(parm,'UCH0'))%>%
   rename(med=`50%`)%>%
-  select(parm,mean,med)%>%
-  mutate(dsr.mean=1-mean,
-        dsr.med=1-med,
-        cumsurv.mean=1-cumsum(mean),
+  select(parm,med)%>%
+  mutate(dsr.med=1-med,
         cumsurv.med=1-cumsum(med))->sr.haz
 
 
-sr.haz
+sr.haz[c(1:3,23:25),]
 
 ```
 
@@ -833,10 +835,6 @@ sr.haz
 ```{r,echo=TRUE}
 
 ###########
-glm.time.dat #get the age at the start of an
-                                            #exposure interval
-
-
 
 
 
@@ -863,16 +861,11 @@ dsr.logexp<-plogis(dsr.logit[1]+dsr.logit[2]*age)
 
 
 # dsr.logexp
-
-
-#            
-
-
  
 
 ```
 
-?????
+
 
 #### Analysis using the cloglog link and exposure time as an offset.
 
@@ -1093,7 +1086,7 @@ flextable::set_caption(flextable::as_paragraph(flextable::as_b('Table 4.'),
 
 
 data.frame(type=c('Hazard','Logistic exposure','State Space','"Truth"'),
-           c.surv=c(sr.haz[24,7],prod(dsr.logexp),prod(ss.dsr), prod(S)))%>%
+           c.surv=c(sr.haz[24,4],prod(dsr.logexp),prod(ss.dsr), prod(S)))%>%
  mutate(c.surv=round(c.surv,digits=3))%>%
   rename(Model=1,
          `Cumulative survival\n(25d)`=2)%>%
@@ -1122,6 +1115,6 @@ flextable::set_caption(flextable::as_paragraph(flextable::as_b('Table 5.'),
 ```
 
 
-Now the fun part. The differences in the daily survival rates among different methods, compared to "Truth" (**Table 4.**) doesn't seem too bad, and it's likely due in part, to just random sampling error (this is just one realization of truth). But I would point out that the rate of change is different among the three different methods, due to their underlying distributions (exponential-hazard, modified logistic-logistic exposure, logistic-state space). This leads to some non-trivial differences in the estimates of the cumulative survival probability (**Table 5.**). This is a feature, not a flaw. Even going back to Shaffer 2004^[], the daily survival estimates produced by the logistic exposure method and Program MARK are different and would lead to substantial cumulative survival probabilities. In the example provided, the discrepancy among methods is probably also a function of the baseline survival probability and how quickly it increased. It might not be that bad if, in this case, DSR never got close to 1, increased more slowly, started lower, or the cumulative survival period was shorter. 
+Now the fun part. The differences in the daily survival rates among different methods, compared to "Truth" (**Table 4.**) doesn't seem too bad, and it's likely due in part, to just random sampling error (this is just one realization of truth). But I would point out that the rate of change is different among the three different methods, due to their underlying distributions (exponential-hazard, modified logistic-logistic exposure, logistic-state space). This leads to some non-trivial differences in the estimates of the cumulative survival probability (**Table 5.**). This is a feature, not a flaw. Even going back to Shaffer 2004^[], the daily survival estimates produced by the logistic exposure method and Program MARK are different and would lead to substantially different cumulative survival probabilities. In the example provided, the discrepancy among methods is probably also a function of the baseline survival probability and how quickly it increased. It might not be that bad if, in this case, DSR never got close to 1, increased more slowly, started lower, or the cumulative survival period was shorter. 
 
 So what to do? If I expected to model time-varying survival, I would probably use the hazard or a state-space formulation. It might seem that it's because they seem to be the most in agreement, but it's not. In the logistic-exposure framework, covariates are assumed to be constant across the exposure period. This is clearly not realistic if we are talking about a nest age, or other time-varying covariates we can measure even if we do not know the nest fate on the corresponding days (daily temperature, daily rainfall, etc.) These other methods however can, and I think that probably makes them a little better, across a wide range of conditions/ parameter values. That said, all models are going to be wrong, but they all are useful so do whatever works best in your situation. 
