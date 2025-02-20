@@ -4,6 +4,7 @@
 #' It is sourced from Ben Bolker's website : https://rpubs.com/bbolker/logregexp
 #'
 #' @param exposure The length of time. defaults to 1 unit.
+#' @importFrom stats plogis qlogis
 #' @examples
 #' \dontrun{
 #'
@@ -65,7 +66,8 @@ logexp<- function(exposure = 1) {
 #' simulate logistic exposure survival data, returns a "long"
 #' object with n.individuals X n observations rows or a 'wide' object for
 #' a different analysis method. permits right censoring
-#'
+#' @importFrom stats rbinom
+#' @import dplyr
 #' @param S.int the interval survival probability
 #' @param nind the number of individuals
 #' @param ntime the length of the encounter histories
