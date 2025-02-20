@@ -15,10 +15,10 @@
 #' @param r.censor TRUE or FALSE, the probability an individual is right censored.
 #'                The function defaults to having all individuals observed at
 #'                the last time interval (as is typical in nest survival studies)
-#' @param p.censor the probability an individual is right censored before time=ntime
+#' @param p.censor the probability an individual is right censored before time = ntime
 #' @param t.censor controls when censoring occurs by treating censoring time as a binomial
 #'                process where the number of trials is the length of the encounter history
-#'                and t.censor is the probability, an the resulting number of successes
+#'                and t.censor is the probability, and the resulting number of successes
 #'                is the interval at which censoring occurs
 #' @param cjs  if TRUE, the encounter history is output in a matrix typical of CJS matrix, suitable
 #'            for use in a bayesian frameowrk
