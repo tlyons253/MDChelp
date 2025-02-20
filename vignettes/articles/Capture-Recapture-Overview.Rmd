@@ -1,0 +1,14 @@
+---
+title: "Capture-Recapture Overview"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MDChelp)
+```

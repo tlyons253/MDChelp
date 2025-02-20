@@ -3,4 +3,4 @@
 export(LP.sim)
 export(chapman)
 export(logexp)
-export(logexp_sim1)
+export(sim1_logexp)

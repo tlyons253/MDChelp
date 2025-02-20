@@ -1,0 +1,83 @@
+---
+title: "Quick Nimble Demo"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{QuickNimbleDemo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MDChelp)
+```
+
+This is just a short demonstration on running a nimble model "the long way." It lets you check your initial values before compiling to avoid the Nimble equivalent of JAGS’s “Node inconsistent with parents” or other errors like that.
+
+This assumes you have already created appropriate data, constant, and initial value objects and functions.
+
+Add: A more comprehensive version.
+
+```{r, eval=FALSE}
+
+#this won't actually run.
+
+# first bundle your stuff together
+my.nimmod <- nimble::nimbleModel(code = model.code,
+                                 constants = nim.const,
+                                 data = nim.dat,
+                                 inits = inits())
+
+
+my.nimmod$calculate() # this should come back as a number (the loglikelihood)
+                      # if nodes have appropriate initial values. You may also
+                      # need to give initial values for latent states.
+
+my.nimmod$info()#this will show you any errors with nodes. It will tell you what parameters need initial values/
+
+test.config<-nimble::configureMCMC(my.nimmod) # configure step
+
+
+#now you can alter the type of sampler on specific parameters if needed.
+# block samplers are slower, but produce a larger ESS for things like the different parameters in a single model (intercept, regression coefficients)
+
+# test.config$replaceSamplers(target = c('phi','p'),
+#                        type= 'RW',targetByNode=TRUE)
+# 
+# test.config$replaceSamplers(target = c('mean.FID','beta.FID'),
+#                        type= 'AF_slice')
+
+
+
+test.config
+#call to see about the samplers and what parameters
+
+test.build<-nimble::buildMCMC(test.config) 
+
+
+
+comp.mod<-nimble::compileNimble(my.nimmod)   #first compile step
+
+
+comp.mcmc<-nimble::compileNimble(test.build, project=comp.mod) # second compile step
+
+
+
+
+# run
+
+samples<-nimble::runMCMC(comp.mcmc,
+                         niter=10000,
+                         nburnin = 1000,
+                         nchains = 3)
+
+MCMCvis::MCMCplot(samples,pdf=FALSE)
+
+```
+

@@ -6,10 +6,11 @@ Authors@R:
            comment = c(ORCID = "0000-0001-6327-9799"))
 Description: Functions and articles to help individuals understand/apply 
       statistical methods common in ecological research.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 URL: https://github.com/tlyons253/MDChelp, https://tlyons253.github.io/MDChelp/
 BugReports: https://github.com/tlyons253/MDChelp/issues
 Suggests: dplyr
+Config/Needs/website: rmarkdown

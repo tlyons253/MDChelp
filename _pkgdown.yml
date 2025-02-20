@@ -2,3 +2,14 @@ url: https://tlyons253.github.io/MDChelp/
 template:
   bootstrap: 5
 
+reference:
+- title: data simulation
+  contents:
+  - sim1_logexp
+  - LP.sim
+- title: closed capture
+  contents:
+  - LP.sim
+  - chapman
+- title: misc
+  contents: logexp

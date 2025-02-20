@@ -95,11 +95,11 @@ logexp<- function(exposure = 1) {
 #' # Show a long-format survival data set using the above defaults
 #' \dontrun{
 #'
-#' logexp_sim1(r.censor=TRUE,p.censor=0.2)->sim.dat
+#' sim1_logexp(r.censor=TRUE,p.censor=0.2)->sim.dat
 #'
 #' }
 #' @export
-logexp_sim1<-function(S.int=0.95,
+sim1_logexp<-function(S.int=0.95,
                       nind=10,
                       ntime=10,
                       p.obs=0.5,
