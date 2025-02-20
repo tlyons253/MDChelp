@@ -12,5 +12,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 URL: https://github.com/tlyons253/MDChelp, https://tlyons253.github.io/MDChelp/
 BugReports: https://github.com/tlyons253/MDChelp/issues
-Suggests: dplyr
+Suggests: tidyverse,nimble, flextable, MCMCvis
 Config/Needs/website: rmarkdown
