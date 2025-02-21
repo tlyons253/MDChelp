@@ -191,7 +191,8 @@ You can see that the GLM- constant survival estimates the cumulative survival pr
 #### Log-Log link
 An alternative to using logit-link regression is to use a log-log link or:
 
-$$ S=exp(-exp(X\beta))\\ and\ the\ inverse\\ X\beta=log(-log(S))$$
+$$S=exp(-exp(X\beta))\\ and\ the\ inverse\\ X\beta=log(-log(S))$$
+
 where $S$ is the survival probability and $X\beta$ is the linear predictor. This approach gives the same interpretation (hazard ratios) of the $\beta_k$ regression coefficients as in proportional hazard models. Often this is preferable to using the logit link because hazards ratios (the relative difference in mortality) don't change whether your model is talking about weekly, monthly, or annual survival. Odds ratios will differ, which may be just confusing or worse, misleading. In R, you have to use the complementary log-log link, which is equivalent to replaceing $S$ with $M$, as that is what $X\beta$ predicts. In R, you still code your data as 1=alive, 0=dead, but you are essentially modeling the 0's when using that data structure and the cloglog link.
 
 Interval censoring can be accommodated when using the logit-link by using the logistic-exposure link, and including an offset for the number of exposure days in each interval when using the cloglog link.
@@ -203,13 +204,17 @@ As the name implies, you're not estimating the probability an event occurs at a 
 
 The math to develop the survivor function is fundamentally different then using something like logstic (exposure) regression. When using the logit link, you can develop the equivalent information by computing the product of the logit-transformed linear predictors
 
-$$ Discrete\ time ,\ logit\ link\\S_{n|1}=\prod_{t=1}^{N}S_t=S_1\cdot S_2\cdot S_3...S_n\\S_t=\frac{exp(X\beta)}{1+exp(X\beta)}$$
+$$Discrete\ time ,\ logit\ link\\
+S_{n|1}=\prod_{t=1}^{N}S_t=S_1\cdot S_2\cdot S_3...S_n\\
+S_t=\frac{exp(X\beta)}{1+exp(X\beta)}$$
 
-<br>
+
 
 and what it looks like if we used a proportional hazards model
 
-$$ TTE\ or\ Continuous\ Time-Proportional Hazards\\S_{1|n}=exp(-\sum_{t=1}^{N}{exp(X\beta}))$$
+$$TTE\ or\ Continuous\ Time-Proportional Hazards\\
+S_{1|n}=exp(-\sum_{t=1}^{N}{exp(X\beta)})$$          
+
 
 It doesn't look like much different, but it makes some math things easier. Particularly, as mentioned before, comparing the effect of a covariate on the outcome at a different unit than what you initially measured $t$ on. It also becomes easier to model a wider of nonlinear effects time or age on survival than is typically available in a GLM (e.g. linear, quadratic, cubic...).
 The figure to the right demonstrates that. It comes from a TTE workshop at the TWS meeting in Reno in 2019, though the data are on a long-term deer survival study in northern MN.
@@ -223,8 +228,9 @@ The textbook definition of the hazard is the instantaneous rate of mortality. If
 
 The simplest form of a TTE linear model is
 $$h(t) = \lambda_0 \cdot \lambda_t$$
-This is the hazard at time $t$, is the product of some baseline hazard$\lambda_0$, and covariates $\lambda_t$that can be modeled using a log link. 
-$$ \lambda_t=exp(\beta_1X_1+\beta_2X_2...\beta_kX_k)$$
+This is the hazard at time $t$, is the product of some baseline hazard$\lambda_0$, and covariates $\lambda_t$ that can be modeled using a log link. 
+
+$$\lambda_t=exp(\beta_1X_1+\beta_2X_2...\beta_kX_k)$$
 
 This particular formulation is a proportional hazards (PH) model. Proportional hazards models can be semi-parametric, where you don't try to specify a distribution of the baseline hazard, or fully parametric where you do.
 
