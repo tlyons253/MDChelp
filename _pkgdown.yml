@@ -13,3 +13,10 @@ reference:
   - chapman
 - title: misc
   contents: logexp
+- title: Non-parametric boostrap
+  contents:
+  - bca_jacknife
+  - jacknife_data
+  - est_accelerate
+  - boot_cluster
+  - resamp.fxn
