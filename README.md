@@ -1,4 +1,4 @@
-Last updated Feb 20, 2025
+Last updated 3/19/2025
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -35,8 +35,8 @@ chapman(sim.dat$r,
         sim.dat$n,
         sim.dat$m)
 #> $N.hat
-#> [1] 413.069
+#> [1] 643
 #> 
 #> $SE
-#> [1] 53.71808
+#> [1] 117.1205
 ```
