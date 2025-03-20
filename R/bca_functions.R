@@ -211,7 +211,7 @@ message("CI's are unadjusted and DO NOT control the family-wide error rate")
 
   boot.est %>%
     split(.$term) %>%
-    map(.,  ~ pull(.x[, 2])) %>%
+    map(.,  ~ pull(.x,var=theta.boot)) %>%
     map2(., map(adj.quant,  ~ as.vector(.x)),  ~ quantile(.x, .y)) %>%
     map(.,  ~ unname(.x)) %>%
     map(.,  ~ matrix(., nrow = 1, ncol = 2)) %>%
