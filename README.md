@@ -16,6 +16,8 @@ You can install the development version of MDChelp from
 [GitHub](https://github.com/) with:
 
 ``` r
+
+options(download.file.method = "wininet")
 # install.packages("pak")
 pak::pak("tlyons253/MDChelp")
 ```
@@ -35,8 +37,8 @@ chapman(sim.dat$r,
         sim.dat$n,
         sim.dat$m)
 #> $N.hat
-#> [1] 643
+#> [1] 373.7586
 #> 
 #> $SE
-#> [1] 117.1205
+#> [1] 48.04161
 ```

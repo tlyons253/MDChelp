@@ -26,6 +26,8 @@ The goal of MDChelp is to provide functions and demonstrations of common statist
 You can install the development version of MDChelp from [GitHub](https://github.com/) with:
 
 ``` r
+
+options(download.file.method = "wininet")
 # install.packages("pak")
 pak::pak("tlyons253/MDChelp")
 ```
