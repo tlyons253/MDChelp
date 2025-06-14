@@ -40,7 +40,13 @@ Whether a population can be classified as open or closed defines most capture-re
 
 Being able to think about how the concept of open or closed populations relates to your study organism, question, and data collection is key as it is the backbone of virtually every statistical model you will use and acts as an important building block, permitting you to use more complex models to answer complex questions.
 
+#### Conditioning on initial capture or modeling the initial capture (full capture history)
 
+It is less important to understand this in detail at this stage, but it's an important technical concept that applies to open-population models. Conditioning on the initial capture just means you don't particularly care about modeling the initial capture of the animal, you only care about what happens after you have caught and released it. Methods like Cormack-Jolly-Seber ignore the initial capture process and only try to estimate apparent survival and *re*capture probability. Other models <u>*do*</u> try to explicitly model the initial capture process (e.g. Jolly-Seber, Pradel, POPAN, closed-capture).
+
+What does each approach get you? By explicitly trying to model the initial capture, you can also start to estimate parameters like abundance and population growth rate. When you condition on the initial capture, you skip all that and only focus on what happens to those animals afterwards, typically focusing on apparent survival or movement. 
+
+So why not always model the initial capture if it gets you more information about the animal population? Logistically, it can be challenging. Modeling the initial capture requires that you are constantly capturing and marking animals throughout time. It's not easy to support that kind of effort and as a result. Full capture history methods might not work well for studies that only last a few years or where animals are captured and marked on very few occasions, relative to how frequently they may be encountered (e.g. waterfowl banding, translocation studies). You also need to have the method of initial capture be the same as subsequent encounters. Finally, the estimates for some parameters (like abundance) might not be that good. In closed-capture models, there is a lot of focus on dealing with issues related to heterogeneity in capture probability, whether it's trap-response, age/cohort/time differences, etc. That complexity doesn't go away, and probably gets worse in open models. You can't deal with in open models like you can in closed models (but see "robust design" models). Still, using the full capture history can allow you to estimate other parameters (that aren't as affected by theses issues) that can be pretty interesting, like [migratory behavior](https://bioone.org/journals/the-condor/volume-116/issue-2/CONDOR-13-114.1/Stopover-ecology-of-American-Golden-Plovers-Pluvialis-dominica-in-Midwestern/10.1650/CONDOR-13-114.1.short) or [hunter participation](https://wildlife.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jwmg.22553).
 
 ### Estimating abundance or demographic parameters
 
@@ -62,8 +68,6 @@ Models/ approaches that focus on demographic parameters are by definition, open 
 
 ### Unique or generic markings
 
-
-
 Not all approaches require you to be able to uniquely identify individuals. Sometimes the organism is too small to be marked with a unique tag, such tags are more likely to be lost compared to other marking techniques (e.g scute marking on turtles, fin clips), or other animal welfare or logistical concerns prevent unique identification. However, you generally have more flexibility if you can uniquely identify individuals. The frequent reality that, for models that use generic markings, many key assumptions cannot be met has generally led to most researchers to use individually identifiable markings. Still, there are cases where generic markings are useful (e.g. estimating waterfowl abundance from direct band recoveries) and you can always "anonymize" your uniquely marked organisms for a model that only requires generic markings.
 
 ```{r,echo=FALSE, fig.cap="**Lincoln (L) and Schnabel (R)**", out.width="50%",fig.align='center'}
@@ -72,11 +76,8 @@ knitr::include_graphics('./art_image/LPschnab.jpg')
 
 The Lincoln-Petersen index and related estimators (e.g. Chao, Schnabel), Jolly-Seber, and some types of mark-resight models can use information about generic markings, but they come with relatively more strict assumptions. All of these approaches have alternatives or different formulations that utilize unique markings that permit you to deal with real issues that can cause bias (e.g. capture probability heterogeneity, non-closure). The upshot is, you can do more and deal with violations of assumptions more easily with unique markings. Options still exist for generic marking, and often, some clever sampling design and help ensure critical model assumptions are met. 
 
-### Extensions
 
-More generally capture recapture models can be thought of as different types of multi-state hidden-Markov-models. You don't need to worry about knowing what those terms mean, but understanding those concepts eventually will help you develop models that can be more tailored to addressing your specific study question.
+### Summary and Extensions
 
-## Summary
-
-
+There is what may seem to be an overwhelming number of capture-recapture based methods in the literature and clarifying what discriminates among them and the key assumptions can help sift through them. Understanding key concepts like population closure is critical not just to using these models correctly, but is important for other methods based on capture recapture (e.g. N-mixture models), or adapting these models to novel applications^[Stodola et al. 2014. Stopover ecology of American Golden-Plovers in Midwestern agricultural fields. https://bioone.org/journals/the-condor/volume-116/issue-2/CONDOR-13-114.1/Stopover-ecology-of-American-Golden-Plovers-Pluvialis-dominica-in-Midwestern/10.1650/CONDOR-13-114.1.short] ^[Graham et al. 2023. Exploring the population dynamcis of waterfowl hunters using a mark-recapture approach. https://wildlife.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jwmg.22553] 
 
