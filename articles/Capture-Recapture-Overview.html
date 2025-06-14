@@ -155,6 +155,48 @@ populations relates to your study organism, question, and data
 collection is key as it is the backbone of virtually every statistical
 model you will use and acts as an important building block, permitting
 you to use more complex models to answer complex questions.</p>
+<div class="section level4">
+<h4 id="conditioning-on-initial-capture-or-modeling-the-initial-capture-full-capture-history">Conditioning on initial capture or modeling the initial capture
+(full capture history)<a class="anchor" aria-label="anchor" href="#conditioning-on-initial-capture-or-modeling-the-initial-capture-full-capture-history"></a>
+</h4>
+<p>It is less important to understand this in detail at this stage, but
+it’s an important technical concept that applies to open-population
+models. Conditioning on the initial capture just means you don’t
+particularly care about modeling the initial capture of the animal, you
+only care about what happens after you have caught and released it.
+Methods like Cormack-Jolly-Seber ignore the initial capture process and
+only try to estimate apparent survival and <em>re</em>capture
+probability. Other models <u><em>do</em></u> try to explicitly model the
+initial capture process (e.g. Jolly-Seber, Pradel, POPAN,
+closed-capture).</p>
+<p>What does each approach get you? By explicitly trying to model the
+initial capture, you can also start to estimate parameters like
+abundance and population growth rate. When you condition on the initial
+capture, you skip all that and only focus on what happens to those
+animals afterwards, typically focusing on apparent survival or
+movement.</p>
+<p>So why not always model the initial capture if it gets you more
+information about the animal population? Logistically, it can be
+challenging. Modeling the initial capture requires that you are
+constantly capturing and marking animals throughout time. It’s not easy
+to support that kind of effort and as a result. Full capture history
+methods might not work well for studies that only last a few years or
+where animals are captured and marked on very few occasions, relative to
+how frequently they may be encountered (e.g. waterfowl banding,
+translocation studies). You also need to have the method of initial
+capture be the same as subsequent encounters. Finally, the estimates for
+some parameters (like abundance) might not be that good. In
+closed-capture models, there is a lot of focus on dealing with issues
+related to heterogeneity in capture probability, whether it’s
+trap-response, age/cohort/time differences, etc. That complexity doesn’t
+go away, and probably gets worse in open models. You can’t deal with in
+open models like you can in closed models (but see “robust design”
+models). Still, using the full capture history can allow you to estimate
+other parameters (that aren’t as affected by theses issues) that can be
+pretty interesting, like <a href="https://bioone.org/journals/the-condor/volume-116/issue-2/CONDOR-13-114.1/Stopover-ecology-of-American-Golden-Plovers-Pluvialis-dominica-in-Midwestern/10.1650/CONDOR-13-114.1.short" class="external-link">migratory
+behavior</a> or <a href="https://wildlife.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jwmg.22553" class="external-link">hunter
+participation</a>.</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="estimating-abundance-or-demographic-parameters">Estimating abundance or demographic parameters<a class="anchor" aria-label="anchor" href="#estimating-abundance-or-demographic-parameters"></a>
@@ -216,19 +258,20 @@ still exist for generic marking, and often, some clever sampling design
 and help ensure critical model assumptions are met.</p>
 </div>
 <div class="section level3">
-<h3 id="extensions">Extensions<a class="anchor" aria-label="anchor" href="#extensions"></a>
+<h3 id="summary-and-extensions">Summary and Extensions<a class="anchor" aria-label="anchor" href="#summary-and-extensions"></a>
 </h3>
-<p>More generally capture recapture models can be thought of as
-different types of multi-state hidden-Markov-models. You don’t need to
-worry about knowing what those terms mean, but understanding those
-concepts eventually will help you develop models that can be more
-tailored to addressing your specific study question.</p>
+<p>There is what may seem to be an overwhelming number of
+capture-recapture based methods in the literature and clarifying what
+discriminates among them and the key assumptions can help sift through
+them. Understanding key concepts like population closure is critical not
+just to using these models correctly, but is important for other methods
+based on capture recapture (e.g. N-mixture models), or adapting these
+models to novel applications<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Stodola et al. 2014. Stopover ecology of American
+Golden-Plovers in Midwestern agricultural fields. &lt;a href="https://bioone.org/journals/the-condor/volume-116/issue-2/CONDOR-13-114.1/Stopover-ecology-of-American-Golden-Plovers-Pluvialis-dominica-in-Midwestern/10.1650/CONDOR-13-114.1.short" class="external-link uri"&gt;https://bioone.org/journals/the-condor/volume-116/issue-2/CONDOR-13-114.1/Stopover-ecology-of-American-Golden-Plovers-Pluvialis-dominica-in-Midwestern/10.1650/CONDOR-13-114.1.short&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a> <a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Graham et al. 2023. Exploring the population dynamcis of
+waterfowl hunters using a mark-recapture approach. &lt;a href="https://wildlife.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jwmg.22553" class="external-link uri"&gt;https://wildlife.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jwmg.22553&lt;/a&gt;&lt;/p&gt;'><sup>2</sup></a></p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
-</h2>
-</div>
+
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
