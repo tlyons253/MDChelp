@@ -1,7 +1,7 @@
 url: https://tlyons253.github.io/MDChelp/
 template:
   bootstrap: 5
-  math-rendering: katex
+
 reference:
 - title: data simulation
   contents:
