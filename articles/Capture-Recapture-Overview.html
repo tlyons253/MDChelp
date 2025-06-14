@@ -5,13 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Capture-Recapture Overview • MDChelp</title>
-<script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Capture-Recapture: Overview • MDChelp</title>
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><link href="../deps/KaTex-0.16.10/katex.min.css" rel="stylesheet">
-<script src="../deps/KaTex-0.16.10/katex.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Capture-Recapture Overview">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Capture-Recapture: Overview">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -35,7 +34,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/Bootstrapping.html">Non-parametric Bootstrapping</a></li>
-    <li><a class="dropdown-item" href="../articles/Capture-Recapture-Overview.html">Capture-Recapture Overview</a></li>
+    <li><a class="dropdown-item" href="../articles/Capture-Recapture-Overview.html">Capture-Recapture: Overview</a></li>
     <li><a class="dropdown-item" href="../articles/Quick-Nimble-Demo.html">Quick Nimble Demo</a></li>
     <li><a class="dropdown-item" href="../articles/TTE-Advanced.html">Time To Event and Known-fate (Survival) Analyses</a></li>
   </ul>
@@ -59,7 +58,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Capture-Recapture Overview</h1>
+      <h1>Capture-Recapture: Overview</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/tlyons253/MDChelp/blob/master/vignettes/articles/Capture-Recapture-Overview.Rmd" class="external-link"><code>vignettes/articles/Capture-Recapture-Overview.Rmd</code></a></small>
@@ -68,13 +67,170 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tlyons253/MDChelp" class="external-link">MDChelp</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="in-development">In development<a class="anchor" aria-label="anchor" href="#in-development"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>Capture-recapture methods and related concepts are at the foundation
+of a plethora of methods and analytic techniques used in ecological. It
+can be difficult to know how best to design a study or even what type of
+data to collect without first having some kind of an idea of the
+analysis you might perform. The goal of these notes is to provide a
+<em>very</em> basic overview of what you can do with capture-recapture
+methods, the basic data needs and assumptions, and provide some basic
+tools to help guide the development of projects. There are many, many
+books that cover this topic with much better clarity and detail, but
+three that may be helpful in particular are:</p>
+<ul>
+<li><a href="https://larkinpowell.wixsite.com/larkinpowell/estimation-of-parameters-for-animal-pop" class="external-link">Estimation
+of Parameters for Animal Populations (Powell and Gale 2015)</a></li>
+<li><a href="www.wiley.com/go/MurayPopulationEcology">Population Ecology
+in Practice (Murray and Sandercock 2022)</a></li>
+<li><a href="www.phidot.org">Program Mark “A Gentle
+Introduction”</a></li>
+</ul>
+<p>These offer more comprehensive discussions of specific types of
+models without being overly technical (the first two), though the
+“Gentle Introduction” goes into much more discussion about a given
+model, while also giving guidance on their implementation in Program
+MARK.</p>
+<p>This and related articles are meant to be a quick reference, to help
+make you aware of what is out there and is in no way comprehensive
+enough to be the only resource you use. You should definitely read
+relevant sections of these or other books, papers, or consult with one
+of the biometricians if you identify a technique you are interested in
+using for a project.</p>
+</div>
+<div class="section level2">
+<h2 id="key-terminology-and-concepts">Key Terminology and Concepts<a class="anchor" aria-label="anchor" href="#key-terminology-and-concepts"></a>
+</h2>
+<p>There are some characteristics/concepts that help
+frame/organize/differentiate among the plethora of methods and serve as
+the basis of critical assumptions. When looking into more specific
+methods or models, you’ll see these terms being referenced
+frequently.</p>
+<div class="section level3">
+<h3 id="model-assumptions-open-or-closed-populations">Model assumptions: open or closed populations<a class="anchor" aria-label="anchor" href="#model-assumptions-open-or-closed-populations"></a>
+</h3>
+<p>Whether a population can be classified as open or closed defines most
+capture-recapture methods and is a critical assumption in different
+models. Closed is simpler to define, as there are a few different
+processes that makes a population “open”. Most simply, a <strong>closed
+population</strong> means that, for the time you are observing your
+animals, there are no births, deaths, or immigration or emigration of
+any kind. The animals you do (or could) observe or capture are the same
+individuals and do not change. If births, deaths, or movement into or
+out of your study area exist, during your data collection, then you have
+an <strong>open population</strong>. It’s an important concept to
+understand, but not always black in white in practice. The lines between
+“open” and “closed” populations (and related statistical models) blur
+because only some processes are relevant to a particular model (deaths
+and emigration, Cormack-Jolly-Seber), or because of how you structure
+your data collection and define a time frame.</p>
+<ul>
+<li><p><strong>Example:</strong> If I go and capture and mark birds in a
+field to estimate abundance each year for 5 years, clearly those are not
+all the same birds. Between years, or even within a year, birds can be
+born, can move into the field, leave the field, or die. However, during
+the time I am marking birds in a given year, if <u>none</u> of those
+processes occur, then, for the purposes of my data collection and
+analysis, I have a closed population. I can then use a model that
+assumes I have a closed population to analyze the data from each year.
+Thus, depending on what it is you are interested in measuring and how
+you design your data collection, you can sometimes treat what is truly
+an “open” population as being closed.</p></li>
+<li><p><strong>Example:</strong> The Cormack-Jolly-Seber (CJS) model is
+considered an “open” population model because you expect individuals to
+die and you estimate the apparent survival of individuals between
+encounters. It’s called apparent survival because if you also have
+individuals leave the study area (emigrate), you can’t differentiate
+between deaths and leaving. However, if you <em>can</em> safely assume
+that individuals don’t leave, but the population is
+<strong>open</strong> (because individuals can still die), then you are
+estimating true survival. Movement into the population or births don’t
+matter in this instance, because the CJS a model only tries to estimate
+apparent survival.</p></li>
+</ul>
+<p>Being able to think about how the concept of open or closed
+populations relates to your study organism, question, and data
+collection is key as it is the backbone of virtually every statistical
+model you will use and acts as an important building block, permitting
+you to use more complex models to answer complex questions.</p>
+</div>
+<div class="section level3">
+<h3 id="estimating-abundance-or-demographic-parameters">Estimating abundance or demographic parameters<a class="anchor" aria-label="anchor" href="#estimating-abundance-or-demographic-parameters"></a>
+</h3>
+<p>Another way to subdivide these models is whether the goal is to
+estimate abundance or demographic parameters (e.g., survival,
+recruitment, population growth rate, etc.). There are methods that do
+both but this is one of the key ways to differentiate among methods.
+There are both open and closed models that can do this as well. Examples
+of specific capture-recapture methods that focus on estimating abundance
+are:</p>
+<ul>
+<li>Lincoln-Petersen (closed)</li>
+<li>Jolly-Seber (open)</li>
+<li>Closed Capture recapture (closed)</li>
+</ul>
+<p>Models/ approaches that focus on demographic parameters are by
+definition, open models, but may not account for all processes
+(immigration/emigration, survival, etc.). Some models that primarily
+focus on demographic processes are :</p>
+<ul>
+<li>Cormack-Jolly-Seber (CJS)</li>
+<li>Jolly Seber</li>
+<li>Pradel</li>
+<li>Robust Design (combines closed and open processes)</li>
+<li>Brownie/Seber (Dead encounters)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="unique-or-generic-markings">Unique or generic markings<a class="anchor" aria-label="anchor" href="#unique-or-generic-markings"></a>
+</h3>
+<p>Not all approaches require you to be able to uniquely identify
+individuals. Sometimes the organism is too small to be marked with a
+unique tag, such tags are more likely to be lost compared to other
+marking techniques (e.g scute marking on turtles, fin clips), or other
+animal welfare or logistical concerns prevent unique identification.
+However, you generally have more flexibility if you can uniquely
+identify individuals. The frequent reality that, for models that use
+generic markings, many key assumptions cannot be met has generally led
+to most researchers to use individually identifiable markings. Still,
+there are cases where generic markings are useful (e.g. estimating
+waterfowl abundance from direct band recoveries) and you can always
+“anonymize” your uniquely marked organisms for a model that only
+requires generic markings.</p>
+<div class="figure" style="text-align: center">
+<img src="art_image/LPschnab.jpg" alt="**Lincoln (L) and Schnabel (R)**" width="50%"><p class="caption">
+<strong>Lincoln (L) and Schnabel (R)</strong>
+</p>
+</div>
+<p>The Lincoln-Petersen index and related estimators (e.g. Chao,
+Schnabel), Jolly-Seber, and some types of mark-resight models can use
+information about generic markings, but they come with relatively more
+strict assumptions. All of these approaches have alternatives or
+different formulations that utilize unique markings that permit you to
+deal with real issues that can cause bias (e.g. capture probability
+heterogeneity, non-closure). The upshot is, you can do more and deal
+with violations of assumptions more easily with unique markings. Options
+still exist for generic marking, and often, some clever sampling design
+and help ensure critical model assumptions are met.</p>
+</div>
+<div class="section level3">
+<h3 id="extensions">Extensions<a class="anchor" aria-label="anchor" href="#extensions"></a>
+</h3>
+<p>More generally capture recapture models can be thought of as
+different types of multi-state hidden-Markov-models. You don’t need to
+worry about knowing what those terms mean, but understanding those
+concepts eventually will help you develop models that can be more
+tailored to addressing your specific study question.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -84,7 +240,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
