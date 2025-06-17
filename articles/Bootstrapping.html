@@ -6,7 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Non-parametric Bootstrapping • MDChelp</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
+  window.MathJax = {
+    chtml: {
+      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
+    }
+  };
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -102,20 +108,14 @@ short of it is:</p>
 coefficients are biased. Think about if you left out a quadratic term of
 a linear model e.g.</li>
 </ul>
-<p><span class="math display">$$Y=\beta_0+\beta_1\cdot x_1\\
+<p><span class="math display">\[Y=\beta_0+\beta_1\cdot x_1\\
 \\
 vs\\
 \\
-Y=\beta_0+\beta_1\cdot x_1 + \beta_2\cdot (x_1)^2$$</span></p>
-<p>Using just the linear term
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\beta_1)</annotation></semantics></math>
-would not accurately describe the relationship between
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math>
-so
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mn>1</mn></msub><annotation encoding="application/x-tex">\beta_1</annotation></semantics></math>
-would be biased.</p>
+Y=\beta_0+\beta_1\cdot x_1 + \beta_2\cdot (x_1)^2\]</span></p>
+<p>Using just the linear term <span class="math inline">\((\beta_1)\)</span> would not accurately describe
+the relationship between <span class="math inline">\(Y\)</span> and
+<span class="math inline">\(x_1\)</span> so <span class="math inline">\(\beta_1\)</span> would be biased.</p>
 <ul>
 <li><p>Another common area where this can be an issue is if you use a
 covariate that is an areal measurement or a count of something else that
@@ -125,12 +125,9 @@ very, very broad. This also leads to the response and covariates not
 being linearly related.</p></li>
 <li><p>When other assumptions about the model/data aren’t met, such as
 the normal residuals in a LM or mean-equal-to-variance in a Poisson, the
-sampling distribution of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>
-is underestimated. This means the reported SE for any particular
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>
-is too small and any resulting confidence interval or p-value will be
-incorrect.</p></li>
+sampling distribution of <span class="math inline">\(\beta\)</span> is
+underestimated. This means the reported SE for any particular <span class="math inline">\(\beta\)</span> is too small and any resulting
+confidence interval or p-value will be incorrect.</p></li>
 </ul>
 <p>What to do when you violate these assumptions?</p>
 <p>If the linearity assumption is not supported, you change the type of
@@ -146,9 +143,8 @@ omit some kind of grouping variable (e.g. ignoring the potential for
 correlated survival probability of gamebird chicks in the same brood),
 or because there are more 0’s than expected. If you were to fit a model
 that ignored these factors, you can no longer trust the SE’s , CI’s, or
-p-values of your
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mi>′</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">\beta's</annotation></semantics></math>
-output by typical routines (e.g. glm in R; <a href="https://statistics4ecologists-v3.netlify.app/10-maximumlikelihood#sec-profile" class="external-link">See
+p-values of your <span class="math inline">\(\beta's\)</span> output
+by typical routines (e.g. glm in R; <a href="https://statistics4ecologists-v3.netlify.app/10-maximumlikelihood#sec-profile" class="external-link">See
 this section</a> of Dr. Fieberg’s book for a more in-depth discussion of
 issues with the CI’s and p-values reported in in common software
 functions) and you might find that a goodness-of-fit (GOF) test would
@@ -176,9 +172,8 @@ still have to have deal with issues like linearity, independence, etc.
 either through the model itself and/or via the resampling method. If
 those assumptions can still be met, then the bootstrap allows you to
 estimate the <em>distribution</em> of parameters, be they the regression
-coefficients
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mi>′</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">\beta's</annotation></semantics></math>)
-or other model-based estimates or predictions.</p>
+coefficients (<span class="math inline">\(\beta's\)</span>) or other
+model-based estimates or predictions.</p>
 <p>The short version is, you can use the bootstrap to estimate the SE of
 a parameter. How does this work? The brief version is:</p>
 <ol style="list-style-type: decimal">
@@ -375,11 +370,8 @@ thousands of estimates.</p>
 <ul>
 <li><p>If it looks normal, you can compute the SE of those bootstrap
 estimates (e.g. <code>sd(boostrap_estimates$Var1-&gt;SE</code>) and then
-compute the 95% (or some other %) confidence interval as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mspace width="0.222em"></mspace><mo>±</mo><mspace width="0.222em"></mspace><mn>1.96</mn><mo>×</mo><mspace width="0.222em"></mspace><mi>S</mi><mi>E</mi></mrow><annotation encoding="application/x-tex">\mu\ \pm\ 1.96\times\ SE</annotation></semantics></math>
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>
-again is the estimate from the model using the original data.</p></li>
+compute the 95% (or some other %) confidence interval as <span class="math inline">\(\mu\ \pm\ 1.96\times\ SE\)</span> where <span class="math inline">\(\mu\)</span> again is the estimate from the model
+using the original data.</p></li>
 <li>
 <p>If it shows skew (which it likely will, even if it’s just fat
 tails), you need to use some form of a quantile
@@ -403,11 +395,10 @@ non-parametric bootstrap.</li>
 BCa interval given a table of bootstrapped estimates and the original
 data (<code><a href="../reference/bca_jacknife.html">MDChelp::bca_jacknife</a></code>). Right now, it’s only been
 tested for creating a table of regression parameter estimates and the
-CI’s
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>β</mi><mi>′</mi><mi>s</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\beta's)</annotation></semantics></math>
-but you might be able to get it to do the same for model-based estimates
-(e.g. marginal means, contrasts, etc.) depending on how you identify a
-parameter of interest in the table and the function you provide.</li>
+CI’s <span class="math inline">\((\beta's)\)</span> but you might be
+able to get it to do the same for model-based estimates (e.g. marginal
+means, contrasts, etc.) depending on how you identify a parameter of
+interest in the table and the function you provide.</li>
 </ul>
 </li>
 </ul>
