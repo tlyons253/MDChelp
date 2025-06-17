@@ -112,7 +112,7 @@ nim.inits<-function(){list(
 
 ```
 
-Now we also set up the functions to generate initial values for each MCMC chain. It's better (but not always essential) to have initial values provided via a function to ensure that the chains all don't start from the same value. It's not always critical if the model mixes well, but in the event it doesn't starting chains from different parameter values can help ensure MCMC is searching the widest range of potential values possible (sampling from the full parameter space). The above initial value has epsilon commented out to facilitate demonstration of some other aspects of Nimble later on.
+Now we also set up the functions to generate initial values for each MCMC chain. It's better (but not always essential) to have initial values provided via a function to ensure that the chains all don't start from the same value. It's not always critical to provide initial values if the model mixes well, but in the event mixing is poor, starting chains from different parameter values can help ensure MCMC is searching the widest range of potential values possible (sampling from the full parameter space). The above initial value has epsilon commented out to facilitate demonstration of some other aspects of Nimble later on.
 
 Now you bundle the data, code, constants, and initial values together in what we'll call a model object
 
@@ -186,6 +186,7 @@ In this case, the conjugate sampler is assigned to the regression coefficients b
 
 Now though, is where you would want to adjust samplers. To do so, we will set up a second configuration to use later on, rather than bouncing back and forth. Here, we set the sampler for the residual variance to be a slice sampler. And set the regression coefficients (b0, b1, b2) to use an automated factor slice sampler, **AF_slice**. This is is a form of block sampler. There is also a **RW_block** sampler, but the former often performs better. Again, blocking parameters just means these parameters are sampled together, rather than individually. In practice, it most likely is most applicable to use for regression coefficients, but it's something you can play around with. It is a slice sampler, so it will only work for parameters that are numerical, not categorical or binary.
 
+[You can see the list of possible samplers and a brief explanation here](https://search.r-project.org/CRAN/refmans/nimble/html/samplers.html)
 
 ```{r}
 demo.config.alt<-configureMCMC(demo.mod)
@@ -282,10 +283,6 @@ slice.end<-Sys.time()
 
 slice.time<-slice.end-slice.start
 
-
-summary(alt.samples)
-
-
 ```
 
 
@@ -325,6 +322,6 @@ MCMCvis::MCMCsummary(alt.samples)->slice.summary
 slice.summary
 ```
 
-The effective sample size for each parameter is much larger using the slice **AF_slice** sampler. There is a time difference, with the slice sampler taking `r paste0(round(slice.time,2),' seconds')` compared to the default samplers of `r paste0(round(RW.time,2),' seconds')`. It's not a large difference in this simple model, but that's `r round(slice.time/RW.time,2)` times longer. That will scale up when your models start taking longer to run. 
+The effective sample size for each parameter is much larger using the slice **AF_slice** sampler. There is a time difference, with the slice sampler taking `r paste0(round(slice.time,2),' seconds')` compared to the default samplers of `r paste0(round(RW.time,2),' seconds')`. It's not a large difference in this simple model, but that's about `r round(slice.time/RW.time,2)` times longer. That will scale up when your models start taking longer to run. 
 
 There isn't a clear answer about what samplers are ultimately better. It could be the case that running the default samplers for more iterations is quicker than using a block or slice sampler. Or, default samplers may not converge or mix properly, regardless of how long you run them. This will just be something you end up playing around with and testing.
