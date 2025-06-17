@@ -232,12 +232,12 @@ the <strong>for</strong> loop) is also a constant.</p>
 <p>Now we also set up the functions to generate initial values for each
 MCMC chain. It’s better (but not always essential) to have initial
 values provided via a function to ensure that the chains all don’t start
-from the same value. It’s not always critical if the model mixes well,
-but in the event it doesn’t starting chains from different parameter
-values can help ensure MCMC is searching the widest range of potential
-values possible (sampling from the full parameter space). The above
-initial value has epsilon commented out to facilitate demonstration of
-some other aspects of Nimble later on.</p>
+from the same value. It’s not always critical to provide initial values
+if the model mixes well, but in the event mixing is poor, starting
+chains from different parameter values can help ensure MCMC is searching
+the widest range of potential values possible (sampling from the full
+parameter space). The above initial value has epsilon commented out to
+facilitate demonstration of some other aspects of Nimble later on.</p>
 <p>Now you bundle the data, code, constants, and initial values together
 in what we’ll call a model object</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -372,6 +372,9 @@ individually. In practice, it most likely is most applicable to use for
 regression coefficients, but it’s something you can play around with. It
 is a slice sampler, so it will only work for parameters that are
 numerical, not categorical or binary.</p>
+<p><a href="https://search.r-project.org/CRAN/refmans/nimble/html/samplers.html" class="external-link">You
+can see the list of possible samplers and a brief explanation
+here</a></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demo.config.alt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/configureMCMC.html" class="external-link">configureMCMC</a></span><span class="op">(</span><span class="va">demo.mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ===== Monitors =====</span></span>
@@ -489,10 +492,7 @@ configuration runs.</p>
 <span></span>
 <span><span class="va">slice.end</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">slice.time</span><span class="op">&lt;-</span><span class="va">slice.end</span><span class="op">-</span><span class="va">slice.start</span></span>
-<span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">alt.samples</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">slice.time</span><span class="op">&lt;-</span><span class="va">slice.end</span><span class="op">-</span><span class="va">slice.start</span></span></code></pre></div>
 <p>Look at the traceplots of each</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">MCMCvis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MCMCvis/man/MCMCtrace.html" class="external-link">MCMCtrace</a></span><span class="op">(</span><span class="va">demo.samples</span>,pdf<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -525,8 +525,8 @@ statistics</p>
 slice <strong>AF_slice</strong> sampler. There is a time difference,
 with the slice sampler taking 0.55 seconds compared to the default
 samplers of 0.28 seconds. It’s not a large difference in this simple
-model, but that’s 2 times longer. That will scale up when your models
-start taking longer to run.</p>
+model, but that’s about 2 times longer. That will scale up when your
+models start taking longer to run.</p>
 <p>There isn’t a clear answer about what samplers are ultimately better.
 It could be the case that running the default samplers for more
 iterations is quicker than using a block or slice sampler. Or, default
