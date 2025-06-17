@@ -67,70 +67,476 @@
 
     
     
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This is just a short demonstration on executing MCMC estimation of a
+Bayesian model in Nimble. This is largely also covered in the <a href="https://r-nimble.org/html_manual/cha-lightning-intro.html#sec:customizing-mcmc" class="external-link">Nimble
+user manual</a>. Specifically, this walks through executing Nimble “the
+long way” because of several benefits. It lets you check your initial
+values before compiling to avoid the Nimble equivalent of JAGS’s “Node
+inconsistent with parents” or other errors and lets you customize the
+samplers for individual or sets of parameters.</p>
+<div class="section level3">
+<h3 id="nimble-vs--jags">Nimble vs. JAGS<a class="anchor" aria-label="anchor" href="#nimble-vs--jags"></a>
+</h3>
+<p>Part of what makes Nimble more attractive, compared to JAGS, is the
+speed with which it samples. Some of the speed comes from some
+computer-background-blackbox stuff that, unless you want to do a deep
+dive into programming, doesn’t matter (compiling,running in C++). That
+adds an extra step in getting your model to run. This is <em>part</em>
+of what makes Nimble more efficient. The other part comes from the type
+of samplers (the algorithm used to perform MCMC estimation) you can
+specify.</p>
+<p>JAGS generally limits your ability to specify samplers for model
+parameters. It’s sometimes better this way, but not always. For example,
+if you have a linear model with many regression coefficients, you may
+find that JAGS samples very slowly and the resulting chains mix poorly.
+That is probably because the default sampler (which you can’t change) is
+a slice sampler. It works on each regression coefficient individually,
+trying to sample one coefficient at a time. Slice sampling like this can
+be slow, but often results in chains with more independent samples/
+lower autocorrelation.</p>
+<p>Nimble provides default samplers, but lets you adjust them as you
+like. The default sampler in Nimble for most parameters (or at least
+continuous value ones, like regression coefficients) is a random-walk
+(Metropolis-Hastings) sampler. It’s very quick, but tends to lead to
+chains with greater autocorrelation than a slice sampler, so you need to
+run longer chains to achieve similar effective sample sizes. However,
+Nimble lets you specify block samplers. This means that, rather than
+sampling regression coefficients individually, you can sample them
+together. This tends to be slower, but results in less autocorrelation
+and improved mixing.</p>
+</div>
+</div>
+<div class="section level2 tabset tabset-pills">
+<h2 class="tabset tabset-pills" id="running-nimble">Running Nimble<a class="anchor" aria-label="anchor" href="#running-nimble"></a>
+</h2>
+<p>We’ll walk through an example below using simulated data. One real
+nice thing about Nimble is that it uses the BUGS programming language to
+write a model so any older models from JAGS should be able to be used in
+Nimble (there are even functions to do that).</p>
+
+
+
+
+
+<ul class="nav nav-pills" id="running-nimble" role="tablist">
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#simulating-data" id="simulating-data-tab" type="button" role="tab" aria-controls="simulating-data" aria-selected="true" class="active nav-link">Simulating data</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#nimble-model-setup" id="nimble-model-setup-tab" type="button" role="tab" aria-controls="nimble-model-setup" aria-selected="false" class="nav-link">Nimble model setup</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#configure-the-mcmc-and-setting-monitors" id="configure-the-mcmc-and-setting-monitors-tab" type="button" role="tab" aria-controls="configure-the-mcmc-and-setting-monitors" aria-selected="false" class="nav-link">Configure the MCMC and setting monitors</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#build-and-compile-mcmc" id="build-and-compile-mcmc-tab" type="button" role="tab" aria-controls="build-and-compile-mcmc" aria-selected="false" class="nav-link">Build and Compile MCMC</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#run-modelget-mcmc-samples" id="run-modelget-mcmc-samples-tab" type="button" role="tab" aria-controls="run-modelget-mcmc-samples" aria-selected="false" class="nav-link">Run model/get MCMC samples</button></li>
+</ul>
+<div class="tab-content">
+<div class="active  tab-pane" id="simulating-data" role="tabpanel" aria-labelledby="simulating-data-tab">
+
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tlyons253/MDChelp" class="external-link">MDChelp</a></span><span class="op">)</span></span></code></pre></div>
-<p>This is just a short demonstration on running a nimble model “the
-long way.” It lets you check your initial values before compiling to
-avoid the Nimble equivalent of JAGS’s “Node inconsistent with parents”
-or other errors like that.</p>
-<p>This assumes you have already created appropriate data, constant, and
-initial value objects and functions.</p>
-<p>Add: A more comprehensive version.</p>
+<code class="sourceCode R"><span><span class="co">#simulate a multiple  regression  model</span></span>
+<span></span>
+<span></span>
+<span><span class="va">sim.dat</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">{</span></span>
+<span></span>
+<span><span class="va">mu</span><span class="op">&lt;-</span><span class="fl">5</span></span>
+<span></span>
+<span><span class="va">b.1</span><span class="op">&lt;-</span><span class="fl">1.5</span></span>
+<span></span>
+<span><span class="va">b.2</span><span class="op">&lt;-</span><span class="op">-</span><span class="fl">3</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="va">x.1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">N</span>,<span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">x.2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">N</span>,<span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">err</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">N</span>,<span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">y</span><span class="op">&lt;-</span><span class="va">mu</span><span class="op">+</span><span class="va">b.1</span><span class="op">*</span><span class="va">x.1</span><span class="op">+</span><span class="va">b.2</span><span class="op">*</span><span class="va">x.2</span><span class="op">+</span><span class="va">err</span></span>
+<span></span>
+<span><span class="va">out.list</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">y</span>,x1<span class="op">=</span><span class="va">x.1</span>,x2<span class="op">=</span><span class="va">x.2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">out.list</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+</div>
+<div class="tab-pane" id="nimble-model-setup" role="tabpanel" aria-labelledby="nimble-model-setup-tab">
+
+<p>Next, write the model in BUGS that we’ll use to estimate
+parameters</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-nimble.org" class="external-link">nimble</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; nimble version 1.3.0 is loaded.</span></span>
+<span><span class="co">#&gt; For more information on NIMBLE and a User Manual,</span></span>
+<span><span class="co">#&gt; please visit https://R-nimble.org.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Note for advanced users who have written their own MCMC samplers:</span></span>
+<span><span class="co">#&gt;   As of version 0.13.0, NIMBLE's protocol for handling posterior</span></span>
+<span><span class="co">#&gt;   predictive nodes has changed in a way that could affect user-defined</span></span>
+<span><span class="co">#&gt;   samplers in some situations. Please see Section 15.5.1 of the User Manual.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'nimble'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     simulate</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     declare</span></span>
+<span></span>
+<span><span class="va">demo.code</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/nimbleCode.html" class="external-link">nimbleCode</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="co">#priors</span></span>
+<span>  <span class="va">b0</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="fl">0</span>,sd<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="va">b1</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="fl">0</span>,sd<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="va">b2</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="fl">0</span>,sd<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="va">epsilon</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">dunif</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span> <span class="co"># residual variance</span></span>
+<span>  </span>
+<span>  <span class="co">#model</span></span>
+<span>  </span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">mu</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">&lt;-</span><span class="va">b0</span><span class="op">+</span><span class="va">b1</span><span class="op">*</span><span class="va">x1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">+</span><span class="va">b2</span><span class="op">*</span><span class="va">x2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="va">y</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="va">mu</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,sd<span class="op">=</span><span class="va">epsilon</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p>You may have already noticed, but another thing you can do in Nimble
+is specify priors using a standard deviation instead of precision. If
+you don’t include <strong>sd=</strong> in the distribution, Nimble will
+assume it’s precision, so be sure you specify that part of your prior
+distribution carefully.</p>
+<p>Next, prepare the data. For data, Nimble is different from JAGS in
+that it makes a distinction between constants and data. Data are
+exclusively quantities that come from stochastic nodes. In our model
+above, the only data we are supplying is the observed outcomes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>y</mi><mi>i</mi></msub><annotation encoding="application/x-tex">y_i</annotation></semantics></math>.
+The covariates we measured
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mrow><mn>1</mn><mi>i</mi></mrow></msub><mo>,</mo><msub><mi>x</mi><mrow><mn>2</mn><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">x_{1i},x_{2i}</annotation></semantics></math>
+get supplied as constants. Any variable we want to use for indexing
+(<strong>n</strong> above, in the <strong>for</strong> loop) is also a
+constant.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
+<span><span class="va">demo.dat</span><span class="op">&lt;-</span><span class="fu">sim.dat</span><span class="op">(</span><span class="fl">40</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nim.dat</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">demo.dat</span><span class="op">$</span><span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nim.const</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">demo.dat</span><span class="op">$</span><span class="va">x2</span><span class="op">)</span>,</span>
+<span>              x1<span class="op">=</span><span class="va">demo.dat</span><span class="op">$</span><span class="va">x1</span>,</span>
+<span>                x2<span class="op">=</span><span class="va">demo.dat</span><span class="op">$</span><span class="va">x2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nim.inits</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="co">#epsilon=runif(1,-5,0),</span></span>
+<span>  b0<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, </span>
+<span>  b1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>  b2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">)</span><span class="op">}</span></span></code></pre></div>
+<p>Now we also set up the functions to generate initial values for each
+MCMC chain. It’s better (but not always essential) to have initial
+values provided via a function to ensure that the chains all don’t start
+from the same value. It’s not always critical if the model mixes well,
+but in the event it doesn’t starting chains from different parameter
+values can help ensure MCMC is searching the widest range of potential
+values possible (sampling from the full parameter space). The above
+initial value has epsilon commented out to facilitate demonstration of
+some other aspects of Nimble later on.</p>
+<p>Now you bundle the data, code, constants, and initial values together
+in what we’ll call a model object</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co">#this won't actually run.</span></span>
+<span><span class="va">demo.mod</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/nimbleModel.html" class="external-link">nimbleModel</a></span><span class="op">(</span>code<span class="op">=</span><span class="va">demo.code</span>,</span>
+<span>                      data<span class="op">=</span><span class="va">nim.dat</span>,</span>
+<span>                      constants <span class="op">=</span> <span class="va">nim.const</span>,</span>
+<span>                      inits<span class="op">=</span><span class="fu">nim.inits</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># remember the () for the initial values function!</span></span>
+<span><span class="co">#&gt; Defining model</span></span>
+<span><span class="co">#&gt; Building model</span></span>
+<span><span class="co">#&gt; Setting data and initial values</span></span>
+<span><span class="co">#&gt; Running calculate on model</span></span>
+<span><span class="co">#&gt;   [Note] Any error reports that follow may simply reflect missing values in model variables.</span></span>
+<span><span class="co">#&gt; Checking model sizes and dimensions</span></span>
+<span><span class="co">#&gt;   [Note] This model is not fully initialized. This is not an error.</span></span>
+<span><span class="co">#&gt;          To see which variables are not initialized, use model$initializeInfo().</span></span>
+<span><span class="co">#&gt;          For more information on model initialization, see help(modelInitialization).</span></span></code></pre></div>
+<p>You should see a message about the model not being fully initialized.
+This usually means there is a parameter you can provide an initial value
+for, but did not. In this case it’s epsilon, the residual variance. This
+is where the first useful tool in Nimble comes in. Before you even start
+trying to sample, you can get a sense of if the model will run
+properly.</p>
+<p>The message tells you to use <strong>model$initializeInfo()</strong>.
+This should tell you that you have nodes without initial values.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">demo.mod</span><span class="op">$</span><span class="fu">initializeInfo</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   [Note] Missing values (NAs) or non-finite values were found in model variables: epsilon.</span></span>
+<span><span class="co">#&gt;   [Note] This is not an error, but some or all variables may need to be initialized for certain algorithms to operate properly.</span></span>
+<span><span class="co">#&gt;   [Note] For more information on model initialization, see help(modelInitialization).</span></span>
 <span></span>
-<span><span class="co"># first bundle your stuff together</span></span>
-<span><span class="va">my.nimmod</span> <span class="op">&lt;-</span> <span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/nimbleModel.html" class="external-link">nimbleModel</a></span><span class="op">(</span>code <span class="op">=</span> <span class="va">model.code</span>,</span>
-<span>                                 constants <span class="op">=</span> <span class="va">nim.const</span>,</span>
-<span>                                 data <span class="op">=</span> <span class="va">nim.dat</span>,</span>
-<span>                                 inits <span class="op">=</span> <span class="fu">inits</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">demo.mod</span><span class="op">$</span><span class="fu">calculate</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] NA</span></span>
 <span></span>
+<span><span class="va">demo.mod</span><span class="op">$</span><span class="fu">calculate</span><span class="op">(</span><span class="st">'epsilon'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+<p>It’s not always fatal, but it’s a good practice to try and provide
+initial values. the second command <strong>$calculate()</strong> tries
+to calculate the log probability density of the model from initial
+values. In hierarchical models, an NA here will mean your model probably
+won’t run, but with simpler models, we can try. You can also check
+particular nodes to see which are giving you trouble.</p>
+<p>We know from <strong>intializeInfo()</strong> that the NA is because
+we didn’t provide a value for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mi>p</mi><mi>s</mi><mi>i</mi><mi>l</mi><mi>o</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">epsilon</annotation></semantics></math>
+in the initial values. Sometimes though, you will still get an NA even
+if you have provided a starting value. If that happens, you’ll need to
+check individual nodes to determine which are giving you trouble and
+make adjustments to the prior, initial value, or both. This may require
+overwriting (re-run) the <strong>nimbleCode</strong> and/or
+<strong>nimbleModel</strong> objects repeatedly.</p>
+<p>Just for the sake of demonstration, we’ll fix our above issue by
+providing an intial value for epsilon</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nim.inits</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  epsilon<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0.001</span>,<span class="fl">5</span><span class="op">)</span>,</span>
+<span>  b0<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, </span>
+<span>  b1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>  b2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">my.nimmod</span><span class="op">$</span><span class="fu">calculate</span><span class="op">(</span><span class="op">)</span> <span class="co"># this should come back as a number (the loglikelihood)</span></span>
-<span>                      <span class="co"># if nodes have appropriate initial values. You may also</span></span>
-<span>                      <span class="co"># need to give initial values for latent states.</span></span>
-<span></span>
-<span><span class="va">my.nimmod</span><span class="op">$</span><span class="fu">info</span><span class="op">(</span><span class="op">)</span><span class="co">#this will show you any errors with nodes. It will tell you what parameters need initial values/</span></span>
-<span></span>
-<span><span class="va">test.config</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/configureMCMC.html" class="external-link">configureMCMC</a></span><span class="op">(</span><span class="va">my.nimmod</span><span class="op">)</span> <span class="co"># configure step</span></span>
-<span></span>
-<span></span>
-<span><span class="co">#now you can alter the type of sampler on specific parameters if needed.</span></span>
-<span><span class="co"># block samplers are slower, but produce a larger ESS for things like the different parameters in a single model (intercept, regression coefficients)</span></span>
-<span></span>
-<span><span class="co"># test.config$replaceSamplers(target = c('phi','p'),</span></span>
-<span><span class="co">#                        type= 'RW',targetByNode=TRUE)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># test.config$replaceSamplers(target = c('mean.FID','beta.FID'),</span></span>
-<span><span class="co">#                        type= 'AF_slice')</span></span>
-<span></span>
-<span></span>
-<span></span>
-<span><span class="va">test.config</span></span>
-<span><span class="co">#call to see about the samplers and what parameters</span></span>
-<span></span>
-<span><span class="va">test.build</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/buildMCMC.html" class="external-link">buildMCMC</a></span><span class="op">(</span><span class="va">test.config</span><span class="op">)</span> </span>
-<span></span>
-<span></span>
-<span></span>
-<span><span class="va">comp.mod</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/compileNimble.html" class="external-link">compileNimble</a></span><span class="op">(</span><span class="va">my.nimmod</span><span class="op">)</span>   <span class="co">#first compile step</span></span>
-<span></span>
-<span></span>
-<span><span class="va">comp.mcmc</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/compileNimble.html" class="external-link">compileNimble</a></span><span class="op">(</span><span class="va">test.build</span>, project<span class="op">=</span><span class="va">comp.mod</span><span class="op">)</span> <span class="co"># second compile step</span></span>
+<span><span class="op">)</span><span class="op">}</span></span>
 <span></span>
 <span></span>
 <span></span>
+<span><span class="va">demo.mod</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/nimbleModel.html" class="external-link">nimbleModel</a></span><span class="op">(</span>code<span class="op">=</span><span class="va">demo.code</span>,</span>
+<span>                      data<span class="op">=</span><span class="va">nim.dat</span>,</span>
+<span>                      constants <span class="op">=</span> <span class="va">nim.const</span>,</span>
+<span>                      inits<span class="op">=</span><span class="fu">nim.inits</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Defining model</span></span>
+<span><span class="co">#&gt; Building model</span></span>
+<span><span class="co">#&gt; Setting data and initial values</span></span>
+<span><span class="co">#&gt; Running calculate on model</span></span>
+<span><span class="co">#&gt;   [Note] Any error reports that follow may simply reflect missing values in model variables.</span></span>
+<span><span class="co">#&gt; Checking model sizes and dimensions</span></span>
 <span></span>
-<span><span class="co"># run</span></span>
 <span></span>
-<span><span class="va">samples</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/runMCMC.html" class="external-link">runMCMC</a></span><span class="op">(</span><span class="va">comp.mcmc</span>,</span>
-<span>                         niter<span class="op">=</span><span class="fl">10000</span>,</span>
+<span></span>
+<span><span class="va">demo.mod</span><span class="op">$</span><span class="fu">initializeInfo</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   [Note] All model variables are initialized.</span></span>
+<span></span>
+<span><span class="va">demo.mod</span><span class="op">$</span><span class="fu">calculate</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -211.9384</span></span>
+<span></span>
+<span><span class="va">demo.mod</span><span class="op">$</span><span class="fu">calculate</span><span class="op">(</span><span class="st">'epsilon'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -2.302585</span></span></code></pre></div>
+</div>
+<div class="tab-pane" id="configure-the-mcmc-and-setting-monitors" role="tabpanel" aria-labelledby="configure-the-mcmc-and-setting-monitors-tab">
+
+<p>Once you sort out the initial values and create the model object, you
+configure the MCMC sampler.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">demo.config</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/configureMCMC.html" class="external-link">configureMCMC</a></span><span class="op">(</span><span class="va">demo.mod</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ===== Monitors =====</span></span>
+<span><span class="co">#&gt; thin = 1: b0, b1, b2, epsilon</span></span>
+<span><span class="co">#&gt; ===== Samplers =====</span></span>
+<span><span class="co">#&gt; RW sampler (1)</span></span>
+<span><span class="co">#&gt;   - epsilon</span></span>
+<span><span class="co">#&gt; conjugate sampler (3)</span></span>
+<span><span class="co">#&gt;   - b0</span></span>
+<span><span class="co">#&gt;   - b1</span></span>
+<span><span class="co">#&gt;   - b2</span></span>
+<span></span>
+<span><span class="va">demo.config</span></span>
+<span><span class="co">#&gt; ===== Monitors =====</span></span>
+<span><span class="co">#&gt; thin = 1: b0, b1, b2, epsilon</span></span>
+<span><span class="co">#&gt; ===== Samplers =====</span></span>
+<span><span class="co">#&gt; RW sampler (1)</span></span>
+<span><span class="co">#&gt;   - epsilon</span></span>
+<span><span class="co">#&gt; conjugate sampler (3)</span></span>
+<span><span class="co">#&gt;   - b0</span></span>
+<span><span class="co">#&gt;   - b1</span></span>
+<span><span class="co">#&gt;   - b2</span></span></code></pre></div>
+<p>Nimble should automatically print what nodes are monitored and what
+the assigned samplers are when you execute
+<strong>configureMCMC</strong> but if you call the object, it will
+appear again.</p>
+<p>In this case, the conjugate sampler is assigned to the regression
+coefficients because the prior and the likelihood (the distribution of
+the observation) are the same (normal). If this were a glm, they
+wouldn’t be conjugate because the likelihood would possibly be Poisson,
+logit, or another distribution. They would be a random walk sampler,
+like epsilon. Conjugate samplers are are a default and might not be the
+best but do generally perform well.</p>
+<p>Now though, is where you would want to adjust samplers. To do so, we
+will set up a second configuration to use later on, rather than bouncing
+back and forth. Here, we set the sampler for the residual variance to be
+a slice sampler. And set the regression coefficients (b0, b1, b2) to use
+an automated factor slice sampler, <strong>AF_slice</strong>. This is is
+a form of block sampler. There is also a <strong>RW_block</strong>
+sampler, but the former often performs better. Again, blocking
+parameters just means these parameters are sampled together, rather than
+individually. In practice, it most likely is most applicable to use for
+regression coefficients, but it’s something you can play around with. It
+is a slice sampler, so it will only work for parameters that are
+numerical, not categorical or binary.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">demo.config.alt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/configureMCMC.html" class="external-link">configureMCMC</a></span><span class="op">(</span><span class="va">demo.mod</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ===== Monitors =====</span></span>
+<span><span class="co">#&gt; thin = 1: b0, b1, b2, epsilon</span></span>
+<span><span class="co">#&gt; ===== Samplers =====</span></span>
+<span><span class="co">#&gt; RW sampler (1)</span></span>
+<span><span class="co">#&gt;   - epsilon</span></span>
+<span><span class="co">#&gt; conjugate sampler (3)</span></span>
+<span><span class="co">#&gt;   - b0</span></span>
+<span><span class="co">#&gt;   - b1</span></span>
+<span><span class="co">#&gt;   - b2</span></span>
+<span></span>
+<span><span class="va">demo.config.alt</span><span class="op">$</span><span class="fu">replaceSamplers</span><span class="op">(</span>target<span class="op">=</span><span class="st">'epsilon'</span>,</span>
+<span>                                type<span class="op">=</span><span class="st">'slice'</span><span class="op">)</span></span>
+<span><span class="va">demo.config.alt</span><span class="op">$</span><span class="fu">replaceSamplers</span><span class="op">(</span>target<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'b0'</span>,<span class="st">'b1'</span>,<span class="st">'b2'</span><span class="op">)</span>,</span>
+<span>                                type<span class="op">=</span><span class="st">'AF_slice'</span><span class="op">)</span></span>
+<span><span class="va">demo.config</span></span>
+<span><span class="co">#&gt; ===== Monitors =====</span></span>
+<span><span class="co">#&gt; thin = 1: b0, b1, b2, epsilon</span></span>
+<span><span class="co">#&gt; ===== Samplers =====</span></span>
+<span><span class="co">#&gt; RW sampler (1)</span></span>
+<span><span class="co">#&gt;   - epsilon</span></span>
+<span><span class="co">#&gt; conjugate sampler (3)</span></span>
+<span><span class="co">#&gt;   - b0</span></span>
+<span><span class="co">#&gt;   - b1</span></span>
+<span><span class="co">#&gt;   - b2</span></span>
+<span><span class="va">demo.config.alt</span></span>
+<span><span class="co">#&gt; ===== Monitors =====</span></span>
+<span><span class="co">#&gt; thin = 1: b0, b1, b2, epsilon</span></span>
+<span><span class="co">#&gt; ===== Samplers =====</span></span>
+<span><span class="co">#&gt; slice sampler (1)</span></span>
+<span><span class="co">#&gt;   - epsilon</span></span>
+<span><span class="co">#&gt; AF_slice sampler (1)</span></span>
+<span><span class="co">#&gt;   - b0, b1, b2</span></span>
+<span></span>
+<span><span class="co"># A third sampler configuration could be having each parameter be a slice sampler and sampled independently (targetByNode=TRUE).</span></span>
+<span><span class="co"># This should be slower than RW or conjugate samplers, but have better mixing. It will be slower than the AF_slice sampler.</span></span>
+<span><span class="co">#### not run</span></span>
+<span></span>
+<span><span class="co">#</span></span>
+<span> <span class="co"># demo.config.alt$replaceSamplers(target=c('b0','b1','b2','epsilon'),</span></span>
+<span> <span class="co">#                             type='slice',</span></span>
+<span> <span class="co">#                              targetByNode=TRUE)</span></span></code></pre></div>
+</div>
+<div class="tab-pane" id="build-and-compile-mcmc" role="tabpanel" aria-labelledby="build-and-compile-mcmc-tab">
+
+<p>Nimble converts your model, data, and MCMC algorithms to C++ which
+makes them run faster when it’s sampling. There is an added cost though,
+that you need to build an MCMC sampler object and compile the model
+first. It takes time but just involves running 3 simple commands. 1.)
+<strong>buildMCMC</strong> using the configuration object, leading to an
+MCMC object 2.) <strong>compileNimble</strong> using the model object,
+leading to a compiled model 3.) <strong>compileNimble</strong> using the
+compiled model and the MCMC object you just created</p>
+<p>We will do it twice to ensure we have everything we need to compare
+the RW sampler to the slice sampler.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#----------- RW sampler on epsilon---------------------------</span></span>
+<span></span>
+<span></span>
+<span><span class="va">demo.build</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/buildMCMC.html" class="external-link">buildMCMC</a></span><span class="op">(</span><span class="va">demo.config</span><span class="op">)</span> <span class="co"># build MCMC</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="va">demo.comp.mod</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/compileNimble.html" class="external-link">compileNimble</a></span><span class="op">(</span><span class="va">demo.mod</span><span class="op">)</span>   <span class="co">#first compile step</span></span>
+<span></span>
+<span></span>
+<span><span class="va">demo.comp.mcmc</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/compileNimble.html" class="external-link">compileNimble</a></span><span class="op">(</span><span class="va">demo.build</span>, project<span class="op">=</span><span class="va">demo.comp.mod</span><span class="op">)</span> <span class="co"># second compile step</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="co">#----------- Slice sampler on epsilon</span></span>
+<span></span>
+<span></span>
+<span><span class="va">alt.build</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/buildMCMC.html" class="external-link">buildMCMC</a></span><span class="op">(</span><span class="va">demo.config.alt</span><span class="op">)</span> <span class="co"># build MCMC</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="va">alt.comp.mod</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/compileNimble.html" class="external-link">compileNimble</a></span><span class="op">(</span><span class="va">demo.mod</span><span class="op">)</span>   <span class="co">#first compile step</span></span>
+<span></span>
+<span></span>
+<span><span class="va">alt.comp.mcmc</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/compileNimble.html" class="external-link">compileNimble</a></span><span class="op">(</span><span class="va">alt.build</span>, project<span class="op">=</span><span class="va">alt.comp.mod</span><span class="op">)</span> <span class="co"># second compile step</span></span></code></pre></div>
+</div>
+<div class="tab-pane" id="run-modelget-mcmc-samples" role="tabpanel" aria-labelledby="run-modelget-mcmc-samples-tab">
+
+<p>Now you can execute the the model and obtain your MCMC samples. This
+is where you set your iterations, burning, chains, and thinning. We can
+use the <a href="https://cran.r-project.org/web/packages/MCMCvis/vignettes/MCMCvis.html" class="external-link">MCMCvis</a>
+to review summary statistics and view traceplots. We also use calls of
+<strong>Sys.time()</strong> to also track how long each sampler
+configuration runs.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#-----------RW samplers</span></span>
+<span><span class="va">RW.start</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">demo.samples</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/runMCMC.html" class="external-link">runMCMC</a></span><span class="op">(</span><span class="va">demo.comp.mcmc</span>,</span>
+<span>                         niter<span class="op">=</span><span class="fl">2000</span>,</span>
+<span>                         nburnin <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>                         nchains <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">RW.end</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">RW.time</span><span class="op">&lt;-</span><span class="va">RW.end</span><span class="op">-</span><span class="va">RW.start</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#------------slice sampler</span></span>
+<span></span>
+<span></span>
+<span><span class="va">slice.start</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">alt.samples</span><span class="op">&lt;-</span><span class="fu">nimble</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nimble/man/runMCMC.html" class="external-link">runMCMC</a></span><span class="op">(</span><span class="va">alt.comp.mcmc</span>,</span>
+<span>                         niter<span class="op">=</span><span class="fl">2000</span>,</span>
 <span>                         nburnin <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>                         nchains <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">MCMCvis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MCMCvis/man/MCMCplot.html" class="external-link">MCMCplot</a></span><span class="op">(</span><span class="va">samples</span>,pdf<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-  </main>
+<span><span class="va">slice.end</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">slice.time</span><span class="op">&lt;-</span><span class="va">slice.end</span><span class="op">-</span><span class="va">slice.start</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">alt.samples</span><span class="op">)</span></span></code></pre></div>
+<p>Look at the traceplots of each</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">MCMCvis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MCMCvis/man/MCMCtrace.html" class="external-link">MCMCtrace</a></span><span class="op">(</span><span class="va">demo.samples</span>,pdf<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Quick-Nimble-Demo_files/figure-html/unnamed-chunk-14-1.png" width="700"><img src="Quick-Nimble-Demo_files/figure-html/unnamed-chunk-14-2.png" width="700"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu">MCMCvis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MCMCvis/man/MCMCtrace.html" class="external-link">MCMCtrace</a></span><span class="op">(</span><span class="va">alt.samples</span>,pdf<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Quick-Nimble-Demo_files/figure-html/unnamed-chunk-14-3.png" width="700"><img src="Quick-Nimble-Demo_files/figure-html/unnamed-chunk-14-4.png" width="700"></p>
+<p>There is better mixing for the slice sampling. Check the summary
+statistics</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu">MCMCvis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html" class="external-link">MCMCsummary</a></span><span class="op">(</span><span class="va">demo.samples</span><span class="op">)</span><span class="op">-&gt;</span><span class="va">RW.summary</span></span>
+<span><span class="va">RW.summary</span></span>
+<span><span class="co">#&gt;               mean         sd       2.5%        50%      97.5% Rhat n.eff</span></span>
+<span><span class="co">#&gt; b0       5.3688498 0.31668017  4.7181530  5.3740203  5.9720205 1.02   167</span></span>
+<span><span class="co">#&gt; b1       1.3864821 0.12001356  1.1585818  1.3836834  1.6237416 1.02   165</span></span>
+<span><span class="co">#&gt; b2      -2.9880842 0.08505345 -3.1549402 -2.9864336 -2.8260734 1.00  1308</span></span>
+<span><span class="co">#&gt; epsilon  0.6318047 0.07263246  0.5129054  0.6259802  0.7989728 1.00   798</span></span>
+<span></span>
+<span></span>
+<span><span class="fu">MCMCvis</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html" class="external-link">MCMCsummary</a></span><span class="op">(</span><span class="va">alt.samples</span><span class="op">)</span><span class="op">-&gt;</span><span class="va">slice.summary</span></span>
+<span><span class="va">slice.summary</span></span>
+<span><span class="co">#&gt;               mean         sd       2.5%       50%      97.5% Rhat n.eff</span></span>
+<span><span class="co">#&gt; b0       5.4075780 0.32059372  4.7680382  5.410258  6.0419999 1.00  3240</span></span>
+<span><span class="co">#&gt; b1       1.3725860 0.12049228  1.1322053  1.370473  1.6079879 1.00  3000</span></span>
+<span><span class="co">#&gt; b2      -2.9830657 0.08727785 -3.1532691 -2.985470 -2.8062216 1.01  2718</span></span>
+<span><span class="co">#&gt; epsilon  0.6368656 0.07732851  0.5076331  0.628372  0.8070473 1.00  2305</span></span></code></pre></div>
+<p>The effective sample size for each parameter is much larger using the
+slice <strong>AF_slice</strong> sampler. There is a time difference,
+with the slice sampler taking 0.55 seconds compared to the default
+samplers of 0.28 seconds. It’s not a large difference in this simple
+model, but that’s 2 times longer. That will scale up when your models
+start taking longer to run.</p>
+<p>There isn’t a clear answer about what samplers are ultimately better.
+It could be the case that running the default samplers for more
+iterations is quicker than using a block or slice sampler. Or, default
+samplers may not converge or mix properly, regardless of how long you
+run them. This will just be something you end up playing around with and
+testing.</p>
+</div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
