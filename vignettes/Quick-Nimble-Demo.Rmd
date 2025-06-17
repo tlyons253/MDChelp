@@ -1,10 +1,7 @@
 ---
 title: "Quick Nimble Demo"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{QuickNimbleDemo}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: html_document
+
 ---
 
 ```{r, include = FALSE}
@@ -14,70 +11,320 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(MDChelp)
+## Introduction 
+
+This is just a short demonstration on executing MCMC estimation of a Bayesian model in Nimble. This is largely also covered in the [Nimble user manual](https://r-nimble.org/html_manual/cha-lightning-intro.html#sec:customizing-mcmc). Specifically, this walks through executing Nimble "the long way" because of several benefits. It lets you check your initial values before compiling to avoid the Nimble equivalent of JAGS’s “Node inconsistent with parents” or other errors and lets you customize the samplers for individual or sets of parameters.
+
+### Nimble vs. JAGS
+
+Part of what makes Nimble more attractive, compared to JAGS, is the speed with which it samples. Some of the speed comes from some computer-background-blackbox stuff that, unless you want to do a deep dive into programming, doesn't matter (compiling,running in C++). That adds an extra step in getting your model to run. This is *part* of what makes Nimble more efficient. The other part comes from the type of samplers (the algorithm used to perform MCMC estimation) you can specify. 
+
+JAGS generally limits your ability to specify samplers for model parameters. It's sometimes better this way, but not always. For example, if you have a linear model with many regression coefficients, you may find that JAGS samples very slowly and the resulting chains mix poorly. That is probably because the default sampler (which you can't change) is a slice sampler. It works on each regression coefficient individually, trying to sample one coefficient at a time. Slice sampling like this can be slow, but often results in chains with more independent samples/ lower autocorrelation.
+
+Nimble provides default samplers, but lets you adjust them as you like. The default sampler in Nimble for most parameters (or at least continuous value ones, like regression coefficients) is a random-walk (Metropolis-Hastings) sampler. It's very quick, but tends to lead to chains with greater autocorrelation than a slice sampler, so you need to run longer chains to achieve similar effective sample sizes. However, Nimble lets you specify block samplers. This means that, rather than sampling regression coefficients individually, you can sample them together. This tends to be slower, but results in less autocorrelation and improved mixing.
+
+## Running Nimble {.tabset .tabset-pills}
+
+We'll walk through an example below using simulated data. One real nice thing about Nimble is that it uses the BUGS programming language to write a model so any older models from JAGS should be able to be used in Nimble (there are even functions to do that).
+
+### Simulating data
+
+```{r}
+#simulate a multiple  regression  model
+
+
+sim.dat<-function(N){
+
+mu<-5
+
+b.1<-1.5
+
+b.2<--3
+
+
+
+x.1<-runif(N,1,4)
+x.2<-runif(N,-2,2)
+err<-rnorm(N,0,0.5)
+
+y<-mu+b.1*x.1+b.2*x.2+err
+
+out.list<-list(y=y,x1=x.1,x2=x.2)
+
+return(out.list)
+}
+
+
+
+
+
 ```
 
-This is just a short demonstration on running a nimble model "the long way." It lets you check your initial values before compiling to avoid the Nimble equivalent of JAGS’s “Node inconsistent with parents” or other errors like that.
 
-This assumes you have already created appropriate data, constant, and initial value objects and functions.
+### Nimble model setup
 
-Add: A more comprehensive version.
+Next, write the model in BUGS that we'll use to estimate parameters
 
+```{r}
+library(nimble)
+
+demo.code<-nimbleCode({
+  #priors
+  b0~dnorm(0,sd=100)
+  b1~dnorm(0,sd=100)
+  b2~dnorm(0,sd=100)
+  epsilon~dunif(0,10) # residual variance
+  
+  #model
+  
+for (i in 1:n){
+  
+  mu[i]<-b0+b1*x1[i]+b2*x2[i]
+  
+  y[i]~dnorm(mu[i],sd=epsilon)
+}
+  })
+
+
+```
+
+You may have already noticed, but another thing you can do in Nimble is specify priors using a standard deviation instead of precision. If you don't include **sd=** in the distribution, Nimble will assume it's precision, so be sure you specify that part of your prior distribution carefully.
+
+Next, prepare the data. For data, Nimble is different from JAGS in that it makes a distinction between constants and data. Data are exclusively quantities that come from stochastic nodes. In our model above, the only data we are supplying is the observed outcomes $y_i$. The covariates we measured $x_{1i},x_{2i}$ get supplied as constants. Any variable we want to use for indexing (**n** above, in the **for** loop) is also a constant.
+
+```{r}
+set.seed(12345)
+demo.dat<-sim.dat(40)
+
+nim.dat<-list(y=demo.dat$y)
+
+nim.const<-list(n=length(demo.dat$x2),
+              x1=demo.dat$x1,
+                x2=demo.dat$x2)
+
+nim.inits<-function(){list(
+  #epsilon=runif(1,-5,0),
+  b0=rnorm(1,0,1), 
+  b1=rnorm(1,0,1),
+  b2=rnorm(1,0,1)
+
+)}
+
+```
+
+Now we also set up the functions to generate initial values for each MCMC chain. It's better (but not always essential) to have initial values provided via a function to ensure that the chains all don't start from the same value. It's not always critical if the model mixes well, but in the event it doesn't starting chains from different parameter values can help ensure MCMC is searching the widest range of potential values possible (sampling from the full parameter space). The above initial value has epsilon commented out to facilitate demonstration of some other aspects of Nimble later on.
+
+Now you bundle the data, code, constants, and initial values together in what we'll call a model object
+
+```{r}
+
+demo.mod<-nimbleModel(code=demo.code,
+                      data=nim.dat,
+                      constants = nim.const,
+                      inits=nim.inits()) # remember the () for the initial values function!
+
+```
+
+You should see a message about the model not being fully initialized. This usually means there is a parameter you can provide an initial value for, but did not. In this case it's epsilon, the residual variance. This is where the first useful tool in Nimble comes in. Before you even start trying to sample, you can get a sense of if the model will run properly. 
+
+The message tells you to use **model$initializeInfo()**. This should tell you that you have nodes without initial values.
+
+```{r}
+demo.mod$initializeInfo()
+
+demo.mod$calculate()
+
+demo.mod$calculate('epsilon')
+```
+It's not always fatal, but it's a good practice to try and provide initial values. the second command **$calculate()** tries to calculate the log probability density of the model from initial values. In hierarchical models, an NA here will mean your model probably won't run, but with simpler models, we can try. You can also check particular nodes to see which are giving you trouble.
+
+We know from **intializeInfo()** that the NA is because we didn't provide a value for $epsilon$ in the initial values. Sometimes though, you will still get an NA even if you have provided a starting value. If that happens, you'll need to check individual nodes to determine which are giving you trouble and make adjustments to the prior, initial value, or both. This may require overwriting (re-run) the **nimbleCode** and/or **nimbleModel** objects repeatedly.
+
+Just for the sake of demonstration, we'll fix our above issue by providing an intial value for epsilon
+
+```{r}
+nim.inits<-function(){list(
+  epsilon=runif(1,0.001,5),
+  b0=rnorm(1,0,1), 
+  b1=rnorm(1,0,1),
+  b2=rnorm(1,0,1)
+
+)}
+
+
+
+demo.mod<-nimbleModel(code=demo.code,
+                      data=nim.dat,
+                      constants = nim.const,
+                      inits=nim.inits())
+
+
+
+demo.mod$initializeInfo()
+
+demo.mod$calculate()
+
+demo.mod$calculate('epsilon')
+
+
+```
+
+
+### Configure the MCMC and setting monitors
+
+Once you sort out the initial values and create the model object, you configure the MCMC sampler.
+
+```{r}
+demo.config<-configureMCMC(demo.mod)
+
+demo.config
+```
+
+Nimble should automatically print what nodes are monitored and what the assigned samplers are when you execute **configureMCMC** but if you call the object, it will appear again.
+
+In this case, the conjugate sampler is assigned to the regression coefficients because the prior and the likelihood (the distribution of the observation) are the same (normal). If this were a glm, they wouldn't be conjugate because the likelihood would possibly be Poisson, logit, or another distribution. They would be a random walk sampler, like epsilon. Conjugate samplers are are a default and might not be the best but do generally perform well. 
+
+Now though, is where you would want to adjust samplers. To do so, we will set up a second configuration to use later on, rather than bouncing back and forth. Here, we set the sampler for the residual variance to be a slice sampler. And set the regression coefficients (b0, b1, b2) to use an automated factor slice sampler, **AF_slice**. This is is a form of block sampler. There is also a **RW_block** sampler, but the former often performs better. Again, blocking parameters just means these parameters are sampled together, rather than individually. In practice, it most likely is most applicable to use for regression coefficients, but it's something you can play around with. It is a slice sampler, so it will only work for parameters that are numerical, not categorical or binary.
+
+
+```{r}
+demo.config.alt<-configureMCMC(demo.mod)
+
+demo.config.alt$replaceSamplers(target='epsilon',
+                                type='slice')
+demo.config.alt$replaceSamplers(target=c('b0','b1','b2'),
+                                type='AF_slice')
+demo.config
+demo.config.alt
+
+# A third sampler configuration could be having each parameter be a slice sampler and sampled independently (targetByNode=TRUE).
+# This should be slower than RW or conjugate samplers, but have better mixing. It will be slower than the AF_slice sampler.
+#### not run
+
+#
+ # demo.config.alt$replaceSamplers(target=c('b0','b1','b2','epsilon'),
+ #                             type='slice',
+ #                              targetByNode=TRUE)
+
+
+
+```
+
+### Build and Compile MCMC
+
+Nimble converts your model, data, and MCMC algorithms to C++ which makes them run faster when it's sampling. There is an added cost though, that you need to build an MCMC sampler object and compile the model first. It takes time but just involves running 3 simple commands.
+1.) **buildMCMC** using the configuration object, leading to an MCMC object
+2.) **compileNimble** using the model object, leading to a compiled model
+3.) **compileNimble** using the compiled model and the MCMC object you just created
+
+
+We will do it twice to ensure we have everything we need to compare the RW sampler to the slice sampler.
 ```{r, eval=FALSE}
 
-#this won't actually run.
-
-# first bundle your stuff together
-my.nimmod <- nimble::nimbleModel(code = model.code,
-                                 constants = nim.const,
-                                 data = nim.dat,
-                                 inits = inits())
+#----------- RW sampler on epsilon---------------------------
 
 
-my.nimmod$calculate() # this should come back as a number (the loglikelihood)
-                      # if nodes have appropriate initial values. You may also
-                      # need to give initial values for latent states.
-
-my.nimmod$info()#this will show you any errors with nodes. It will tell you what parameters need initial values/
-
-test.config<-nimble::configureMCMC(my.nimmod) # configure step
-
-
-#now you can alter the type of sampler on specific parameters if needed.
-# block samplers are slower, but produce a larger ESS for things like the different parameters in a single model (intercept, regression coefficients)
-
-# test.config$replaceSamplers(target = c('phi','p'),
-#                        type= 'RW',targetByNode=TRUE)
-# 
-# test.config$replaceSamplers(target = c('mean.FID','beta.FID'),
-#                        type= 'AF_slice')
+demo.build<-nimble::buildMCMC(demo.config) # build MCMC
 
 
 
-test.config
-#call to see about the samplers and what parameters
-
-test.build<-nimble::buildMCMC(test.config) 
+demo.comp.mod<-nimble::compileNimble(demo.mod)   #first compile step
 
 
-
-comp.mod<-nimble::compileNimble(my.nimmod)   #first compile step
-
-
-comp.mcmc<-nimble::compileNimble(test.build, project=comp.mod) # second compile step
+demo.comp.mcmc<-nimble::compileNimble(demo.build, project=demo.comp.mod) # second compile step
 
 
 
+#----------- Slice sampler on epsilon
 
-# run
 
-samples<-nimble::runMCMC(comp.mcmc,
-                         niter=10000,
+alt.build<-nimble::buildMCMC(demo.config.alt) # build MCMC
+
+
+
+alt.comp.mod<-nimble::compileNimble(demo.mod)   #first compile step
+
+
+alt.comp.mcmc<-nimble::compileNimble(alt.build, project=alt.comp.mod) # second compile step
+
+```
+
+### Run model/get MCMC samples
+
+Now you can execute the the model and obtain your MCMC samples. This is where you set your iterations, burning, chains, and thinning. We can use the [MCMCvis](https://cran.r-project.org/web/packages/MCMCvis/vignettes/MCMCvis.html) to review summary statistics and view traceplots. We also use calls of **Sys.time()** to also track how long each sampler configuration runs. 
+
+
+
+```{r,eval=FALSE}
+
+#-----------RW samplers
+RW.start<-Sys.time()
+demo.samples<-nimble::runMCMC(demo.comp.mcmc,
+                         niter=2000,
+                         nburnin = 1000,
+                         nchains = 3)
+RW.end<-Sys.time()
+
+RW.time<-RW.end-RW.start
+
+
+#------------slice sampler
+
+
+slice.start<-Sys.time()
+
+alt.samples<-nimble::runMCMC(alt.comp.mcmc,
+                         niter=2000,
                          nburnin = 1000,
                          nchains = 3)
 
-MCMCvis::MCMCplot(samples,pdf=FALSE)
+slice.end<-Sys.time()
+
+slice.time<-slice.end-slice.start
+
+
+summary(alt.samples)
+
 
 ```
 
+
+```{r,echo=FALSE,eval=FALSE}
+
+save(RW.time,demo.samples,
+     slice.time,alt.samples,file='./vignettes/nimdemo.rda')
+
+```
+
+
+```{r,echo=FALSE}
+load(file='./nimdemo.rda')
+
+
+RW.time<-as.numeric(RW.time)
+slice.time<-as.numeric(slice.time)
+```
+
+Look at the traceplots of each
+
+```{r}
+MCMCvis::MCMCtrace(demo.samples,pdf=FALSE)
+
+MCMCvis::MCMCtrace(alt.samples,pdf=FALSE)
+```
+
+
+There is better mixing for the slice sampling. Check the summary statistics
+```{r}
+
+MCMCvis::MCMCsummary(demo.samples)->RW.summary
+RW.summary
+
+
+MCMCvis::MCMCsummary(alt.samples)->slice.summary
+slice.summary
+```
+
+The effective sample size for each parameter is much larger using the slice **AF_slice** sampler. There is a time difference, with the slice sampler taking `r paste0(round(slice.time,2),' seconds')` compared to the default samplers of `r paste0(round(RW.time,2),' seconds')`. It's not a large difference in this simple model, but that's `r round(slice.time/RW.time,2)` times longer. That will scale up when your models start taking longer to run. 
+
+There isn't a clear answer about what samplers are ultimately better. It could be the case that running the default samplers for more iterations is quicker than using a block or slice sampler. Or, default samplers may not converge or mix properly, regardless of how long you run them. This will just be something you end up playing around with and testing.
