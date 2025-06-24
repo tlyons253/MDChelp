@@ -75,7 +75,8 @@
     
     
 <div class="section level2 tabset">
-<h2 class="tabset" id="abundance-estimation-methods">Abundance estimation Methods<a class="anchor" aria-label="anchor" href="#abundance-estimation-methods"></a>
+<h2 class="tabset" id="closed-population-abundance-estimation-methods--marked-individuals">Closed population abundance estimation methods-
+marked individuals<a class="anchor" aria-label="anchor" href="#closed-population-abundance-estimation-methods--marked-individuals"></a>
 </h2>
 <p>Below are several common abundance estimation methods suitable for
 <strong>closed populations</strong>. Demographic closure means that,
@@ -90,18 +91,18 @@ them.</p>
 assumptions, constraints, and data collection methods, to solving this
 equation.</p>
 <p><span class="math display">\[ N=\frac{n}{p} \]</span> Where <span class="math inline">\(N\)</span> is the number of individuals, <span class="math inline">\(n\)</span> is the number of individuals we
-observe, and <span class="math inline">\(p\)</span> is the capture or
-recapture probability. The only thing you need to retain from this
-equation is all these methods are trying use different approaches to
-estimate <span class="math inline">\(p\)</span>. But if you are
-interested in understanding more of the math, there is some discussion
-of that as well.</p>
+observe, and <span class="math inline">\(p\)</span> is the “encounter”
+(capture or recapture) probability. The only thing you need to retain
+from this equation is all these methods are trying use different
+approaches to estimate <span class="math inline">\(p\)</span>. But if
+you are interested in understanding more of the math, there is some
+discussion of that as well.</p>
 
 
 
-<ul class="nav nav-tabs" id="abundance-estimation-methods" role="tablist">
+<ul class="nav nav-tabs" id="closed-population-abundance-estimation-methods--marked-individuals" role="tablist">
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#lincoln-petersen-method" id="lincoln-petersen-method-tab" type="button" role="tab" aria-controls="lincoln-petersen-method" aria-selected="true" class="active nav-link">Lincoln-Petersen Method</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#huggins-closed-capture-and-variations" id="huggins-closed-capture-and-variations-tab" type="button" role="tab" aria-controls="huggins-closed-capture-and-variations" aria-selected="false" class="nav-link">Huggins closed-capture and variations</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#closed-capture-likelihood-models-and-variations" id="closed-capture-likelihood-models-and-variations-tab" type="button" role="tab" aria-controls="closed-capture-likelihood-models-and-variations" aria-selected="false" class="nav-link">Closed-capture likelihood models and variations</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#removal-models" id="removal-models-tab" type="button" role="tab" aria-controls="removal-models" aria-selected="false" class="nav-link">Removal Models</button></li>
 </ul>
 <div class="tab-content">
@@ -128,7 +129,7 @@ individuals from <span class="math inline">\(n_1\)</span>, observed in
 <p>This is a very simple equation, but it’s not the one actually used in
 practice. If you do end up using a LP, you will most likely use the
 Chapman version/ estimator. It’s what’s implemented in
-MDChelp::chapman().</p>
+<code><a href="../reference/chapman.html">MDChelp::chapman()</a></code>.</p>
 <p>Multiple variations and extensions of the LP method exist. If you
 have multiple encounters where you mark, release, and recapture
 individuals, an alternative known as the Schnabel method/estimator is
@@ -193,20 +194,35 @@ difficult to implement is not an excuse to just use LP if you cannot
 adequately meet the assumptions!!!</strong> It is worth remembering
 though, that it can be advantageous to alter your study design to meet
 the assumptions of a simpler approach than to address logistical or
-animal welfare constraints of less restrictive methods.</p>
+animal welfare constraints of methods with more flexible or relaxed
+assumptions.</p>
 </div>
 </div>
-<div class="tab-pane" id="huggins-closed-capture-and-variations" role="tabpanel" aria-labelledby="huggins-closed-capture-and-variations-tab">
+<div class="tab-pane" id="closed-capture-likelihood-models-and-variations" role="tabpanel" aria-labelledby="closed-capture-likelihood-models-and-variations-tab">
 
+<p>There are times when the LP approach won’t cut it. Usually it’s
+because the assumption of a homogeneous encounter probability for marked
+and unmarked animals isn’t met. Alternatives to LP (or Scnabel) still
+rely on demographic closure assumptions, but can account for
+heterogeneous encounter probabilities among individuals and across
+encounter events.</p>
+<p>Doing so requires some changes. Mathematically, we now start using
+likelihood based methods. This just means we start using probability
+theory and distributions to estimate abundance rather than algebra like
+above. The more practical, real-world implication is, we now need to
+have individuals marked with unique markings and we need to follow
+them.</p>
+<p>There are a lot of variations to using a likelihood based approach
+(see Chapter 14 in the Program MARK “Gentle Introduction”) but the first
+difference to be aware of is if you are using the “full-likelihood” or
+or a “conditional” likelihood. As mentioned
+in<code>article("Capture-Recapture-Overview",package="MDChelp"</code>)</p>
 <div class="section level4">
-<h4 id="approach">Approach<a class="anchor" aria-label="anchor" href="#approach"></a>
+<h4 id="unconditional-or-full-likelihood">Unconditional or Full-likelihood<a class="anchor" aria-label="anchor" href="#unconditional-or-full-likelihood"></a>
 </h4>
-<ul>
-<li>Unique Markings</li>
-</ul>
 </div>
 <div class="section level4">
-<h4 id="key-assumptions">Key Assumptions<a class="anchor" aria-label="anchor" href="#key-assumptions"></a>
+<h4 id="conditional-likelihood-or-huggins-models">Conditional likelihood or Huggins models<a class="anchor" aria-label="anchor" href="#conditional-likelihood-or-huggins-models"></a>
 </h4>
 </div>
 </div>
