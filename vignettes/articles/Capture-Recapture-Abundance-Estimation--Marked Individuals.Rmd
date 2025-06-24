@@ -1,0 +1,69 @@
+---
+title: "Capture-Recapture: Abundance Estimation Closed Populations- Marked Individuals"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Abundance estimation Methods {.tabset}
+
+Below are several common abundance estimation methods suitable for **closed populations**. Demographic closure means that, while animals are being observed, there are no births, deaths, immigration, or emigration within the study area. The methods below are identified as appropriate for "marked" individuals. That is, these assume you are physically capturing and marking individuals. Another document covers abundance estimation in closed populations for individuals you can uniquely identify, but are physically marking them.
+
+All these methods are various formulations, with different assumptions, constraints, and data collection methods, to solving this equation.
+
+$$ N=\frac{n}{p} $$
+Where $N$ is the number of individuals, $n$ is the number of individuals we observe, and $p$ is the capture or recapture probability. The only thing you need to retain from this equation is all these methods are trying use different approaches to estimate $p$. But if you are interested in understanding more of the math, there is some discussion of that as well.
+                                                                    
+### Lincoln-Petersen Method
+<br>
+<br>
+The original Lincoln-Petersen (LP) estimator (Petersen 1896^[], Lincoln 1930^[]) is a simple 2-sample technique to estimate abundance. By 2-sample technique, I mean you only need 2 capture occasions: the first capture occasion when you mark and release animals, and an additional occasion when you recapture them. That's it. The LP estimator calculates abundance as:
+$$N=\frac{n_1\times \ n_2}{k}$$
+
+* $n_1$ the number of animals encountered on the first occasion. All encountered animals are marked and released. 
+
+* $n_2$ the <u>*total*</u> number of animals encountered on the second occasion.
+
+* $k$ is the number of marked individuals from $n_1$, observed in $n_2$.
+
+This is a very simple equation, but it's not the one actually used in practice. If you do end up using a LP, you will most likely use the Chapman version/ estimator. It's what's implemented in MDChelp::chapman().
+
+Multiple variations and extensions of the LP method exist. If you have multiple encounters where you mark, release, and recapture individuals, an alternative known as the Schnabel method/estimator is appropriate (after Zoe Emily Schnabel). There are also methods that combine the Schnabel method with simultaneous removals, but are not discussed here. The extensions beyond the simple LP framework have largely been supplanted by methods that use uniquely marked animals, primarily because of the development of better marking techniques (e.g. RFID tags). Still, it's important to highlight the conceptual contributions of these individuals. It's also a helpful reminder of some less common methods that are sill viable, when you can't meet the data collection methods of more contemporary alternatives.
+
+
+#### Important Assumptions/ Limitations/ Tidbits
+
+* The population is closed between the first and second capture events!!!!
+
+* Tags or markings do not need to be unique among individuals, but there are no tag losses between the following the release of marked individuals.
+
+* All individuals have the same <u>**recapture**</u> probability.
+
+  * The capture probability at the first event can be different than the  probability at the second event, but the capture probability between unmarked and marked individuals is the same.
+  
+    * This means that the methods used to capture individuals during the first event for marking can be different than those used to capture individuals during individuals. 
+    
+      * The most extreme example of this is when the LP method is used to estimate abundance when the initial capture period is (obviously) a live capture, marking and release, but the recapture is a dead recovery (e.g. waterfowl band recovery, tagged fish).
+
+* Performs poorly when fewer than 50 individuals ( ideally, mark > 100) or $p$ is small. This is important if there is group-level heterogeneity in capture probability. If capture probability differs between male/ female or adult/juvenile, you "bin" individuals in each group separately which can lead to small $n_1$ for any group
+
+
+#### Why still use it ? 
+
+While "better" methods do exist that deal with some very common violations of the assumptions that LP relies on (capture heterogeneity), they typically require you find more populations to sample, have more capture events, etc. **The fact that the alternatives might be difficult to implement is not an excuse to just use LP if you cannot adequately meet the assumptions!!!** It is worth remembering though, that it can be advantageous to alter your study design to meet the assumptions of a simpler approach than to address logistical or animal welfare constraints of less restrictive methods.
+
+### Huggins closed-capture and variations
+
+#### Approach
+
+* Unique Markings
+
+#### Key Assumptions
+
+
+### Removal Models
+
