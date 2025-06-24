@@ -9,14 +9,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Abundance estimation Methods {.tabset}
+## Closed population abundance estimation methods- marked individuals {.tabset}
 
 Below are several common abundance estimation methods suitable for **closed populations**. Demographic closure means that, while animals are being observed, there are no births, deaths, immigration, or emigration within the study area. The methods below are identified as appropriate for "marked" individuals. That is, these assume you are physically capturing and marking individuals. Another document covers abundance estimation in closed populations for individuals you can uniquely identify, but are physically marking them.
 
 All these methods are various formulations, with different assumptions, constraints, and data collection methods, to solving this equation.
 
 $$ N=\frac{n}{p} $$
-Where $N$ is the number of individuals, $n$ is the number of individuals we observe, and $p$ is the capture or recapture probability. The only thing you need to retain from this equation is all these methods are trying use different approaches to estimate $p$. But if you are interested in understanding more of the math, there is some discussion of that as well.
+Where $N$ is the number of individuals, $n$ is the number of individuals we observe, and $p$ is the "encounter" (capture or recapture) probability. The only thing you need to retain from this equation is all these methods are trying use different approaches to estimate $p$. But if you are interested in understanding more of the math, there is some discussion of that as well.
                                                                     
 ### Lincoln-Petersen Method
 <br>
@@ -30,7 +30,7 @@ $$N=\frac{n_1\times \ n_2}{k}$$
 
 * $k$ is the number of marked individuals from $n_1$, observed in $n_2$.
 
-This is a very simple equation, but it's not the one actually used in practice. If you do end up using a LP, you will most likely use the Chapman version/ estimator. It's what's implemented in MDChelp::chapman().
+This is a very simple equation, but it's not the one actually used in practice. If you do end up using a LP, you will most likely use the Chapman version/ estimator. It's what's implemented in `MDChelp::chapman()`.
 
 Multiple variations and extensions of the LP method exist. If you have multiple encounters where you mark, release, and recapture individuals, an alternative known as the Schnabel method/estimator is appropriate (after Zoe Emily Schnabel). There are also methods that combine the Schnabel method with simultaneous removals, but are not discussed here. The extensions beyond the simple LP framework have largely been supplanted by methods that use uniquely marked animals, primarily because of the development of better marking techniques (e.g. RFID tags). Still, it's important to highlight the conceptual contributions of these individuals. It's also a helpful reminder of some less common methods that are sill viable, when you can't meet the data collection methods of more contemporary alternatives.
 
@@ -54,15 +54,19 @@ Multiple variations and extensions of the LP method exist. If you have multiple 
 
 #### Why still use it ? 
 
-While "better" methods do exist that deal with some very common violations of the assumptions that LP relies on (capture heterogeneity), they typically require you find more populations to sample, have more capture events, etc. **The fact that the alternatives might be difficult to implement is not an excuse to just use LP if you cannot adequately meet the assumptions!!!** It is worth remembering though, that it can be advantageous to alter your study design to meet the assumptions of a simpler approach than to address logistical or animal welfare constraints of less restrictive methods.
+While "better" methods do exist that deal with some very common violations of the assumptions that LP relies on (capture heterogeneity), they typically require you find more populations to sample, have more capture events, etc. **The fact that the alternatives might be difficult to implement is not an excuse to just use LP if you cannot adequately meet the assumptions!!!** It is worth remembering though, that it can be advantageous to alter your study design to meet the assumptions of a simpler approach than to address logistical or animal welfare constraints of methods with more flexible or relaxed assumptions.
 
-### Huggins closed-capture and variations
+### Closed-capture likelihood models and variations
 
-#### Approach
+There are times when the LP approach won't cut it. Usually it's because the assumption of a homogeneous encounter probability for marked and unmarked animals isn't met. Alternatives to LP (or Scnabel) still rely on demographic closure assumptions, but can account for heterogeneous encounter probabilities among individuals and across encounter events.
 
-* Unique Markings
+Doing so requires some changes. Mathematically, we now start using likelihood based methods. This just means we start using probability theory and distributions to estimate abundance rather than algebra like above. The more practical, real-world implication is, we now need to have individuals marked with unique markings and we need to follow them.
 
-#### Key Assumptions
+There are a lot of variations to using a likelihood based approach (see Chapter 14 in the Program MARK "Gentle Introduction") but the first difference to be aware of is if you are using the "full-likelihood" or or a "conditional" likelihood. As mentioned in`article("Capture-Recapture-Overview",package="MDChelp"`)
+
+#### Unconditional or Full-likelihood
+
+#### Conditional likelihood or Huggins models
 
 
 ### Removal Models
