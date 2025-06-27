@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Capture-Recapture: Abundance Estimation Closed Populations- Marked Individuals • MDChelp</title>
+<title>Capture-Recapture: Closed Capture Abundance - Marked Individuals • MDChelp</title>
 <!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
   window.MathJax = {
     chtml: {
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Capture-Recapture: Abundance Estimation Closed Populations- Marked Individuals">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Capture-Recapture: Closed Capture Abundance - Marked Individuals">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -40,7 +40,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/Bootstrapping.html">Non-parametric Bootstrapping</a></li>
-    <li><a class="dropdown-item" href="../articles/Capture-Recapture-Abundance-Estimation--Marked%20Individuals.html">Capture-Recapture: Abundance Estimation Closed Populations- Marked Individuals</a></li>
+    <li><a class="dropdown-item" href="../articles/Capture-Recapture-Abundance-Estimation--Marked%20Individuals.html">Capture-Recapture: Closed Capture Abundance - Marked Individuals</a></li>
     <li><a class="dropdown-item" href="../articles/Capture-Recapture-Overview.html">Capture-Recapture: Overview</a></li>
     <li><a class="dropdown-item" href="../articles/Quick-Nimble-Demo.html">Quick Nimble Demo</a></li>
     <li><a class="dropdown-item" href="../articles/TTE-Advanced.html">Time To Event and Known-fate (Survival) Analyses</a></li>
@@ -65,7 +65,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Capture-Recapture: Abundance Estimation Closed Populations- Marked Individuals</h1>
+      <h1>Capture-Recapture: Closed Capture Abundance - Marked Individuals</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/tlyons253/MDChelp/blob/master/vignettes/articles/Capture-Recapture-Abundance-Estimation--Marked%20Individuals.Rmd" class="external-link"><code>vignettes/articles/Capture-Recapture-Abundance-Estimation--Marked Individuals.Rmd</code></a></small>
@@ -78,43 +78,69 @@
 <h2 class="tabset" id="closed-population-abundance-estimation-methods--marked-individuals">Closed population abundance estimation methods-
 marked individuals<a class="anchor" aria-label="anchor" href="#closed-population-abundance-estimation-methods--marked-individuals"></a>
 </h2>
-<p>Below are several common abundance estimation methods suitable for
-<strong>closed populations</strong>. Demographic closure means that,
+<p>As mentioned in the overview, capture-recapture models for closed
+populations are strictly used for estimating the abundance of critters.
+Though many abundance estimation methods have, at their core, some kind
+of closed population capture-recapture framework, these methods below
+are generally applied to strictly estimate abundance <span class="math inline">\(\hat{N}\)</span>. There have been limited
+applications of these methods beyond obtaining a point estimate for a
+location, at a single point in time, and none that robustly address
+abundance-habitat relationships, though expanding the model development
+to address these questions using Bayesian methods (or spatially explicit
+capture-recapture) are possibilities.</p>
+<p>Below are several common capture-recapture abundance estimation
+methods suitable for <strong>closed populations</strong>, often
+shortened as “closed capture methods”. Demographic closure means that,
 while animals are being observed, there are no births, deaths,
 immigration, or emigration within the study area. The methods below are
-identified as appropriate for “marked” individuals. That is, these
-assume you are physically capturing and marking individuals. Another
-document covers abundance estimation in closed populations for
-individuals you can uniquely identify, but are physically marking
-them.</p>
-<p>All these methods are various formulations, with different
-assumptions, constraints, and data collection methods, to solving this
-equation.</p>
-<p><span class="math display">\[ N=\frac{n}{p} \]</span> Where <span class="math inline">\(N\)</span> is the number of individuals, <span class="math inline">\(n\)</span> is the number of individuals we
-observe, and <span class="math inline">\(p\)</span> is the “encounter”
-(capture or recapture) probability. The only thing you need to retain
-from this equation is all these methods are trying use different
-approaches to estimate <span class="math inline">\(p\)</span>. But if
-you are interested in understanding more of the math, there is some
-discussion of that as well.</p>
+appropriate for “marked” individuals. That is, these assume you are
+physically capturing and marking individuals. Another document covers
+abundance estimation in closed populations for individuals you can
+uniquely identify, but are not physically marking them.</p>
+<p>Fundamentally, we’re trying to solve this equation: <span class="math display">\[
+N=\frac{n}{p}
+\]</span> Where <span class="math inline">\(N\)</span> is the unknown
+abundance,<span class="math inline">\(n\)</span> is the number of unique
+individuals we know about, and <span class="math inline">\(p\)</span> is
+the capture probability.</p>
+<p>Probably the most important thing to recognize about these models is,
+aside from needing to meet the closure assumption, all methods are
+<strong>very, very, sensitive to violations of assumptions about capture
+probability and closure</strong>. If capture/recapture probability is
+not addressed correctly, your estimates of abundance can be very, very
+wrong.</p>
+<p>Typically, the use of the methods below will require you have some
+form of trap grid or transects (think small mammal traps) or can at
+least define some spatial extent you are trapping (e.g., sampling
+defined stream reaches, capturing waterfowl within a spatially defined
+breeding population). Again, having demographic closure is of key
+importance here; if animals are moving in and out of the study area or
+the size of the study area keeps changing (due to sampling effort) then
+your estimate of <span class="math inline">\(N\)</span> becomes somewhat
+useless.</p>
 
 
 
 <ul class="nav nav-tabs" id="closed-population-abundance-estimation-methods--marked-individuals" role="tablist">
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#lincoln-petersen-method" id="lincoln-petersen-method-tab" type="button" role="tab" aria-controls="lincoln-petersen-method" aria-selected="true" class="active nav-link">Lincoln-Petersen Method</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#closed-capture-likelihood-models-and-variations" id="closed-capture-likelihood-models-and-variations-tab" type="button" role="tab" aria-controls="closed-capture-likelihood-models-and-variations" aria-selected="false" class="nav-link">Closed-capture likelihood models and variations</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#removal-models" id="removal-models-tab" type="button" role="tab" aria-controls="removal-models" aria-selected="false" class="nav-link">Removal Models</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#summary" id="summary-tab" type="button" role="tab" aria-controls="summary" aria-selected="false" class="nav-link">Summary</button></li>
 </ul>
 <div class="tab-content">
 <div class="active  tab-pane" id="lincoln-petersen-method" role="tabpanel" aria-labelledby="lincoln-petersen-method-tab">
 
-<p><br><br> The original Lincoln-Petersen (LP) estimator (Petersen
-1896<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;&lt;/p&gt;"><sup>1</sup></a>,
-Lincoln 1930<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;&lt;/p&gt;"><sup>2</sup></a>) is a simple 2-sample technique to estimate
-abundance. By 2-sample technique, I mean you only need 2 capture
-occasions: the first capture occasion when you mark and release animals,
-and an additional occasion when you recapture them. That’s it. The LP
-estimator calculates abundance as: <span class="math display">\[N=\frac{n_1\times \ n_2}{k}\]</span></p>
+<p><br> The original Lincoln-Petersen (LP) estimator (Petersen 1896<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Petersen, C. G. J. 1896. The yearly immigration of young
+plaice into the Limfjord from the German Sea. In “Report of the Danish
+Biological Station”, vol. 6, pp. 1–48.&lt;/p&gt;"><sup>1</sup></a>, Lincoln
+1930<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Lincoln, F. C. 1930. Calculating waterfowl abundance on
+the basis of banding returns. Circular 118, pp. 1–4. United States
+Department of Agriculture,&lt;/p&gt;"><sup>2</sup></a>) is
+a simple 2-sample technique to estimate abundance. By 2-sample
+technique, I mean you only need 2 capture occasions: the first capture
+occasion when you mark and release animals, and an additional occasion
+when you recapture them. That’s it. The LP estimator calculates
+abundance as: <span class="math display">\[N=\frac{n_1\times \
+n_2}{k}\]</span></p>
 <ul>
 <li><p><span class="math inline">\(n_1\)</span> the number of animals
 encountered on the first occasion. All encountered animals are marked
@@ -123,8 +149,8 @@ and released.</p></li>
 <u><em>total</em></u> number of animals encountered on the second
 occasion.</p></li>
 <li><p><span class="math inline">\(k\)</span> is the number of marked
-individuals from <span class="math inline">\(n_1\)</span>, observed in
-<span class="math inline">\(n_2\)</span>.</p></li>
+individuals from <span class="math inline">\(n_1\)</span>, captured
+again and included in <span class="math inline">\(n_2\)</span>.</p></li>
 </ul>
 <p>This is a very simple equation, but it’s not the one actually used in
 practice. If you do end up using a LP, you will most likely use the
@@ -135,13 +161,13 @@ have multiple encounters where you mark, release, and recapture
 individuals, an alternative known as the Schnabel method/estimator is
 appropriate (after Zoe Emily Schnabel). There are also methods that
 combine the Schnabel method with simultaneous removals, but are not
-discussed here. The extensions beyond the simple LP framework have
-largely been supplanted by methods that use uniquely marked animals,
-primarily because of the development of better marking techniques
-(e.g. RFID tags). Still, it’s important to highlight the conceptual
-contributions of these individuals. It’s also a helpful reminder of some
-less common methods that are sill viable, when you can’t meet the data
-collection methods of more contemporary alternatives.</p>
+discussed here and aren’t generally used anymore. The extensions beyond
+the simple LP framework have largely been supplanted by methods that use
+uniquely marked animals, primarily because of the development of better
+marking techniques (e.g. RFID tags). Still, it’s important to highlight
+the conceptual contributions of these individuals. It’s also a helpful
+reminder of some less common methods that are sill viable when you can’t
+meet the data collection needs of more contemporary alternatives.</p>
 <div class="section level4">
 <h4 id="important-assumptions-limitations-tidbits">Important Assumptions/ Limitations/ Tidbits<a class="anchor" aria-label="anchor" href="#important-assumptions-limitations-tidbits"></a>
 </h4>
@@ -163,7 +189,7 @@ unmarked and marked individuals is the same.</p>
 <li>
 <p>This means that the methods used to capture individuals during
 the first event for marking can be different than those used to capture
-individuals during individuals.</p>
+individuals during the second event.</p>
 <ul>
 <li>The most extreme example of this is when the LP method is used to
 estimate abundance when the initial capture period is (obviously) a live
@@ -175,12 +201,11 @@ capture, marking and release, but the recapture is a dead recovery
 </li>
 </ul>
 </li>
-<li><p>Performs poorly when fewer than 50 individuals ( ideally, mark
-&gt; 100) or <span class="math inline">\(p\)</span> is small. This is
-important if there is group-level heterogeneity in capture probability.
-If capture probability differs between male/ female or adult/juvenile,
-you “bin” individuals in each group separately which can lead to small
-<span class="math inline">\(n_1\)</span> for any group</p></li>
+<li><p>LP methods perform poorly when fewer than 50 individuals are
+marked ( ideally, mark &gt; 100) or <span class="math inline">\(p\)</span> is small. This is important if there is
+group-level heterogeneity in capture probability. If capture probability
+differs between male/ female or adult/juvenile, you “bin” individuals in
+each group separately which can lead to small <span class="math inline">\(n_1\)</span> for any group</p></li>
 </ul>
 </div>
 <div class="section level4">
@@ -194,40 +219,139 @@ difficult to implement is not an excuse to just use LP if you cannot
 adequately meet the assumptions!!!</strong> It is worth remembering
 though, that it can be advantageous to alter your study design to meet
 the assumptions of a simpler approach than to address logistical or
-animal welfare constraints of methods with more flexible or relaxed
-assumptions.</p>
+animal welfare constraints of methods that promise more flexible or
+relaxed assumptions.</p>
 </div>
 </div>
 <div class="tab-pane" id="closed-capture-likelihood-models-and-variations" role="tabpanel" aria-labelledby="closed-capture-likelihood-models-and-variations-tab">
 
-<p>There are times when the LP approach won’t cut it. Usually it’s
-because the assumption of a homogeneous encounter probability for marked
-and unmarked animals isn’t met. Alternatives to LP (or Scnabel) still
-rely on demographic closure assumptions, but can account for
-heterogeneous encounter probabilities among individuals and across
-encounter events.</p>
+<p>There are times when the LP or other simpler approaches won’t cut it.
+Usually it’s because the assumption of a homogeneous encounter
+probability for marked and unmarked animals isn’t met. If you cannot
+meet that assumption, then it’s time to switch to a likelihood approach
+that can!</p>
 <p>Doing so requires some changes. Mathematically, we now start using
 likelihood based methods. This just means we start using probability
 theory and distributions to estimate abundance rather than algebra like
 above. The more practical, real-world implication is, we now need to
-have individuals marked with unique markings and we need to follow
-them.</p>
-<p>There are a lot of variations to using a likelihood based approach
-(see Chapter 14 in the Program MARK “Gentle Introduction”) but the first
-difference to be aware of is if you are using the “full-likelihood” or
-or a “conditional” likelihood. As mentioned
-in<code>article("Capture-Recapture-Overview",package="MDChelp"</code>)</p>
+have individuals marked with unique markings and we need to follow them.
+You are likely going to also have &gt; 2 encounter events, or
+opportunities to capture and recapture marked animals. Information about
+whether an individual(s) was captured at each encounter event is called
+an encounter history. We now have several parameters that get used to
+describe these encounter or capture histories.</p>
+<ul>
+<li>
+<span class="math inline">\(\hat{N}\)</span> the estimated
+abundance</li>
+<li>
+<span class="math inline">\(p\)</span> the capture and/or recapture
+probability.</li>
+<li>
+<span class="math inline">\(c\)</span> the recapture probability, if
+different from <span class="math inline">\(p\)</span>
+</li>
+</ul>
+<p>These are not the only parameters you may come across if you end up
+getting further into closed-capture models, but they’re the foundation
+on what all other variations are built and what can be used to help
+discriminate among the different variations.</p>
 <div class="section level4">
-<h4 id="unconditional-or-full-likelihood">Unconditional or Full-likelihood<a class="anchor" aria-label="anchor" href="#unconditional-or-full-likelihood"></a>
+<h4 id="variations-on-closed-capture-models">Variations on closed-capture models<a class="anchor" aria-label="anchor" href="#variations-on-closed-capture-models"></a>
 </h4>
+<p>A big focus of the historical development around closed-capture
+models is to account for capture heterogeneity. This has led to a host
+of variations in the literature. Below are some more common variations
+in closed capture models that might help clarify things if you get more
+into these methods, but also represent some important practical issues
+you should consider with your own data. Unless noted, these variations
+exist for both full-likelihood and Huggins methods.</p>
+<ul>
+<li><p><strong>Behavioral response to trapping:</strong> Use <span class="math inline">\(p\)</span> and <span class="math inline">\(c\)</span> to account for trap happiness or trap
+shyness</p></li>
+<li><p><strong>Temporal variation in capture probability:</strong> <span class="math inline">\(p\)</span> and/or <span class="math inline">\(c\)</span> varies among encounter events</p></li>
+<li><p><strong>Heterogeneity via “mixtures”:</strong> There are groups
+of individuals with different <span class="math inline">\(p\)</span> or
+<span class="math inline">\(c\)</span>, but you can’t identify them in
+the field. We can use a “mixture model” that introduces another
+parameter <span class="math inline">\(\pi\)</span> that represents the
+probability an individual belongs to one unobservable group or the
+other. Groups have different <span class="math inline">\(p/c\)</span>
+parameters, but individuals within groups are assumed
+homogeneous.</p></li>
+<li><p><strong>Heterogeneity as individual random effects:</strong> Is
+only feasible with the Huggins model. Rather than grouping individuals,
+or assuming individuals within groups are homogeneous, we can treat all
+critters as being different from one another via an individual random
+effect. Like random effects in linear models, there is some “average”
+<span class="math inline">\(p/c\)</span> but individuals deviate from
+this average. Those deviations follow a normal distribution.</p></li>
+</ul>
+<p>These variations are an important extension. As mentioned before,
+estimates of abundance are sensitive to assumptions about <span class="math inline">\(p/c\)</span>, whether they are the same among
+individuals, vary among individuals, vary across capture events, etc.
+Appropriately accounting for these possibilities is critical to
+obtaining accurate and unbiased estimates of abundance.</p>
 </div>
 <div class="section level4">
-<h4 id="conditional-likelihood-or-huggins-models">Conditional likelihood or Huggins models<a class="anchor" aria-label="anchor" href="#conditional-likelihood-or-huggins-models"></a>
+<h4 id="criticisims-complications">Criticisims/ Complications<a class="anchor" aria-label="anchor" href="#criticisims-complications"></a>
 </h4>
+<p>There are a few common criticisms or complications that arise with
+the use of likelihood-based closed-capture methods</p>
+<ul>
+<li><p><span class="math inline">\(N\)</span> is only an estimate of the
+population size vulnerable to capture. If you sample more area
+(intentionally or unintentionally), your estimate of <span class="math inline">\(N\)</span> increases. Other methods focus on
+estimating density try to address this problem (e.g. spatially-explicit
+capture-recapture; SECR).</p></li>
+<li><p>Most applications do not try to address or estimate what causes
+variation in <span class="math inline">\(N\)</span>-it’s possible, but
+likely logistically challenging (trapping effort in multiple areas) and
+still suffers from the above issue.</p></li>
+<li><p>Because of this, it’s typically suggested to use a SECR approach
+if possible. It results in an exactly defined spatial extent, making
+<span class="math inline">\(N\)</span> more reliable and can more easily
+incorporate/ test for environmental variables affecting
+abundance.</p></li>
+<li><p>Other methods have you sample smaller, but still defined areas to
+estimate density in a model-based approach. It’s much simpler to
+incorporate information about</p></li>
+<li><p>If you can exactly define the extent of the space being sampled,
+<span class="math inline">\(N\)</span> represents a
+<strong>realized</strong> estimate of abundance, that is the estimate of
+the number of critters actually running around at that time. Other
+methods may provide model-based estimates of <span class="math inline">\(N\)</span> or both. Model-based estimates provide
+the expected abundance, given information about things like habitat or
+other environmental covariates. These are not the same quantity and
+which one you should use will depend on your question.</p></li>
+</ul>
 </div>
 </div>
-<div class="tab-pane" id="removal-models" role="tabpanel" aria-labelledby="removal-models-tab">
+<div class="tab-pane" id="summary" role="tabpanel" aria-labelledby="summary-tab">
 
+<p>The above covers more the the technical details of closed-capture
+methods. It’s important to understand them and they cannot be ignored.
+But if you are in the processing of identifying appropriate methods for
+your particular question, below are some general, practical points about
+closed-capture methods that may be helpful.</p>
+<ul>
+<li><p>The closed capture methods described above are best suited when
+getting an estimate of <span class="math inline">\(N\)</span> is of
+interest, not understanding various factors responsible for variation in
+<span class="math inline">\(N\)</span>.</p></li>
+<li><p>Because of many of the strict assumptions, it’s probably best not
+to think of <span class="math inline">\(N\)</span> as a “true” estimate
+of abundance, unless you can guarantee all individuals are vulnerable to
+capture. If you can at least ensure a representative sample, it provides
+a very good index.</p></li>
+<li><p>In practice, the best uses of these methods independently
+(e.g. not part of a robust design or other integrated method) will
+probably be for simple monitoring and status and trend
+assessment.</p></li>
+<li><p>Some specifics like distinction between <span class="math inline">\(p/c\)</span> are specific to physically capturing
+animals, but conceptually, but closed-capture methods are a very general
+concept that most other capture-recapture methods are based on.</p></li>
+</ul>
 </div>
 </div>
 </div>
