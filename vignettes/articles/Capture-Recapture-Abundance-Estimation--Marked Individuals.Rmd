@@ -106,7 +106,7 @@ There are a few common criticisms or complications that arise with the use of li
 
 ### Summary
 
-The above covers more the the technical details of closed-capture methods. It's important to understand them and they cannot be ignored. But if you are in the processing of identifying appropriate methods for your particular question, below are some general, practical points about closed-capture methods that may be helpful.
+The above covers more of the technical details of closed-capture methods. It's important to understand them and they cannot be ignored. But if you are in the processing of identifying appropriate methods for your particular question, below are some general, practical points about closed-capture methods that may be helpful.
 
 * The closed capture methods described above are best suited when getting an estimate of $N$ is of interest, not understanding various factors responsible for variation in $N$.
 
