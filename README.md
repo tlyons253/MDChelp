@@ -1,10 +1,11 @@
-Last updated 3/19/2025
+Last updated 6/27/2025
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # MDChelp
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 The goal of MDChelp is to provide functions and demonstrations of common
@@ -22,23 +23,7 @@ options(download.file.method = "wininet")
 pak::pak("tlyons253/MDChelp")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(MDChelp)
-## simulate data and estimate abundance using Chapman's version of a Lincoln-Peterson estimator
-
-LP.sim(500,75,0.3,sample.fixed=TRUE)->sim.dat
-
-
-chapman(sim.dat$r,
-        sim.dat$n,
-        sim.dat$m)
-#> $N.hat
-#> [1] 373.7586
-#> 
-#> $SE
-#> [1] 48.04161
-```
+See “Articles” in the menu for a list of potentially helpful articles on
+methods and techniques. If there is a topic you are interested in, or an
+analysis you do frequently, let me know and I can develop articles or
+functions to include in the `MDChelp` package.
