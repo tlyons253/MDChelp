@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   articles/Bootstrapping: Bootstrapping.html
@@ -8,7 +8,7 @@ articles:
   articles/Capture-Recapture-Overview: Capture-Recapture-Overview.html
   Quick-Nimble-Demo: Quick-Nimble-Demo.html
   TTE-Advanced: TTE-Advanced.html
-last_built: 2025-06-27T16:45Z
+last_built: 2025-11-25T15:36Z
 urls:
   reference: https://tlyons253.github.io/MDChelp/reference
   article: https://tlyons253.github.io/MDChelp/articles

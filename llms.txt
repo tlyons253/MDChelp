@@ -1,0 +1,59 @@
+# MDChelp
+
+Last updated 6/27/2025
+
+The goal of MDChelp is to provide functions and demonstrations of common
+statistical methods in fish/ wildlife research.
+
+## Installation
+
+You can install the development version of MDChelp from
+[GitHub](https://github.com/) with:
+
+``` r
+
+options(download.file.method = "wininet")
+# install.packages("pak")
+pak::pak("tlyons253/MDChelp")
+```
+
+See “Articles” in the menu for a list of potentially helpful articles on
+methods and techniques. If there is a topic you are interested in, or an
+analysis you do frequently, let me know and I can develop articles or
+functions to include in the `MDChelp` package.
+
+# Package index
+
+## data simulation
+
+- [`sim1_logexp()`](https://tlyons253.github.io/MDChelp/reference/sim1_logexp.md)
+  : A simple logistic exposure survival simulation.
+- [`LP.sim()`](https://tlyons253.github.io/MDChelp/reference/LP.sim.md)
+  : Lincoln-Petersen Simulation
+
+## closed capture
+
+- [`LP.sim()`](https://tlyons253.github.io/MDChelp/reference/LP.sim.md)
+  : Lincoln-Petersen Simulation
+- [`chapman()`](https://tlyons253.github.io/MDChelp/reference/chapman.md)
+  : Chapman Estimator for closed populations
+
+## misc
+
+- [`logexp()`](https://tlyons253.github.io/MDChelp/reference/logexp.md)
+  : logistic exposure link function.
+
+# Articles
+
+### All vignettes
+
+- [Non-parametric
+  Bootstrapping](https://tlyons253.github.io/MDChelp/articles/Bootstrapping.md):
+- [Capture-Recapture: Closed Capture Abundance - Marked
+  Individuals](https://tlyons253.github.io/MDChelp/articles/Capture-Recapture-Abundance-Estimation--Marked%20Individuals.md):
+- [Capture-Recapture:
+  Overview](https://tlyons253.github.io/MDChelp/articles/Capture-Recapture-Overview.md):
+- [Quick Nimble
+  Demo](https://tlyons253.github.io/MDChelp/articles/Quick-Nimble-Demo.md):
+- [Time To Event and Known-fate (Survival)
+  Analyses](https://tlyons253.github.io/MDChelp/articles/TTE-Advanced.md):

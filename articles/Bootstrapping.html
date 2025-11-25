@@ -394,7 +394,7 @@ able to utilize it.</li>
 non-parametric bootstrap.</li>
 <li>The <code>MDChelp</code> package has functions that will compute the
 BCa interval given a table of bootstrapped estimates and the original
-data (<code><a href="../reference/bca_jacknife.html">MDChelp::bca_jacknife</a></code>). Right now, it’s only been
+data (<code>MDChelp::bca_jacknife</code>). Right now, it’s only been
 tested for creating a table of regression parameter estimates and the
 CI’s <span class="math inline">\((\beta's)\)</span> but you might be
 able to get it to do the same for model-based estimates (e.g. marginal
@@ -545,7 +545,7 @@ the data first, like we did in <code>reg.fxn.2()</code>.</p>
 <div class="section level3">
 <h3 id="summarize-estimates-and-compute-bca-intervals">Summarize estimates and compute BCa intervals<a class="anchor" aria-label="anchor" href="#summarize-estimates-and-compute-bca-intervals"></a>
 </h3>
-<p>The <code><a href="../reference/bca_jacknife.html">MDChelp::bca_jacknife()</a></code> function needs a table of
+<p>The <code>MDChelp::bca_jacknife()</code> function needs a table of
 named parameters and the bootstrapped estimates. This is easy to obtain
 using <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">broom::tidy()</a></code>. It wants the column that represents
 the parameter value to be called “theta.boot”. You also need to pass a
@@ -570,7 +570,7 @@ tweaks so that it doesn’t write to a folder.</p>
 <span></span>
 <span></span>
 <span></span>
-<span><span class="fu">MDChelp</span><span class="fu">::</span><span class="fu"><a href="../reference/bca_jacknife.html">bca_jacknife</a></span><span class="op">(</span><span class="va">boot.param.tab</span>,<span class="va">tmp</span>,<span class="va">bca.fxn</span>,alpha<span class="op">=</span><span class="fl">0.05</span>,multcomp<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">MDChelp</span><span class="fu">::</span><span class="fu">bca_jacknife</span><span class="op">(</span><span class="va">boot.param.tab</span>,<span class="va">tmp</span>,<span class="va">bca.fxn</span>,alpha<span class="op">=</span><span class="fl">0.05</span>,multcomp<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Alpha sets the error rate and multcomp determines whether that is the
 family-wide error rate (testing whether all parameters are = 0) or on a
 per-variable basis. This uses the Sidak method of correction. This is
@@ -591,7 +591,7 @@ regression coefficients (e.g. using emmeans, ggeffects), you should set
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
