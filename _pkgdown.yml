@@ -6,7 +6,7 @@ template:
 reference:
 - title: data simulation
   contents:
-  - sim1_logexp
+  - surv_sim1
   - LP.sim
 - title: closed capture
   contents:

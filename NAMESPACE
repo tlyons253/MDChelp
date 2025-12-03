@@ -3,4 +3,5 @@
 export(LP.sim)
 export(chapman)
 export(logexp)
-export(sim1_logexp)
+export(surv_sim1)
+import(tidyverse)
