@@ -5,11 +5,11 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="A simple survival simulation. — surv_sim1"><meta name="description" content="Simulate known or apparent survival data via a HMM, with or without interval
-censoring or right censoring. The base simulation simulates known-fate data,
-without interval or right censoring."><meta property="og:description" content="Simulate known or apparent survival data via a HMM, with or without interval
-censoring or right censoring. The base simulation simulates known-fate data,
-without interval or right censoring."></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="A simple survival simulation. — surv_sim1"><meta name="description" content="Simulate known fate or apparent survival data via a HMM, with or without
+interval censoring or right censoring. The default parameter values simulate
+survival data without interval or right censoring."><meta property="og:description" content="Simulate known fate or apparent survival data via a HMM, with or without
+interval censoring or right censoring. The default parameter values simulate
+survival data without interval or right censoring."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -17,7 +17,7 @@ without interval or right censoring."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MDChelp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.01</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,11 +29,12 @@ without interval or right censoring."></head><body>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Bootstrapping.html">Non-parametric Bootstrapping</a></li>
-    <li><a class="dropdown-item" href="../articles/Capture-Recapture-Abundance-Estimation--Marked%20Individuals.html">Capture-Recapture: Closed Capture Abundance - Marked Individuals</a></li>
-    <li><a class="dropdown-item" href="../articles/Capture-Recapture-Overview.html">Capture-Recapture: Overview</a></li>
+    <li><a class="dropdown-item" href="../articles/CCAMarked.html">Capture-Recapture: Closed Capture Abundance - Marked Individuals</a></li>
+    <li><a class="dropdown-item" href="../articles/CROverview.html">Capture-Recapture: Overview</a></li>
     <li><a class="dropdown-item" href="../articles/Quick-Nimble-Demo.html">Quick Nimble Demo</a></li>
     <li><a class="dropdown-item" href="../articles/TTE-Advanced.html">Time To Event and Known-fate (Survival) Analyses</a></li>
   </ul></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/tlyons253/MDChelp/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -51,9 +52,9 @@ without interval or right censoring."></head><body>
     </div>
 
     <div class="ref-description section level2">
-    <p>Simulate known or apparent survival data via a HMM, with or without interval
-censoring or right censoring. The base simulation simulates known-fate data,
-without interval or right censoring.</p>
+    <p>Simulate known fate or apparent survival data via a HMM, with or without
+interval censoring or right censoring. The default parameter values simulate
+survival data without interval or right censoring.</p>
     </div>
 
     <div class="section level2">
@@ -113,40 +114,59 @@ individual from being censored. Here, censoring is a known event (i.e. a
 known transmitter failure, drop, etc.)</p></dd>
 
 
+<dt id="arg-visit-parms">visit.parms<a class="anchor" aria-label="anchor" href="#arg-visit-parms"></a></dt>
+<dd><p>a vector of length 2, giving a "maximum probability" of a
+visit and the number of days over which to consider. The probability of a
+visit is calculated according to the formula below.</p></dd>
+
+
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>LOGEXP, KF, CJS or SURV. CJS= A wide matrix of 1,0; apparent
-survival. KF= a wide matrix of 1(live), 0(unobserved), and 2(dead); MS HMM
-known-fate LOGEXP= a long data frame formatted for logistic exposure; known
-fate SURV= a long data frame of entry time, last observation, and if the
-observation was censored or an event was observed-suitable for survival
-analysis using the survival program.</p></dd>
+<dd><p>LOGEXP, KF, CJS, SURV or RAW, the default. Controls the type of
+output provided (described below)</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>data</p>
-    </div>
+
+<ul><li><p>type==CJS- A wide matrix of 1,0; apparent survival.</p></li>
+<li><p>type==KF- a wide matrix of 1(live), and 2(dead); A multi-state HMM</p></li>
+<li><p>type==LOGEXP- along data frame formatted for logistic exposure; known fate</p></li>
+<li><p>type==SURV- a long data frame of entry time, last observation, and if the
+observation was censored or an event was observed-suitable for survival
+analysis using the survival program.</p></li>
+<li><p>type==RAW- Raw observation matrix, visit matrix, detection matrix, and
+vectors describing the first and last time intervals for which and
+individual should be included, that last interval they were observed alive,
+as well as a vector indicating which individuals are censored and when.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Interval censoring (for logistic exposure or other known-fate designs) is
-accomplished by including an observation probability. This will inherently
-lead to right-censoring, but here, the observation at the last time interval
-can be fixed to 1 and interval censoring is simulated alternatively. Thus,
-when there is no formal right censoring, all dead individuals are observed
-dead at least one time.</p>
+    <p>Known-fate data requires individuals are observable in a dead state. When
+individuals cannot be observed in a dead state and detection is imperfect,
+apparent survival is the result.</p>
+<p>Interval censoring is accomplished by including a visit probability. This
+will inherently lead to right-censoring, but here, the observation at the
+last time interval can be fixed to 1 and right censoring is simulated
+alternatively by providing censoring parameters. Thus, when there is no
+explicit right censoring, all dead individuals are observed dead at least one
+time, unless "CJS" is selected as the output format.</p>
+<p>The visit probability is not an independent random probability. It's
+constructed such that given a "maximum" visit probability Q and a time window
+W the probability of a visit at time t (\(p_t\)) is:
+$$\sum\limits_{t-W}^{t-1}{\substack{1\ if\ a\ visit\ occurred\\ 0\ if\ no\
+visit}} = K\\ p_t=Q^{3K}$$
+This way, if there hasn't been a visit in W days, one will occur with a
+probability = Q. If there has been &gt; 1, then the probability drops off
+dramatically.</p>
 <p>Right censoring is created by providing two probabilities. The first defines
 the probability any individual will be censored. The second is used in a
 binomial probability where n_trials is the length of the observation period.
 While true right censoring can occur at any time, this better simulates more
 common causes of right censoring, like transmitters failing at the end of
-battery life.</p>
-<p>Known-fate data requires individuals are observable in a dead state. When
-individuals cannot be observed in a dead state and detection is imperfect,
-apparent survival is the result. The same parameter that generates intervals
-for known-fate data with perfect detection can be re-purposed as detection
-probability for an apparent survival simulation with imperfect detection.
-Individuals that die are no longer observable as dead, and instead are
-treated as unobservable.</p>
+battery life. Encounter matrices are generated for the full time series, but
+right censored observations are indicated by a negative value. To avoid
+issues in analysis, vectors indicating the time when an individual is first
+observed and when and individual "leaves" the study (if known) are provided.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

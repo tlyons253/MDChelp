@@ -1,6 +1,6 @@
 # MDChelp
 
-Last updated 6/27/2025
+Last updated 12/03/2025
 
 The goal of MDChelp is to provide functions and demonstrations of common
 statistical methods in fish/ wildlife research.
