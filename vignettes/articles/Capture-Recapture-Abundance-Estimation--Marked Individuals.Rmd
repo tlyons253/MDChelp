@@ -11,10 +11,10 @@ knitr::opts_chunk$set(
 
 ## Closed population abundance estimation methods- marked individuals {.tabset}
 
-As mentioned in the overview, capture-recapture models for closed populations are strictly used for estimating the abundance of critters. Though many abundance estimation methods have, at their core, some kind of closed population capture-recapture framework, these methods below are generally applied to strictly estimate abundance $\hat{N}$. There have been limited applications of these methods beyond obtaining a point estimate for a location, at a single point in time, and none that robustly address abundance-habitat relationships, though expanding the model development to address these questions using Bayesian methods (or spatially explicit capture-recapture) are possibilities.
+As mentioned in the overview, capture-recapture models for closed populations are strictly used for estimating the abundance of critters. Though many abundance estimation methods have, at their core, some kind of closed population capture-recapture framework, these methods below are typically applied to strictly estimate abundance $\hat{N}$. There have been limited applications of these methods beyond obtaining a point estimate for a location, at a single point in time, and none that robustly address abundance-habitat relationships, though expanding the model development to address these questions using Bayesian methods (or spatially explicit capture-recapture) are possibilities.
 
 
-Below are several common capture-recapture abundance estimation methods suitable for **closed populations**, often shortened as "closed capture methods". Demographic closure means that, while animals are being observed, there are no births, deaths, immigration, or emigration within the study area. The methods below are appropriate for "marked" individuals. That is, these assume you are physically capturing and marking individuals. Another document covers abundance estimation in closed populations for individuals you can uniquely identify, but are not physically marking them.
+Below are several common capture-recapture abundance estimation methods suitable for **closed populations**, often shortened as "closed capture methods". Demographic closure means that, while animals are being observed, there are no births, deaths, immigration, or emigration within the study area. The methods below are appropriate for "marked" individuals. That is, these assume you are physically capturing and marking individuals. Another document will cover abundance estimation in closed populations for individuals you can uniquely identify, but are not physically marking them.
 
 Fundamentally, we're trying to solve this equation:
 $$
@@ -28,7 +28,9 @@ Typically, the use of the methods below will require you have some form of trap 
 
 ### Lincoln-Petersen Method
 <br>
-The original Lincoln-Petersen (LP) estimator (Petersen 1896^[Petersen, C. G. J. 1896. The yearly immigration of young plaice into the Limfjord from the German Sea. In "Report of the Danish Biological Station", vol. 6, pp. 1–48.], Lincoln 1930^[Lincoln, F. C. 1930. Calculating waterfowl abundance on the basis of banding returns. Circular 118, pp. 1–4. United States Department of Agriculture,]) is a simple 2-sample technique to estimate abundance. By 2-sample technique, I mean you only need 2 capture occasions: the first capture occasion when you mark and release animals, and an additional occasion when you recapture them. That's it. The LP estimator calculates abundance as:
+The original Lincoln-Petersen (LP) estimator (Petersen 1896^[Petersen, C. G. J. 1896. The yearly immigration of young plaice into the Limfjord from the German Sea. In "Report of the Danish Biological Station", vol. 6, pp. 1–48.], Lincoln 1930^[Lincoln, F. C. 1930. Calculating waterfowl abundance on the basis of banding returns. Circular 118, pp. 1–4. United States Department of Agriculture,]) is a simple 2-sample technique to estimate abundance. By 2-sample technique, I mean you only need 2 capture occasions: the first capture occasion when you mark and release animals, and an additional occasion when you recapture them. That's it. Additionally, the individuals you mark do not need to be uniquely identifiable. You just need to know if they were captured previously or not.
+
+The LP estimator calculates abundance as:
 $$N=\frac{n_1\times \ n_2}{k}$$
 
 * $n_1$ the number of animals encountered on the first occasion. All encountered animals are marked and released. 
@@ -110,7 +112,7 @@ The above covers more of the technical details of closed-capture methods. It's i
 
 * The closed capture methods described above are best suited when getting an estimate of $N$ is of interest, not understanding various factors responsible for variation in $N$.
 
-* Because of many of the strict assumptions, it's probably best not to think of $N$ as a "true" estimate of abundance, unless you can guarantee all individuals are vulnerable to capture. If you can at least ensure a representative sample, it provides a very good index.
+* Because of the strict assumptions, it's probably best not to think of $N$ as a "true" estimate of abundance, unless you can guarantee all individuals are vulnerable to capture. If you can at least ensure a representative sample, it provides a very good index.
 
 * In practice, the best uses of these methods independently (e.g. not part of a robust design or other integrated method) will probably be for simple monitoring and status and trend assessment.
 

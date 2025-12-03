@@ -1,6 +1,6 @@
 Package: MDChelp
 Title: Help With Environmental Statistical Methods
-Version: 0.0.0.9000
+Version: 0.0.01
 Authors@R: 
     person("Tim", "Lyons", , "timothy.lyons@mdc.mo.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6327-9799"))

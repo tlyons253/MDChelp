@@ -41,41 +41,60 @@ second parameter is the probability. The default values prevent any
 individual from being censored. Here, censoring is a known event (i.e. a
 known transmitter failure, drop, etc.)}
 
-\item{type}{LOGEXP, KF, CJS or SURV. CJS= A wide matrix of 1,0; apparent
-survival. KF= a wide matrix of 1(live), 0(unobserved), and 2(dead); MS HMM
-known-fate LOGEXP= a long data frame formatted for logistic exposure; known
-fate SURV= a long data frame of entry time, last observation, and if the
-observation was censored or an event was observed-suitable for survival
-analysis using the survival program.}
+\item{visit.parms}{a vector of length 2, giving a "maximum probability" of a
+visit and the number of days over which to consider. The probability of a
+visit is calculated according to the formula below.}
+
+\item{type}{LOGEXP, KF, CJS, SURV or RAW, the default. Controls the type of
+output provided (described below)}
 }
 \value{
-data
+\itemize{
+\item type==CJS- A wide matrix of 1,0; apparent survival.
+\item type==KF- a wide matrix of 1(live), and 2(dead); A multi-state HMM
+\item type==LOGEXP- along data frame formatted for logistic exposure; known fate
+\item type==SURV- a long data frame of entry time, last observation, and if the
+observation was censored or an event was observed-suitable for survival
+analysis using the survival program.
+\item type==RAW- Raw observation matrix, visit matrix, detection matrix, and
+vectors describing the first and last time intervals for which and
+individual should be included, that last interval they were observed alive,
+as well as a vector indicating which individuals are censored and when.
+}
 }
 \description{
-Simulate known or apparent survival data via a HMM, with or without interval
-censoring or right censoring. The base simulation simulates known-fate data,
-without interval or right censoring.
+Simulate known fate or apparent survival data via a HMM, with or without
+interval censoring or right censoring. The default parameter values simulate
+survival data without interval or right censoring.
 }
 \details{
-Interval censoring (for logistic exposure or other known-fate designs) is
-accomplished by including an observation probability. This will inherently
-lead to right-censoring, but here, the observation at the last time interval
-can be fixed to 1 and interval censoring is simulated alternatively. Thus,
-when there is no formal right censoring, all dead individuals are observed
-dead at least one time.
+Known-fate data requires individuals are observable in a dead state. When
+individuals cannot be observed in a dead state and detection is imperfect,
+apparent survival is the result.
+
+Interval censoring is accomplished by including a visit probability. This
+will inherently lead to right-censoring, but here, the observation at the
+last time interval can be fixed to 1 and right censoring is simulated
+alternatively by providing censoring parameters. Thus, when there is no
+explicit right censoring, all dead individuals are observed dead at least one
+time, unless "CJS" is selected as the output format.
+
+The visit probability is not an independent random probability. It's
+constructed such that given a "maximum" visit probability Q and a time window
+W the probability of a visit at time t (\eqn{p_t}) is:
+\deqn{\sum\limits_{t-W}^{t-1}{\substack{1\ if\ a\ visit\ occurred\\ 0\ if\ no\
+visit}} = K\\ p_t=Q^{3K}}
+This way, if there hasn't been a visit in W days, one will occur with a
+probability = Q. If there has been > 1, then the probability drops off
+dramatically.
 
 Right censoring is created by providing two probabilities. The first defines
 the probability any individual will be censored. The second is used in a
 binomial probability where n_trials is the length of the observation period.
 While true right censoring can occur at any time, this better simulates more
 common causes of right censoring, like transmitters failing at the end of
-battery life.
-
-Known-fate data requires individuals are observable in a dead state. When
-individuals cannot be observed in a dead state and detection is imperfect,
-apparent survival is the result. The same parameter that generates intervals
-for known-fate data with perfect detection can be re-purposed as detection
-probability for an apparent survival simulation with imperfect detection.
-Individuals that die are no longer observable as dead, and instead are
-treated as unobservable.
+battery life. Encounter matrices are generated for the full time series, but
+right censored observations are indicated by a negative value. To avoid
+issues in analysis, vectors indicating the time when an individual is first
+observed and when and individual "leaves" the study (if known) are provided.
 }

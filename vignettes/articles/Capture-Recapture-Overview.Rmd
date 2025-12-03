@@ -6,6 +6,7 @@ title: "Capture-Recapture: Overview"
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
+  message=FALSE
 )
 ```
 
