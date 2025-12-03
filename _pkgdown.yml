@@ -15,14 +15,3 @@ reference:
 - title: misc
   contents: logexp
 
-articles:
-- title: "Closed Capture Methods"
-  contents:
-  - Capture-Recapture Overview
-  - Capture-Recapture Abundance Estimation -Marked Individuals
-- title: "Nimble"
-  contents: Quick-Nimble-Demo
-- title: "Bootstrapping"
-  contents: bootstrapping
-- title: "Survival analysis"
-  contents: TTE-Advanced

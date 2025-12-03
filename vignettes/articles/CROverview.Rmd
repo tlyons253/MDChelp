@@ -6,11 +6,10 @@ title: "Capture-Recapture: Overview"
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
-  message=FALSE
 )
 ```
 
-```{r setup, echo=FALSE}
+```{r setup, echo=FALSE,message=FALSE}
 library(MDChelp)
 ```
 
