@@ -4,21 +4,21 @@ template:
   math-rendering: mathjax
 navbar:
   components:
-  reference:
-  - title: data simulation
-    contents:
-    - surv_sim1
-    - LP.sim
-  - title: closed capture
-    contents:
-    - LP.sim
-    - chapman
-  - title: misc
-    contents: logexp
-  articles:
-    text: Closed Capture
-    menu:
-    - text: Closed Capture Methods Overview
-    - href: articles/CROverview.html
-    - text: Abundance Estimation-Marked Individuals
-    - href: articles/CCA.html
+    reference:
+   - title: data simulation
+     contents:
+     - surv_sim1
+     - LP.sim
+    - title: closed capture
+     contents:
+      - LP.sim
+      - chapman
+    - title: misc
+     contents: logexp
+    articles:
+      text: Closed Capture
+      menu:
+      - text: Closed Capture Methods Overview
+      - href: articles/CROverview.html
+      - text: Abundance Estimation-Marked Individuals
+      - href: articles/CCA.html
