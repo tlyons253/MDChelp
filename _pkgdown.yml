@@ -6,15 +6,15 @@ navbar:
   components:
     reference:
     - title: data simulation
-     contents:
-     - surv_sim1
+    contents:
+      - surv_sim1
      - LP.sim
     - title: closed capture
-     contents:
+    contents:
       - LP.sim
       - chapman
     - title: misc
-     contents: logexp
+    contents: logexp
     articles:
       text: Closed Capture
       menu:
