@@ -5,7 +5,7 @@ template:
 navbar:
   components:
     reference:
-   - title: data simulation
+    - title: data simulation
      contents:
      - surv_sim1
      - LP.sim
