@@ -2,8 +2,8 @@
 
 ## data simulation
 
-- [`sim1_logexp()`](https://tlyons253.github.io/MDChelp/reference/sim1_logexp.md)
-  : A simple logistic exposure survival simulation.
+- [`surv_sim1()`](https://tlyons253.github.io/MDChelp/reference/surv_sim1.md)
+  : A simple survival simulation.
 - [`LP.sim()`](https://tlyons253.github.io/MDChelp/reference/LP.sim.md)
   : Lincoln-Petersen Simulation
 
