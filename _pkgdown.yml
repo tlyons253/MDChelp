@@ -1,3 +1,5 @@
+development:
+ mode: auto
 url: https://tlyons253.github.io/MDChelp/
 template:
   bootstrap: 5
@@ -16,3 +18,12 @@ reference:
   contents: logexp
 
 
+articles:
+- title: Capture Recapture
+  contents:
+  - articles/CROverview
+  - articles/CCAMarked
+- title: Other
+  contents:
+  - TTE-Advanced
+  - articles/Bootstrapping
