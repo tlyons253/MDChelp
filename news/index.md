@@ -6,3 +6,4 @@
 
 - Revised survival simulation function, pulled bootstrapping functions
   to fix errors
+- Test
