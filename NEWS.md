@@ -1,4 +1,4 @@
-# MDChelp (0.0.01)
+# MDChelp 0.0.01
 
 ## New
 
