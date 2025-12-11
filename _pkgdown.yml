@@ -16,6 +16,13 @@ reference:
   - chapman
 - title: misc
   contents: logexp
+- title: non-parametric bootstrapping
+  contents:
+  - boot_cluster
+  - bootstrap_interval
+  - est_accelerat
+  - jacknife_data
+  - resamp.fxn
 
 
 articles:
