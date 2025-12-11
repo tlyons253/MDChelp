@@ -20,7 +20,7 @@ reference:
   contents:
   - boot_cluster
   - bootstrap_interval
-  - est_accelerat
+  - est_accelerate
   - jacknife_data
   - resamp.fxn
 
