@@ -18,6 +18,8 @@
 
 - [`logexp()`](https://tlyons253.github.io/MDChelp/reference/logexp.md)
   : logistic exposure link function.
+- [`get_betadist()`](https://tlyons253.github.io/MDChelp/reference/get_betadist.md)
+  : Convert a probability and SD to beta distribution parameters
 
 ## non-parametric bootstrapping
 
