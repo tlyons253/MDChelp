@@ -15,7 +15,9 @@ reference:
   - LP.sim
   - chapman
 - title: misc
-  contents: logexp
+  contents:
+  - logexp
+  - get_betadist
 - title: non-parametric bootstrapping
   contents:
   - boot_cluster
