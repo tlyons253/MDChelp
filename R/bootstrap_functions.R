@@ -72,7 +72,7 @@ resamp.fxn<-function(tmp.dat,tmp.id){
 #' # ~boot_cluster(dat,
 #' #           cluster.vars=c(A),
 #' #          out.path="./bootdata/",
-#'#          i=.x))
+#' #          i=.x))
 #'
 #' # Writing to an object in memory
 #'
