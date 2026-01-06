@@ -1,7 +1,9 @@
 #' Convert a probability and SD to beta distribution parameters
 #'
 #' @param mu
+#' mean probability
 #' @param sd
+#' standard deviation/ error of probability
 #'
 #' @returns
 #' A named vector including alpha and beta parameters

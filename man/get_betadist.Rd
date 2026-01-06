@@ -7,7 +7,9 @@
 get_betadist(mu, sd)
 }
 \arguments{
-\item{sd}{}
+\item{mu}{mean probability}
+
+\item{sd}{standard deviation/ error of probability}
 }
 \value{
 A named vector including alpha and beta parameters
