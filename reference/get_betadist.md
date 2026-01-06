@@ -10,7 +10,13 @@ get_betadist(mu, sd)
 
 ## Arguments
 
+- mu:
+
+  mean probability
+
 - sd:
+
+  standard deviation/ error of probability
 
 ## Value
 
