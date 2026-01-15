@@ -25,6 +25,8 @@ reference:
   - est_accelerate
   - jacknife_data
   - resamp.fxn
+- title: fish squeezing
+  -exploit_fish
 
 
 articles:

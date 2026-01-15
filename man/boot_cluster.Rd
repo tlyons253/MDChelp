@@ -35,3 +35,29 @@ This function defines the cluster variables, then resamples from the unique
 clusters N times, where N is the number of unique clusters. Observations
 within each cluster are also resampled.
 }
+\examples{
+
+
+dat<-data.frame(Y=rnorm(30,0,1),
+                A=rep(c('a1','a2','a3'),each=10))
+
+# Run it using purrr. Use walk because this writes to a folder
+
+# purrr::walk(1:5,
+# ~boot_cluster(dat,
+#           cluster.vars=c(A),
+#          out.path="./bootdata/",
+#          i=.x))
+
+# Writing to an object in memory
+
+# purrr::map(1:5,
+#            ~boot_cluster(dat,
+#           cluster.vars=c(A)))->output.out
+
+#Create one bootstrapped data set
+
+# boot_cluster(dat,cluster.vars=c(A))->output.out
+
+
+}

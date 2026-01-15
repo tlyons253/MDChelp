@@ -64,7 +64,7 @@ resamp.fxn<-function(tmp.dat,tmp.id){
 #'
 #'
 #' dat<-data.frame(Y=rnorm(30,0,1),
-#'                 A=rep(c('a1','a2,'a3'),each=10))
+#'                 A=rep(c('a1','a2','a3'),each=10))
 #'
 #' # Run it using purrr. Use walk because this writes to a folder
 #'
