@@ -2,12 +2,16 @@
 
 ## MDChelp 0.0.01
 
-### Jan 6, 2025
+### Jan 15, 2025
+
+- added exploitation estimator function
+
+#### Jan 6, 2025
 
 - added function to calculate beta distribution parameters from mean and
   sd of a probability
 
-### Older
+#### Older
 
 - Revised survival simulation function, pulled bootstrapping functions
   to fix errors

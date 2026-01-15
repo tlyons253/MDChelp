@@ -34,3 +34,8 @@
   : Jacknife data helper function
 - [`resamp.fxn()`](https://tlyons253.github.io/MDChelp/reference/resamp.fxn.md)
   : Resampling helper function
+
+## Fish squeezing
+
+- [`exploit_fish()`](https://tlyons253.github.io/MDChelp/reference/exploit_fish.md)
+  : Estimate fish exploitation rate

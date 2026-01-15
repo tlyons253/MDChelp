@@ -45,3 +45,30 @@ boot_cluster(dat, design.vars, cluster.vars, out.folder, i)
 
 writes file(s) of bootstrapped data to a folder, if specified, or as a
 list to an object in the local environment
+
+## Examples
+
+``` r
+
+dat<-data.frame(Y=rnorm(30,0,1),
+                A=rep(c('a1','a2','a3'),each=10))
+
+# Run it using purrr. Use walk because this writes to a folder
+
+# purrr::walk(1:5,
+# ~boot_cluster(dat,
+#           cluster.vars=c(A),
+#          out.path="./bootdata/",
+#          i=.x))
+
+# Writing to an object in memory
+
+# purrr::map(1:5,
+#            ~boot_cluster(dat,
+#           cluster.vars=c(A)))->output.out
+
+#Create one bootstrapped data set
+
+# boot_cluster(dat,cluster.vars=c(A))->output.out
+
+```
