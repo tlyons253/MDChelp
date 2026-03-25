@@ -90,7 +90,7 @@ or alive.
 If you lose track of an individual and never find them (alive or dead)
 or they haven’t died yet when the study ends, this is right-censoring.
 In the latter case, it’s called fixed censoring, whereas the former,
-it’s assumed random. That is, dying doesn’t cause you to loose track of
+it’s assumed random. That is, dying doesn’t cause you to lose track of
 an individual. If this censoring is informative (radio transmitters fail
 because they are destroyed by cars/people/predators) then your survival
 estimate will be biased. This is true regardless if you analyze the data
@@ -206,7 +206,7 @@ survival probability.
 An alternative to using logit-link regression is to use a log-log link
 or:
 
-\\ S=exp(-exp(X\beta))\\ and\\ the\\ inverse\\ X\beta=log(-log(S))\\
+\\S=exp(-exp(X\beta))\\ and\\ the\\ inverse\\ X\beta=log(-log(S))\\
 
 where \\S\\ is the survival probability and \\X\beta\\ is the linear
 predictor. This approach gives the same interpretation (hazard ratios)
@@ -359,7 +359,7 @@ Weibull distribution. If \\\alpha\\ is just 0, then the hazard is
 constant through time and we’re back at the exponential distribution.
 
 Fun fact, the Weibull above is both and AFT and a PH model, and it’s the
-only form that can both. That’s because, in the equation above, you
+only form that can be both. That’s because, in the equation above, you
 could think of the \\\alpha\log(t)\\ as a baseline hazard
 
 Another way to write the Weibull hazard can be found in handout 9

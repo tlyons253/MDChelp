@@ -6,6 +6,8 @@
   Overview](https://tlyons253.github.io/MDChelp/articles/CROverview.md):
 - [Capture-Recapture: Closed Capture Abundance - Marked
   Individuals](https://tlyons253.github.io/MDChelp/articles/CCAMarked.md):
+- [Capture-Recapture: Closed Population Abundance Estimation- Unmarked
+  Individuals](https://tlyons253.github.io/MDChelp/articles/CCAUnmarked.md):
 
 ### Other
 

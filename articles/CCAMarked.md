@@ -1,6 +1,6 @@
 # Capture-Recapture: Closed Capture Abundance - Marked Individuals
 
-## Closed population abundance estimation methods- marked individuals
+## Introduction
 
 As mentioned in the overview, capture-recapture models for closed
 populations are strictly used for estimating the abundance of critters.
@@ -250,9 +250,9 @@ closed-capture methods that may be helpful.
   for simple monitoring and status and trend assessment.
 
 - Some specifics like distinction between \\p/c\\ are specific to
-  physically capturing animals, but conceptually, but closed-capture
-  methods are a very general concept that most other capture-recapture
-  methods are based on.
+  physically capturing animals, but closed-capture methods are a very
+  general concept that most other capture-recapture methods are based
+  on.
 
 ------------------------------------------------------------------------
 
