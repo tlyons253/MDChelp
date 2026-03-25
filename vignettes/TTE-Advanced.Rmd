@@ -50,7 +50,7 @@ Compare that to TTE analysis or almost any other analysis we'll use where interv
 
 #### Right Censoring and informative censoring
 
-If you lose track of an individual and never find them (alive or dead) or they haven't died yet when the study ends, this is right-censoring. In the latter case, it's called fixed censoring, whereas the former, it's assumed random. That is, dying doesn't cause you to loose track of an individual. If this censoring is informative (radio transmitters fail because they are destroyed by cars/people/predators) then your survival estimate will be biased. This is true regardless if you analyze the data in a TTE framework or a logistic regression framework. If it is random (or at least nearly) then it doesn't matter. If you do lose track of a lot of individuals without knowing their fate, it's recommended you don't use an approach that relies on accurately knowing it.
+If you lose track of an individual and never find them (alive or dead) or they haven't died yet when the study ends, this is right-censoring. In the latter case, it's called fixed censoring, whereas the former, it's assumed random. That is, dying doesn't cause you to lose track of an individual. If this censoring is informative (radio transmitters fail because they are destroyed by cars/people/predators) then your survival estimate will be biased. This is true regardless if you analyze the data in a TTE framework or a logistic regression framework. If it is random (or at least nearly) then it doesn't matter. If you do lose track of a lot of individuals without knowing their fate, it's recommended you don't use an approach that relies on accurately knowing it.
 
 ```{r, out.width='50%', fig.align='center'}
 knitr::include_graphics('./images/pawnstars.jpg')
@@ -191,7 +191,7 @@ You can see that the GLM- constant survival estimates the cumulative survival pr
 #### Log-Log link
 An alternative to using logit-link regression is to use a log-log link or:
 
-$$ S=exp(-exp(X\beta))\\ and\ the\ inverse\\ X\beta=log(-log(S))$$
+$$S=exp(-exp(X\beta))\\ and\ the\ inverse\\ X\beta=log(-log(S))$$
 
 where $S$ is the survival probability and $X\beta$ is the linear predictor. This approach gives the same interpretation (hazard ratios) of the $\beta_k$ regression coefficients as in proportional hazard models. Often this is preferable to using the logit link because hazards ratios (the relative difference in mortality) don't change whether your model is talking about weekly, monthly, or annual survival. Odds ratios will differ, which may be just confusing or worse, misleading. In R, you have to use the complementary log-log link, which is equivalent to replaceing $S$ with $M$, as that is what $X\beta$ predicts. In R, you still code your data as 1=alive, 0=dead, but you are essentially modeling the 0's when using that data structure and the cloglog link.
 
@@ -267,7 +267,7 @@ $$log(h(t))=\alpha\log(t)+\beta_0^*+\beta_1^*X_1...\beta_k^*X_k$$
 
 This is now an AFT, depending on the parameter value of $\alpha$(see pp. 20-21 in SAS survival book). In this case, $\alpha$ controls how the hazard varies across time, ensuring that the event times T follow a Weibull distribution. If $\alpha$ is just 0, then the hazard is constant through time and we're back at the exponential distribution.
 
-Fun fact, the Weibull above is both and AFT and a PH model, and it's the only form that can both. That's because, in the equation above, you could think of the $\alpha\log(t)$ as a baseline hazard
+Fun fact, the Weibull above is both and AFT and a PH model, and it's the only form that can be both. That's because, in the equation above, you could think of the $\alpha\log(t)$ as a baseline hazard
 
 Another way to write the Weibull hazard can be found in handout 9 [here]("https://stat.ethz.ch/education/semesters/ss2011/seminar/contents/handout_9.pdf") is as:
 

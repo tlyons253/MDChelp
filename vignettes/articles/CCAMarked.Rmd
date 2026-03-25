@@ -9,7 +9,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Closed population abundance estimation methods- marked individuals {.tabset}
+
+
+## Introduction {.tabset}
 
 As mentioned in the overview, capture-recapture models for closed populations are strictly used for estimating the abundance of critters. Though many abundance estimation methods have, at their core, some kind of closed population capture-recapture framework, these methods below are typically applied to strictly estimate abundance $\hat{N}$. There have been limited applications of these methods beyond obtaining a point estimate for a location, at a single point in time, and none that robustly address abundance-habitat relationships, though expanding the model development to address these questions using Bayesian methods (or spatially explicit capture-recapture) are possibilities.
 
@@ -116,4 +118,4 @@ The above covers more of the technical details of closed-capture methods. It's i
 
 * In practice, the best uses of these methods independently (e.g. not part of a robust design or other integrated method) will probably be for simple monitoring and status and trend assessment.
 
-* Some specifics like distinction between $p/c$ are specific to physically capturing animals, but conceptually, but closed-capture methods are a very general concept that most other capture-recapture methods are based on.
+* Some specifics like distinction between $p/c$ are specific to physically capturing animals, but closed-capture methods are a very general concept that most other capture-recapture methods are based on.
