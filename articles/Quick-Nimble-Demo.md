@@ -87,7 +87,7 @@ Next, write the model in BUGS that we’ll use to estimate parameters
 
 ``` r
 library(nimble)
-#> nimble version 1.4.1 is loaded.
+#> nimble version 1.4.2 is loaded.
 #> For more information on NIMBLE and a User Manual,
 #> please visit https://R-nimble.org.
 #> 

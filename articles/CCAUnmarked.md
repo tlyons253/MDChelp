@@ -122,7 +122,11 @@ a site are impractical or just not possible (i.e. aerial surveys, remote
 back country surveys, etc.). Double observer surveys still requires you
 be able to identify and keep track of individuals, but now you are
 aggregating them in counts. There are two approaches to estimating
-abundance from two observers:
+abundance from two observers:  
+  
+![](CCAUnmarked_files/figure-html/unnamed-chunk-2-1.png)
+
+  
 
 #### Dependent observers:
 
@@ -139,6 +143,10 @@ abundance from two observers:
   observations to one another.
 - Once both are done, observers reconcile which individuals were
   observed uniquely, and which were observed by both.
+
+  
+  
+  
 
 These double observer methods have been used on data sets with as few as
 10 sites (Nichols et al. 2000[²](#fn2)), making it potentially useful
@@ -178,7 +186,7 @@ you include a covariate such as cloud cover on detection probability
 because you know birds sing less frequently on cloudy days, or
 butterflies are less active, you aren’t necessarily stating the average
 detection probability is lower which may be what you want. Instead, you
-are suggesting that how your ability to detect birds at range of
+are suggesting that how your ability to detect birds at a range of
 distances has changed.
 
 ------------------------------------------------------------------------
