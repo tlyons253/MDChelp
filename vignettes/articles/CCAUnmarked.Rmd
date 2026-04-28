@@ -66,26 +66,57 @@ This approach may be best suited when there are a reasonably large number of sit
 ### Double observer
 
 Double observer counts are another useful option when multiple visits to a site are impractical or just not possible (i.e. aerial surveys, remote back country surveys, etc.). Double observer surveys still requires you be able to identify and keep track of individuals, but now you are aggregating them in counts. There are two approaches to estimating abundance from two observers:
+<br>
+<br>
+<!-- pika survey image -->
+```{r,message=FALSE,warning=FALSE, echo=FALSE, out.width='50%', out.extra='style="float:left; padding-right:3px; padding-left:0px; padding-top:5px; padding-bottom:50px"'}
+ggplot() +
+  theme_void() + # Start with a completely blank theme
+  labs(x="Double observer surveys were employed by the NPS for pika surveys during the late 2000's")+
+  theme(
+    axis.title.x= element_text(
+      
+      size = 10,
+      colour = "black")#, # Add space above the caption
+    #margin=margin(t=0,l=0,r=0,b=10))
+    #plot.margin = margin(b=1,unit='cm')
+  )->P
 
+library(cowplot)
+
+ggdraw()+
+  draw_image('./art_image/pika.JPG',
+             scale=0.9)+
+  draw_plot(P)
+  
+  # 
+  # draw_label('Double observer surveys have been used in pika (lower left) surveys in National Parks',x=0.5,y=0,angle=0,vjust=-0.5)
+
+``` 
+
+<br>
 
 #### Dependent observers:
 
   * One observer acts as the "primary" observer and records all unique individuals and tells the second observer where they are.
   * The second observer, simultaneously, records all individuals identified by the primary observer, as well as any individuals the primary observer misses. They DO NOT tell the primary observer about any individuals they see.
-  
+
+
 
 #### Independent observers:
 
   * Each individual performs a survey separately, without communicating observations to one another.
   * Once both are done, observers reconcile which individuals were observed uniquely, and which were observed by both.
-  
+
+<br>
+<br>
+<br>
 
 These double observer methods have been used on data sets with as few as 10 sites (Nichols et al. 2000^[Nichols, J. et al. 2000. A double-observer approach for estimating detection probability and abundance from point counts. *The Auk*. 117:393-408]), making it potentially useful when data are limited, and the primary goal is to obtain an estimate of abundance, not model the effect of covariates.
 
-<!-- pika survey image -->
-```{r,eval=FALSE, echo=FALSE, out.width='50%', out.extra='style="float:left; padding:10px"'}
-knitr::include_graphics('./art_image/timtemp.png')
-``` 
+
+
+
 ---
 
 ### Distance Sampling
@@ -164,7 +195,7 @@ Some additional key assumptions are:
 * All individuals at the center of a point or directly on the transect are detected perfectly.
 * Animals are distributed uniformly throughout the transect.
 
-The effect of distance on detection explicitly and singularly deals with the part of detection probability associated with "sightability" or the ability of an observer to detect/ the observers perceptual range. The other approaches lump availability and sightability together. Thus, if you include a covariate such as cloud cover on detection probability because you know birds sing less frequently on cloudy days, or butterflies are less active, you aren't necessarily stating the average detection probability is lower which may be what you want. Instead, you are suggesting that how your ability to detect birds at range of distances has changed.
+The effect of distance on detection explicitly and singularly deals with the part of detection probability associated with "sightability" or the ability of an observer to detect/ the observers perceptual range. The other approaches lump availability and sightability together. Thus, if you include a covariate such as cloud cover on detection probability because you know birds sing less frequently on cloudy days, or butterflies are less active, you aren't necessarily stating the average detection probability is lower which may be what you want. Instead, you are suggesting that how your ability to detect birds at a range of distances has changed.
 
 ---
 
