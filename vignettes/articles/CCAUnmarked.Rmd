@@ -86,7 +86,7 @@ library(cowplot)
 library(magick)
 
 ggdraw()+
-  draw_image('.articles/art_image/pika.jpg',
+  draw_image('./articles/art_image/pika.jpg',
              scale=0.9)+
   draw_plot(P)
   
