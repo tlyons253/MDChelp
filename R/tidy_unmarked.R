@@ -9,18 +9,18 @@
 #'   does for lm/glm objects
 #'
 #' @export
-tidy.unmarkedFit<-function(X){
-  X@estimates->param.list
+tidy.unm<-function(X){
+  X@estimates@estimates->param.list
 
-  map(param.list,~um.help(.x))%>%bind_rows()->tmp
+  map(param.list,~um.help(.x))%>%bind_rows()%>%as.tibble()->tmp
 
   row.names(tmp)<-NULL
 
   return(tmp)}
 #'
 #' @examples
-
-'tidy.umarkedFit'
+#' No
+'tidy.unm'
 
 
 #
@@ -46,4 +46,5 @@ data.frame(process=rep(X@name,length(X@estimates)),
 }
 #'
 #' @examples
+#' No
 'um.help'

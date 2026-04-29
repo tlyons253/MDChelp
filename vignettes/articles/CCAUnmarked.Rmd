@@ -85,7 +85,7 @@ ggplot() +
 library(cowplot)
 
 ggdraw()+
-  draw_image('./art_image/pika.JPG',
+  draw_image('./art_image/pika.jpg',
              scale=0.9)+
   draw_plot(P)
   
