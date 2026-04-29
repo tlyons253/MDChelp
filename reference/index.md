@@ -39,3 +39,9 @@
 
 - [`exploit_fish()`](https://tlyons253.github.io/MDChelp/reference/exploit_fish.md)
   : Estimate fish exploitation rate
+
+## unmarked support
+
+- [`tidy.unm()`](https://tlyons253.github.io/MDChelp/reference/tidy.unm.md)
+  [`tidy.unm`](https://tlyons253.github.io/MDChelp/reference/tidy.unm.md)
+  : tidy unmarked parameter estimates
