@@ -83,6 +83,7 @@ ggplot() +
   )->P
 
 library(cowplot)
+library(magick)
 
 ggdraw()+
   draw_image('./art_image/pika.jpg',
