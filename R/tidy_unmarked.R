@@ -25,7 +25,9 @@ tidy.unm<-function(X){
 
 #
 #'Formatting for a single parameter
+#'
 #' @keywords internal
+#'
 #' @param X would be one slot from within unmarkedFit@estimates list
 #'
 #' @returns a data.frame of the proccess, parameter, SE and approximate Z and P
