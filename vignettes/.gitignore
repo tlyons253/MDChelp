@@ -1,4 +1,4 @@
 *.html
 *.R
-**/art_indev/
+
 /.quarto/
