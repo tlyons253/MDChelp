@@ -50,6 +50,7 @@ list to an object in the local environment
 
 ``` r
 
+
 dat<-data.frame(Y=rnorm(30,0,1),
                 A=rep(c('a1','a2','a3'),each=10))
 

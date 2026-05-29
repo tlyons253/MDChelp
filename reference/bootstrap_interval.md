@@ -55,6 +55,7 @@ BCa confidence intervals
 ## Examples
 
 ``` r
+
 # data.frame(X1=seq(1,10,1),
 #            X2=rnorm(10,0,1))%>%
 #   mutate(Y=0.2*X1+X2)%>%

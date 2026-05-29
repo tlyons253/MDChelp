@@ -18,6 +18,7 @@ logexp(exposure = 1)
 ## Examples
 
 ``` r
+
 # Simulate binomial survival data and estimate dsr
 
 if (FALSE) { # \dontrun{

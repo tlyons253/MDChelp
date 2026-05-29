@@ -15,10 +15,10 @@ replaced with detection probability, given that animals are detected
 
 Historically, scientists and agencies would often perform counts in
 designated areas and used those counts as an index. The value of index
-counts is debatable (Anderson 2001[¹](#fn1)), but converting an index
-count into a more robust estimate of abundance or density is
-straightforward, at least conceptually. You just need to estimate a
-detection or “capture” probability. So how do you do that?
+counts is debatable (Anderson 2001[^1]), but converting an index count
+into a more robust estimate of abundance or density is straightforward,
+at least conceptually. You just need to estimate a detection or
+“capture” probability. So how do you do that?
 
 The first step is you need multiple encounters. This can be accomplished
 by:
@@ -149,8 +149,8 @@ abundance from two observers:
   
 
 These double observer methods have been used on data sets with as few as
-10 sites (Nichols et al. 2000[²](#fn2)), making it potentially useful
-when data are limited, and the primary goal is to obtain an estimate of
+10 sites (Nichols et al. 2000[^2]), making it potentially useful when
+data are limited, and the primary goal is to obtain an estimate of
 abundance, not model the effect of covariates.
 
 ------------------------------------------------------------------------
@@ -193,11 +193,11 @@ distances has changed.
 
 Removal models have been used in fisheries for a very long time with
 some mention to their use in terrestrial wildlife a bit later (Zippin
-1958[³](#fn3)). Still, given how removal sampling is conducted and some
-of the early limitations, it never became widespread outside of
-fisheries. Under a removal model, an observer conducts repeated sampling
-events (just like capture occasions in closed-capture for marked
-individuals) but individuals are physically removed, rather than marked.
+1958[^3]). Still, given how removal sampling is conducted and some of
+the early limitations, it never became widespread outside of fisheries.
+Under a removal model, an observer conducts repeated sampling events
+(just like capture occasions in closed-capture for marked individuals)
+but individuals are physically removed, rather than marked.
 Traditionally, this was applied to fish removals in a pond or lake.
 While this typically may have occurred as multiple visits to the same
 location on different days, we’ll limit our focus here to the use of
@@ -224,9 +224,9 @@ all individuals have the same detection probability.
 In another document we will go over extensions of the above models. The
 two major extensions are:
 
-1.) Hierarchical abundance models (i.e. Royle and Dorazio 2006[⁴](#fn4))
+1.) Hierarchical abundance models (i.e. Royle and Dorazio 2006[^4])
 
-2.) Time-to-detection models (TTD; Strebel et al. 2021[⁵](#fn5))
+2.) Time-to-detection models (TTD; Strebel et al. 2021[^5])
 
 These extensions generally require much larger data sets (100’s of
 survey sites, rather than dozens), but offer a major advantages.
@@ -278,34 +278,32 @@ otherwise produce a population index, to an estimate of abundance.
 
   
 
-|                                                                                | Single visit?a | Multiple visits?b | Heterogeneity in detection?c | Observer differences?d | Sightability/ Availability?e |
-|--------------------------------------------------------------------------------|----------------|-------------------|------------------------------|------------------------|------------------------------|
-| Time of Detection                                                              | +              |                   | +                            |                        | C                            |
-| Double Observer                                                                | +              |                   |                              | +                      | C                            |
-| Distance Sampling                                                              | +              |                   | +                            |                        | S                            |
-| Removal Methods                                                                | +              | +                 |                              |                        | C                            |
-| aCan be performed with a single visit                                          |                |                   |                              |                        |                              |
-| bCan be perfomed across multiple visits                                        |                |                   |                              |                        |                              |
-| cMethod accounts for heterogeneity in detection                                |                |                   |                              |                        |                              |
-| dCan account for differences among observers                                   |                |                   |                              |                        |                              |
-| eHow are sightability/ availability handled; C= combined, S= sightability only |                |                   |                              |                        |                              |
+|  | Single visit?a | Multiple visits?b | Heterogeneity in detection?c | Observer differences?d | Sightability/ Availability?e |
+|----|----|----|----|----|----|
+| Time of Detection | + |  | + |  | C |
+| Double Observer | + |  |  | + | C |
+| Distance Sampling | + |  | + |  | S |
+| Removal Methods | + | + |  |  | C |
+| aCan be performed with a single visit |  |  |  |  |  |
+| bCan be perfomed across multiple visits |  |  |  |  |  |
+| cMethod accounts for heterogeneity in detection |  |  |  |  |  |
+| dCan account for differences among observers |  |  |  |  |  |
+| eHow are sightability/ availability handled; C= combined, S= sightability only |  |  |  |  |  |
 
-------------------------------------------------------------------------
-
-1.  Anderson, D. R. 2001. The need to get the basics right in wildlife
+[^1]: Anderson, D. R. 2001. The need to get the basics right in wildlife
     field studies. *Wildlife Society Bulletin*. 29:1294-1297
 
-2.  Nichols, J. et al. 2000. A double-observer approach for estimating
+[^2]: Nichols, J. et al. 2000. A double-observer approach for estimating
     detection probability and abundance from point counts. *The Auk*.
     117:393-408
 
-3.  Zippin, C. 1958. The removal method of population estimation.
+[^3]: Zippin, C. 1958. The removal method of population estimation.
     *Journal of Wildlife Management*. 22:82-90
 
-4.  Royle, J. A. and R. M. Dorazio. 2006. Hierarchical models of animal
-    abundance and occurence. *Journal of Agricultural, Biological, and
-    Environmental Statistics*. 11:249-263
+[^4]: Royle, J. A. and R. M. Dorazio. 2006. Hierarchical models of
+    animal abundance and occurence. *Journal of Agricultural,
+    Biological, and Environmental Statistics*. 11:249-263
 
-5.  Strebel, N. et al. 2021. Estimating abundance based on
+[^5]: Strebel, N. et al. 2021. Estimating abundance based on
     time-to-detection data. *Methods in Ecology and Evolution*.
     12:909-920

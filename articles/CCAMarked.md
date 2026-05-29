@@ -48,14 +48,13 @@ estimate of \\N\\ becomes somewhat useless.
 - Summary
 
   
-The original Lincoln-Petersen (LP) estimator (Petersen 1896[¹](#fn1),
-Lincoln 1930[²](#fn2)) is a simple 2-sample technique to estimate
-abundance. By 2-sample technique, I mean you only need 2 capture
-occasions: the first capture occasion when you mark and release animals,
-and an additional occasion when you recapture them. That’s it.
-Additionally, the individuals you mark do not need to be uniquely
-identifiable. You just need to know if they were captured previously or
-not.
+The original Lincoln-Petersen (LP) estimator (Petersen 1896[^1], Lincoln
+1930[^2]) is a simple 2-sample technique to estimate abundance. By
+2-sample technique, I mean you only need 2 capture occasions: the first
+capture occasion when you mark and release animals, and an additional
+occasion when you recapture them. That’s it. Additionally, the
+individuals you mark do not need to be uniquely identifiable. You just
+need to know if they were captured previously or not.
 
 The LP estimator calculates abundance as: \\N=\frac{n_1\times \\
 n_2}{k}\\
@@ -63,7 +62,7 @@ n_2}{k}\\
 - \\n_1\\ the number of animals encountered on the first occasion. All
   encountered animals are marked and released.
 
-- \\n_2\\ the **total** number of animals encountered on the second
+- \\n_2\\ the total number of animals encountered on the second
   occasion.
 
 - \\k\\ is the number of marked individuals from \\n_1\\, captured again
@@ -254,12 +253,10 @@ closed-capture methods that may be helpful.
   general concept that most other capture-recapture methods are based
   on.
 
-------------------------------------------------------------------------
-
-1.  Petersen, C. G. J. 1896. The yearly immigration of young plaice into
-    the Limfjord from the German Sea. In “Report of the Danish
+[^1]: Petersen, C. G. J. 1896. The yearly immigration of young plaice
+    into the Limfjord from the German Sea. In “Report of the Danish
     Biological Station”, vol. 6, pp. 1–48.
 
-2.  Lincoln, F. C. 1930. Calculating waterfowl abundance on the basis of
-    banding returns. Circular 118, pp. 1–4. United States Department of
-    Agriculture,
+[^2]: Lincoln, F. C. 1930. Calculating waterfowl abundance on the basis
+    of banding returns. Circular 118, pp. 1–4. United States Department
+    of Agriculture,

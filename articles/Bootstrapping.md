@@ -117,6 +117,7 @@ random. Like this code below that creates 10 bootstrap data sets from
 the original data,`tmp`.
 
 ``` r
+
  data.frame(X1=seq(1,10,1),
            X2=rnorm(10,0,1))%>%
   mutate(Y=0.2*X1+X2)%>%
@@ -165,6 +166,7 @@ students, in 5 classrooms per school, in 4 schools:
   - Do not resample schools.
 
 ``` r
+
 library(tidyverse)
 demo.dat<-expand.grid(school=c("Hogwarts",
                                "Tattoine P.S. 1",
@@ -217,6 +219,7 @@ differs, leading to some classrooms accounting for more than 20
 students.
 
 ``` r
+
 gdata::keep(demo.dat,sure=TRUE)
 ```
 
@@ -225,6 +228,7 @@ all 20? Now you just make sure that those students are also resampled
 within each classroom.
 
 ``` r
+
 # make an "original" data set of 10 students from each classroom. We are pretending the other 10 students were never measured. You won't do this step ever with your data
 demo.dat<-expand.grid(school=c("Hogwarts",
                                "Tattoine P.S. 1",
@@ -354,6 +358,7 @@ results.
 ### Create bootstrapped data
 
 ``` r
+
 #create a set of dummy data
 
  data.frame(X=rnorm(100,0,5),
@@ -404,6 +409,7 @@ actually helps or hurts, but it’s what I do…
 ### Create model objects
 
 ``` r
+
 #create a list of file paths for all the bootstrapped data
 
 bootdat.list<-list.files(path='your path/boot_data/',
@@ -477,6 +483,7 @@ reg.fxn above). It may need some slight tweaks so that it doesn’t write
 to a folder.
 
 ``` r
+
 map(coef.tab.list,~broom::tidy(.x)%>%
       select(term,
              theta.boot=estimate))%>% #rename the value to theta.boot

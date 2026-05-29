@@ -19,12 +19,12 @@ any data that:
 
 Ecologists typically encounter it as a survival analysis where the event
 of interest is death, but it can be almost anything. In ecology, it’s
-been used to model resources selection (First-passage-time[¹](#fn1)),
-epidemiology and disease dynamics[²](#fn2), and breeding ecology.
-[³](#fn3) It’s also at the core of the space-to-event model of
-estimating animal density.[⁴](#fn4) Importantly, the event of interest
-doesn’t just need to be something that can only occur once (like death),
-the TTE framework can accommodate recurring events.
+been used to model resources selection (First-passage-time[^1]),
+epidemiology and disease dynamics[^2], and breeding ecology. [^3] It’s
+also at the core of the space-to-event model of estimating animal
+density.[^4] Importantly, the event of interest doesn’t just need to be
+something that can only occur once (like death), the TTE framework can
+accommodate recurring events.
 
 ![](images/methods.png) Still, we’ll focus on the application to
 survival analysis since it’s the most common and we can use other
@@ -68,9 +68,9 @@ indicate an individual was missing, and thus, censor that time period.
 They refer to it as interval censoring, but it’s not the same “interval
 censoring” as is mentioned in most other texts regarding TTE or survival
 analyses. It’s more accurately called interval truncation and DeCesare
-et.al (2015[⁵](#fn5)) give a good explanation. It’s an artifact of
-Program MARK using a model that does not permit interval censoring. They
-even tell you that you should use their nest-survival module if you have
+et.al (2015[^5]) give a good explanation. It’s an artifact of Program
+MARK using a model that does not permit interval censoring. They even
+tell you that you should use their nest-survival module if you have
 interval censoring.
 
 Compare that to TTE analysis or almost any other analysis we’ll use
@@ -184,7 +184,7 @@ Furthermore, Kaplan-Meier estimates assume there is no interval
 censoring. It’s generally your best bet if you don’t have very many
 individuals in your data set.
 
-Plots of Kaplan-Meier estimates typically show **cumulative** survival
+Plots of Kaplan-Meier estimates typically show cumulative survival
 probability as a function of time in a stair-step pattern. Note that
 this is not implying that survival probability varies with time.
 Kaplan-Meier estimates survival at each time step, but it is visualized
@@ -467,7 +467,8 @@ formatted for use in a nimble model specified below.
 | 11      | 1    | 3     | 0      |
 | 12      | 3    | 25    | 1      |
 
-Table 1. Time to event data format
+Table 1. Time to event data format {.table .cl-aa912626
+quarto-disable-processing="true"}
 
 The **Survive”** package in R which would otherwise fit a Cox
 proportional hazards model does not handle interval censoring so we
@@ -497,7 +498,8 @@ And here is what the GLM Data looks like
 | 2       | 9   | 2        | 1      |
 | 2       | 10  | 1        | 1      |
 
-Table 2. A subset of GLM survival data
+Table 2. A subset of GLM survival data {.table .cl-aabe2e14
+quarto-disable-processing="true"}
 
 #### Analysis using a TTE hazards model
 
@@ -507,6 +509,7 @@ and it will generally produce the same hazard ratios as a Cox PH model
 that doesn’t assume a baseline hazard.
 
 ``` r
+
 library(nimble)
 
 constant.model<-nimble::nimbleCode({
@@ -601,6 +604,7 @@ This means the estimated daily survival from the TTE model is 0.984.
 #### Analysis using logistic exposure
 
 ``` r
+
 #####   Create the link function
 # Link function comes from Ben Bolker's page: https://rpubs.com/bbolker/logregexp
 
@@ -638,6 +642,7 @@ it’s included as a function in the MDChelp package using
 ‘MDChelp::logexp()’
 
 ``` r
+
 ###########
 
 
@@ -655,6 +660,7 @@ parms.logit
     ## 1 (Intercept)     4.02     0.280      14.4 1.00e-46
 
 ``` r
+
 #DSR
 plogis(parms.logit%>%
   pull(estimate))->dsr.logit
@@ -670,6 +676,7 @@ When back-transforming, we need the mean mean of the “exposure”
 variable.
 
 ``` r
+
 mod.clog<-glm(obs.ld~1+offset(log(exposure)),
               family=binomial(link='cloglog'),
               data=glm.dat)
@@ -686,6 +693,7 @@ parms.clog
     ## 1 (Intercept)    0.975    0.0745      13.1 4.36e-39
 
 ``` r
+
 #calculate mean exposure
 mu.exp<-glm.dat%>%pull(exposure)%>%mean()
 
@@ -709,7 +717,8 @@ error. Very mindful, very demure.
 
 [TABLE]
 
-Table 3. Survival estimate comparison among methods
+Table 3. Survival estimate comparison among methods {.table .cl-ab58d78e
+quarto-disable-processing="true"}
 
 ### Survival as a function of time
 
@@ -722,6 +731,7 @@ increases. The survival probability for the first interval is 0.93 and
 the regression coefficent is 0.3.
 
 ``` r
+
 #simulate data
 library(tidyverse)
 set.seed(1234)
@@ -803,6 +813,7 @@ to specify any kind of functional relationship (like a linear model),
 but it can be more challenging to fit.
 
 ``` r
+
 library(nimble)
 
 time.model<-nimble::nimbleCode({
@@ -898,6 +909,7 @@ samples.time<-nimble::runMCMC(time.mcmc,
 #### Analysis using logistic exposure
 
 ``` r
+
 ###########
 
 
@@ -935,6 +947,7 @@ arises from the shape of the cloglog distribution near the tails of
 probability. If you want hazards, just run a hazards model.
 
 ``` r
+
 glm.time.dat$exposure
 
 
@@ -975,22 +988,23 @@ because if you haven’t figured out by now, I’m kind of lazy.
 
     ## [1] 0.7981269
 
-| Model             | Age 1  | Age 2  | Age 3  | Age 4  | Age 5  | Age 6  | Age 7  | Age 8  | Age 9  | Age 10 | Age 11 | Age 12 | Age 13 | Age 14 | Age 15 | Age 16 | Age 17 | Age 18 | Age 19 | Age 20 | Age 21 | Age 22 | Age 23 | Age 24 |
-|-------------------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
-| Hazard            | 0.9550 | 0.9203 | 0.8936 | 0.8732 | 0.8575 | 0.8454 | 0.8361 | 0.8287 | 0.8230 | 0.8185 | 0.8150 | 0.8122 | 0.8101 | 0.8084 | 0.8071 | 0.8061 | 0.8053 | 0.8047 | 0.8042 | 0.8038 | 0.8035 | 0.8033 | 0.8031 | 0.8030 |
+| Model | Age 1 | Age 2 | Age 3 | Age 4 | Age 5 | Age 6 | Age 7 | Age 8 | Age 9 | Age 10 | Age 11 | Age 12 | Age 13 | Age 14 | Age 15 | Age 16 | Age 17 | Age 18 | Age 19 | Age 20 | Age 21 | Age 22 | Age 23 | Age 24 |
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| Hazard | 0.9550 | 0.9203 | 0.8936 | 0.8732 | 0.8575 | 0.8454 | 0.8361 | 0.8287 | 0.8230 | 0.8185 | 0.8150 | 0.8122 | 0.8101 | 0.8084 | 0.8071 | 0.8061 | 0.8053 | 0.8047 | 0.8042 | 0.8038 | 0.8035 | 0.8033 | 0.8031 | 0.8030 |
 | Logistic exposure | 0.9365 | 0.9474 | 0.9565 | 0.9641 | 0.9705 | 0.9757 | 0.9800 | 0.9836 | 0.9865 | 0.9889 | 0.9909 | 0.9926 | 0.9939 | 0.9950 | 0.9959 | 0.9966 | 0.9972 | 0.9977 | 0.9982 | 0.9985 | 0.9988 | 0.9990 | 0.9992 | 0.9993 |
-| State Space       | 0.9622 | 0.9684 | 0.9737 | 0.9781 | 0.9817 | 0.9848 | 0.9874 | 0.9895 | 0.9913 | 0.9928 | 0.9940 | 0.9950 | 0.9959 | 0.9966 | 0.9971 | 0.9976 | 0.9980 | 0.9984 | 0.9986 | 0.9989 | 0.9991 | 0.9992 | 0.9994 | 0.9995 |
-| "Truth"           | 0.9300 | 0.9472 | 0.9603 | 0.9703 | 0.9778 | 0.9835 | 0.9877 | 0.9909 | 0.9932 | 0.9950 | 0.9963 | 0.9972 | 0.9979 | 0.9985 | 0.9989 | 0.9992 | 0.9994 | 0.9995 | 0.9997 | 0.9997 | 0.9998 | 0.9999 | 0.9999 | 0.9999 |
+| State Space | 0.9622 | 0.9684 | 0.9737 | 0.9781 | 0.9817 | 0.9848 | 0.9874 | 0.9895 | 0.9913 | 0.9928 | 0.9940 | 0.9950 | 0.9959 | 0.9966 | 0.9971 | 0.9976 | 0.9980 | 0.9984 | 0.9986 | 0.9989 | 0.9991 | 0.9992 | 0.9994 | 0.9995 |
+| "Truth" | 0.9300 | 0.9472 | 0.9603 | 0.9703 | 0.9778 | 0.9835 | 0.9877 | 0.9909 | 0.9932 | 0.9950 | 0.9963 | 0.9972 | 0.9979 | 0.9985 | 0.9989 | 0.9992 | 0.9994 | 0.9995 | 0.9997 | 0.9997 | 0.9998 | 0.9999 | 0.9999 | 0.9999 |
 
 Table 4. Daily survival estimate comparison among methods, (time-varying
-survival).
+survival). {.table .cl-ad3a5546 quarto-disable-processing="true"}
 
 | Parameter    | Hazard | Logistic exposure | State Space | "Truth" |
 |--------------|--------|-------------------|-------------|---------|
 | 25d survival | 0.803  | 0.695             | 0.798       | 0.753   |
 
 Table 5. Cumulative survival estimate comparison among methods;
-(time-varying survival).
+(time-varying survival). {.table .cl-ad56bee8
+quarto-disable-processing="true"}
 
 Now the fun part. The differences in the daily survival rates among
 different methods, compared to “Truth” (**Table 4.**) doesn’t seem too
@@ -1001,9 +1015,9 @@ underlying distributions (exponential-hazard, modified logistic-logistic
 exposure, logistic-state space). This leads to some non-trivial
 differences in the estimates of the cumulative survival probability
 (**Table 5.**). This is a feature, not a flaw. Even going back to
-Shaffer 2004[⁶](#fn6), the daily survival estimates produced by the
-logistic exposure method and Program MARK are different and would lead
-to substantially different cumulative survival probabilities. In the
+Shaffer 2004[^6], the daily survival estimates produced by the logistic
+exposure method and Program MARK are different and would lead to
+substantially different cumulative survival probabilities. In the
 example provided, the discrepancy among methods is probably also a
 function of the baseline survival probability and how quickly it
 increased. It might not be that bad if, in this case, DSR never got
@@ -1023,30 +1037,28 @@ range of conditions/ parameter values. That said, all models are going
 to be wrong, but they all are useful so do whatever works best in your
 situation.
 
-------------------------------------------------------------------------
-
-1.  Freitas, C., K. M. Kovacs, C. Lydersen, R. A. Ims. 2008. A novel
+[^1]: Freitas, C., K. M. Kovacs, C. Lydersen, R. A. Ims. 2008. A novel
     method for quantifying habitat selection and predicting habitat use.
     45: 1213-1220.
     <https://www.whoi.edu/cms/files/Freitas2008_JAE_57188.pdf>
 
-2.  Heisey, D.M., D. O. Joly, and F. Messier. 2006. The fitting of
+[^2]: Heisey, D.M., D. O. Joly, and F. Messier. 2006. The fitting of
     general force-of-infection models to wildlife disease prevalence
     data. Ecology. 87: 2356-2365.
     <https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1890/0012-9658(2006)87%5B2356:TFOGFM%5D2.0.CO;2>
 
-3.  Karniski, C., E. Krzyszcyk, and J. Mann. 2018. Senescence impacts
+[^3]: Karniski, C., E. Krzyszcyk, and J. Mann. 2018. Senescence impacts
     reproduction and maternal investment in bottlenose dolphins.
     Proceedings of the Royal Society B. 285:20181123.
     <https://royalsocietypublishing.org/doi/full/10.1098/rspb.2018.1123>
 
-4.  Moeller, A. K., P. M. Lukacs, and J. S. Horne. 2018. Three novel
+[^4]: Moeller, A. K., P. M. Lukacs, and J. S. Horne. 2018. Three novel
     methods to estimate abundance of unmarked animals using remote
     cameras. Ecosphere 9(8):e02331
 
-5.  DeCesare, N. J., M. Hebblewhite, P. M. Lukacs, D. Hervieux. 2015.
+[^5]: DeCesare, N. J., M. Hebblewhite, P. M. Lukacs, D. Hervieux. 2015.
     Evaluating Sources of censoring and truncation in telemetry-based
     survival data. Journal of Wildlife Management. 80: 138-148.
     <https://wildlife.onlinelibrary.wiley.com/doi/full/10.1002/jwmg.991>
 
-6.  
+[^6]:

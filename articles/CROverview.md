@@ -95,7 +95,7 @@ particularly care about modeling the initial capture of the animal, you
 only care about what happens after you have caught and released it.
 Methods like Cormack-Jolly-Seber ignore the initial capture process and
 only try to estimate apparent survival and *re*capture probability.
-Other models **do** try to explicitly model the initial capture process
+Other models do try to explicitly model the initial capture process
 (e.g. Jolly-Seber, Pradel, POPAN, closed-capture).
 
 What does each approach get you? By explicitly trying to model the
@@ -190,14 +190,12 @@ them and the key assumptions can help sift through them. Understanding
 key concepts like population closure is critical not just to using these
 models correctly, but is important for other methods based on capture
 recapture (e.g. N-mixture models), or adapting these models to novel
-applications[¹](#fn1) [²](#fn2)
+applications[^1] [^2]
 
-------------------------------------------------------------------------
-
-1.  Stodola et al. 2014. Stopover ecology of American Golden-Plovers in
-    Midwestern agricultural fields.
+[^1]: Stodola et al. 2014. Stopover ecology of American Golden-Plovers
+    in Midwestern agricultural fields.
     <https://bioone.org/journals/the-condor/volume-116/issue-2/CONDOR-13-114.1/Stopover-ecology-of-American-Golden-Plovers-Pluvialis-dominica-in-Midwestern/10.1650/CONDOR-13-114.1.short>
 
-2.  Graham et al. 2023. Exploring the population dynamcis of waterfowl
+[^2]: Graham et al. 2023. Exploring the population dynamcis of waterfowl
     hunters using a mark-recapture approach.
     <https://wildlife.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jwmg.22553>

@@ -58,6 +58,7 @@ Nimble (there are even functions to do that).
 - Run model/get MCMC samples
 
 ``` r
+
 #simulate a multiple  regression  model
 
 
@@ -86,6 +87,7 @@ return(out.list)
 Next, write the model in BUGS that we’ll use to estimate parameters
 
 ``` r
+
 library(nimble)
 #> nimble version 1.4.2 is loaded.
 #> For more information on NIMBLE and a User Manual,
@@ -132,6 +134,7 @@ we want to use for indexing (**n** above, in the **for** loop) is also a
 constant.
 
 ``` r
+
 set.seed(12345)
 demo.dat<-sim.dat(40)
 
@@ -165,6 +168,7 @@ what we’ll call a model object
 
 ``` r
 
+
 demo.mod<-nimbleModel(code=demo.code,
                       data=nim.dat,
                       constants = nim.const,
@@ -190,6 +194,7 @@ The message tells you to use **model\$initializeInfo()**. This should
 tell you that you have nodes without initial values.
 
 ``` r
+
 demo.mod$initializeInfo()
 #>   [Note] Missing values (NAs) or non-finite values were found in model variables: epsilon.
 #>   [Note] This is not an error, but some or all variables may need to be initialized for certain algorithms to operate properly.
@@ -221,6 +226,7 @@ Just for the sake of demonstration, we’ll fix our above issue by
 providing an intial value for epsilon
 
 ``` r
+
 nim.inits<-function(){list(
   epsilon=runif(1,0.001,5),
   b0=rnorm(1,0,1), 
@@ -258,6 +264,7 @@ Once you sort out the initial values and create the model object, you
 configure the MCMC sampler.
 
 ``` r
+
 demo.config<-configureMCMC(demo.mod)
 #> ===== Monitors =====
 #> thin = 1: b0, b1, b2, epsilon
@@ -310,6 +317,7 @@ binary.
 here](https://search.r-project.org/CRAN/refmans/nimble/html/samplers.html)
 
 ``` r
+
 demo.config.alt<-configureMCMC(demo.mod)
 #> ===== Monitors =====
 #> thin = 1: b0, b1, b2, epsilon
@@ -368,6 +376,7 @@ RW sampler to the slice sampler.
 
 ``` r
 
+
 #----------- RW sampler on epsilon---------------------------
 
 
@@ -404,6 +413,7 @@ to review summary statistics and view traceplots. We also use calls of
 
 ``` r
 
+
 #-----------RW samplers
 RW.start<-Sys.time()
 demo.samples<-nimble::runMCMC(demo.comp.mcmc,
@@ -433,12 +443,14 @@ slice.time<-slice.end-slice.start
 Look at the traceplots of each
 
 ``` r
+
 MCMCvis::MCMCtrace(demo.samples,pdf=FALSE)
 ```
 
 ![](Quick-Nimble-Demo_files/figure-html/unnamed-chunk-14-1.png)![](Quick-Nimble-Demo_files/figure-html/unnamed-chunk-14-2.png)
 
 ``` r
+
 
 MCMCvis::MCMCtrace(alt.samples,pdf=FALSE)
 ```
@@ -449,6 +461,7 @@ There is better mixing for the slice sampling. Check the summary
 statistics
 
 ``` r
+
 
 MCMCvis::MCMCsummary(demo.samples)->RW.summary
 RW.summary
