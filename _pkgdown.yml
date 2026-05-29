@@ -32,15 +32,19 @@ reference:
   contents:
   - tidy.unm
 
-
 articles:
 - title: Capture Recapture
   contents:
   - articles/CROverview
   - articles/CCAMarked
   - articles/CCAUnmarked
+  - articles/DetProb
+- title: Hypothesis Testing and Linear model basics
+  contents:
+  - articles/Equivalence
 - title: Other
   contents:
+  - articles/DetProb
   - TTE-Advanced
   - articles/Bootstrapping
   - Quick-Nimble-Demo
