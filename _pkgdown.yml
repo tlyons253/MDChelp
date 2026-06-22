@@ -3,7 +3,7 @@ development:
 url: https://tlyons253.github.io/MDChelp/
 template:
   bootstrap: 5
-  math-rendering: mathjax
+  math-rendering: katex
 
 reference:
 - title: data simulation

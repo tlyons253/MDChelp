@@ -213,19 +213,25 @@ $$ H_0:\theta_{typical}-\theta_{manged} \geq M\\ H_A: \theta_{typical}-\theta_{m
   
 and we need to define $M$, or the margin we care about. This is where people get squeamish. In practice, $M$ typically isn't 0 (or 1 for an $OR$). There is typically uncertainty in $\theta_{typical}$ and we never actually expect a difference to be 0. M is usually some difference that we think is negligible. So how much worse, does the alternative really need to be before we care? Defining that makes people squeamish, but it's likely folks can identify some threshold. In cases where you really want to sit in the fence and not use your ecological/biological knowledge to define the threshold, $M$ could be set relative to the upper confidence limit of $\theta_{typical}$. This suggests the difference between the two parameters needs to exceed the uncertainty in the control or reference group.
 
-In the pheasant example, maybe we are ok as long as $\theta_{managed}$ isn't more than 10% less than $\theta_{typical}$. This corresponds to an threshold $OR\sim0.8$. A fun fact about non-inferiority tests, they are one-tailed while tradition NHST is two-tailed. If we were to keep our type I error rate the same as NHST, that means we now can use a 90% confidence interval and test whether the lower bound of our CI includes 0.8.
+In the pheasant example, maybe we are ok as long as $\theta_{managed}$ isn't more than 10% less than $\theta_{typical}$. This corresponds to an threshold $OR\sim0.8$ and statistical hypotheses:
+
+$$ H_0:\frac{\theta_{typical}}{\theta_{managed}} \leq\ 0.8\\ H_A:\ \frac{\theta_{typical}}{\theta_{managed}}\  >\ 0.8 $$
+
+A fun fact about non-inferiority tests, they are one-tailed while tradition NHST is two-tailed. If we were to keep our type I error rate the same as NHST, that means we now can use a 90% confidence interval and test whether the lower bound of our CI includes 0.8.
 
 ```{r}
 exp(confint(mod.nhst, level=0.90))
 ```
 Huzzah! The lower bound doesn't include 0.8 so we can conclude that the alternative is non inferior. But we should also simulate additional data sets and compare it to NHST. Remember, under NHST we failed to reject the null ~ 60% of the time.
 ```{r}
-map_dbl(1:1000,~res.sim(threshold=0.8,alpha=0.9))%>%
+map_dbl(1:1000,~res.sim(threshold=0.8,alpha=0.1))%>%
   sum()/1000
 ```
-So now we only fail to reject the null 40% of the time. In practical terms, under NHST, we select the true hypothesis (a difference exists), only ~ 40% of the time, but under non-inferiority, we select the true hypothesis ~ 60% of the time. We have more power (although neither is still great).
+So now we  fail to reject the null (not inferior) only about 24% of the time. In practical terms, under NHST, we select the true hypothesis (a difference exists), only ~ 40% of the time, but under non-inferiority, we select the true hypothesis (non-inferior) about 75% of the time.
 
-Is this cheating? Maybe, depending on who you talk to. We've done two things different from NHST. First, we lowered the threshold from 0 to -10% (or in $OR$ terms, from 1 to 0.8). Second, we are using the same $\alpha=0.05$ but only performing a one-tail test. Some people see this as lowering the bar and would recommend using $\alpha=0.025$. Instead, think of it as a reward for having a more appropriately defined statistical hypothesis for the problem at hand! 
+Is this cheating? No, but there is an important caveat here. You really ought to be interested in demonstrating non-inferiority and not framing a real expectation of a difference as just not inferior.
+
+Still the swing in selecting the correct hypothesis was large, but that's because we've done a few things different from NHST.  First, there is a real difference of 0.15, and we are only interested in knowing if that difference is > -0.1. Second, we lowered the threshold from 0 to -10% (or in $OR$ terms, from 1 to 0.8). Third, we are using the same $\alpha=0.05$ but only performing a one-tail test. Some people see this as lowering the bar and would recommend using $\alpha=0.025$. Instead, think of it as a reward for having a more appropriately defined statistical hypothesis for the problem at hand! 
 
 But wait, there is more!
 
@@ -277,18 +283,18 @@ exp(confint(mod.nhst,level=0.90))
 Unfortunately, we can't declare $\theta_{managed}$ is superior to $\theta_{typical}$, despite that being how we simulated the data. But how does power compare to NHST?
 
 ```{r}
-map_dbl(1:1000,~res.sim(threshold=1.23,alpha=0.9))%>%
+map_dbl(1:1000,~res.sim(threshold=1.23,alpha=0.1))%>%
   sum()/1000
 ```
 
-Despite performing a one-tail test, it's actually worse! what gives? Well, we specified a difference larger than 0 now, so there may have been instances where simulated data estimated an $OR$ >0 but less than 1.23. If we wanted the one-tailed equivalent from NHST, we could just examine whether the lower bound of 1 fell within a 90% CI.
+Despite performing a one-tail test, it's actually worse! what gives? In NHST we failed to reject the null ~60% of the time, but now it's almost 70%! Well, we specified a difference larger than 0 now, so there may have been instances where simulated data estimated an $OR$ >1 but less than 1.23. If we wanted the one-tailed equivalent from NHST, we could just examine whether the lower bound of 1 fell within a 90% CI.
 ```{r}
-map_dbl(1:1000,~res.sim(threshold=1,alpha=0.9))%>%
+map_dbl(1:1000,~res.sim(threshold=1,alpha=0.1))%>%
   sum()/1000
 ```
 
-Now it seems that only 2% of the time, do we find that an $OR$ of 1
+So, under NHST with a one-tail test, we improve from failing to reject the null about ~60% (selecting the correct hypothesis ~40%) of the time to only about 45% of the time (selecting the correct hypothesis 55% of the time). Again, this has better power (55% vs 40%) because it is one-tailed. It's also better than the superiority test (55% vs 30% power) but in that case, it's because our $OR$ threshold is 1 under NHST vs 1.23 under superiority testing.
 
 ## Summary
 
-For better or worse, statistical hypothesis testing is part of the statistical milleau. Typical NHST sets a pretty high bar for rejecting a null hypothesis, but more importantily, is incongruent with our understanding of biology/ecology and reduces our need to think critically about our problem. Equivalence testing offers an alternative framework that requires us to be specific about how much of a difference we consider to be biologically relevant. It also is the only correct way to provide evidence that two quantites are "functionally equivalent."...
+For better or worse, statistical hypothesis testing is part of the milleau that is data analysis. Typical NHST sets a pretty high bar for rejecting a null hypothesis, but more importantly, it is incongruent with our understanding of biology/ecology and reduces our need to think critically about our problem. Equivalence testing and superiority/inferiority testing offer an alternative framework that requires us to be specific about how much of a difference we consider to be biologically relevant. These alternatives alter traditional $H_0$ and $H_A$ hypotheses and provide the only legitimate framework for testing whether two quantities are "similar enough."  
