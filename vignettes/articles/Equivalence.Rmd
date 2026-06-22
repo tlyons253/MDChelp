@@ -22,7 +22,7 @@ library(MDChelp)
 
 The dominant paradigm or way of approaching statistics is based on **Null-hypothesis significance testing (NHST)**. All the ANOVAs, t-tests, and regressions you are probably familiar with operate this way. As a recap, under this approach, you assume the the effect of a covariate or the difference between treatments, groups, etc., is 0. That is the null hypothesis. The alternative is the difference or effect is not zero. In a grossly simplified example, you collect data and, with a specified false-positive error rate (i.e. a p-value (P); $\alpha$=0.05) determine you either have evidence to reject the null hypothesis, or you fail to reject the null. **FAILURE TO REJECT THE NULL IS NOT THE SAME AS CONCLUDING THE NULL IS TRUE**. 
 
-$$ H_0: \theta_1-\theta_2=0\\H_A: \theta_1-\theta_2 \neq 0$$
+$$ H_0: \theta_1-\theta_2=0\\ H_A: \theta_1-\theta_2 \neq 0$$
 <p align="center"><em>Equations representing the typical null and alternative hypotheses that the difference in two parameters is 0 (null) or not equal to 0.</em></p>
 
 
@@ -94,8 +94,6 @@ flextable::align(align = "center", part = "all")%>%
     flextable::autofit(.)
 ```
 
-
-
 ## Equivalence/ Superiority/ Non-Inferiority Testing: A more better way to do biology/ecology
 
 If we accept that there is always some small difference between parameters or quantities we measure, then all NHST is really testing is whether our sample size is large enough to detect that difference. So why are we doing it?
@@ -153,9 +151,9 @@ sim.dat<-nest.sim()
 First up is NHST. NHST is probably the most common framework people will go to to in this example. It's straightforward.
 
 NHST is appropriate if your question is: "Is nest survival different between typical grasslands and managed grasslands?" and is represented by the statistical hypotheses:
-$$ H_0: \theta_{typical}-\theta_{managed}=0\\H_A: \theta_{typical}-\theta_{managed} \neq 0$$
+$$ H_0: \theta_{typical}-\theta_{managed}=0\\ H_A: \theta_{typical}-\theta_{managed} \neq 0$$
 Because this is logistic regression, the above is more accurately written as:
-$$ H_0: \frac{Odds_{managed}}{Odds_{typical}}=1\\H_A: \frac{Odds_{managed}}{Odds_{typical}} \neq 1$$
+$$ H_0: \frac{Odds_{managed}}{Odds_{typical}}=1\\ H_A: \frac{Odds_{managed}}{Odds_{typical}} \neq 1$$
 The fraction in each hypothesis is an odds ratio ($OR$). We don't have time to get into the weeds about what odds are, but just know that, because we are working with logistic regression, one of the quantities we will be interested in will be the odds ratio and that this representation is the same as the previous one, just adapted for logistic regression.
 
 We test it by running a simple glm
@@ -211,9 +209,7 @@ In our pheasant example, maybe we are replacing food plots with high-diversity f
 
 Now, the hypotheses change:
 
-$$ H_0: 
-    \theta_{typical}-\theta_{manged} \geq M \\
-  H_A: \theta_{typical}-\theta_{manged}  < M $$
+$$ H_0:\theta_{typical}-\theta_{manged} \geq M\\ H_A: \theta_{typical}-\theta_{manged}  < M $$
   
 and we need to define $M$, or the margin we care about. This is where people get squeamish. In practice, $M$ typically isn't 0 (or 1 for an $OR$). There is typically uncertainty in $\theta_{typical}$ and we never actually expect a difference to be 0. M is usually some difference that we think is negligible. So how much worse, does the alternative really need to be before we care? Defining that makes people squeamish, but it's likely folks can identify some threshold. In cases where you really want to sit in the fence and not use your ecological/biological knowledge to define the threshold, $M$ could be set relative to the upper confidence limit of $\theta_{typical}$. This suggests the difference between the two parameters needs to exceed the uncertainty in the control or reference group.
 
@@ -229,7 +225,7 @@ map_dbl(1:1000,~res.sim(threshold=0.8,alpha=0.9))%>%
 ```
 So now we only fail to reject the null 40% of the time. In practical terms, under NHST, we select the true hypothesis (a difference exists), only ~ 40% of the time, but under non-inferiority, we select the true hypothesis ~ 60% of the time. We have more power (although neither is still great).
 
-Is this cheating? Maybe, depending on who you talk to. We've done two things different from NHST. First, we lowered the threshold from 0 to -10% (or in $OR$ terms, from 1 to 0.8). Second, we are using the same $\alpha=0.05$ but only performing a one-tail test. Some people see this as lowering the bar and would recommend using $\alpha=0.025$, but I think this is smart. If your question really is about inferiority, why do you need a more conservative $\alpha$? 
+Is this cheating? Maybe, depending on who you talk to. We've done two things different from NHST. First, we lowered the threshold from 0 to -10% (or in $OR$ terms, from 1 to 0.8). Second, we are using the same $\alpha=0.05$ but only performing a one-tail test. Some people see this as lowering the bar and would recommend using $\alpha=0.025$. Instead, think of it as a reward for having a more appropriately defined statistical hypothesis for the problem at hand! 
 
 But wait, there is more!
 
@@ -240,12 +236,11 @@ Another alternative to NHST is equivalence testing. This is really appropriate w
    
 $$ \begin{equation}
   H_0: \begin{cases}
-    \theta_{typical}-\theta_{manged} \leq -M \\
-    \quad \quad\quad and\\
+    \theta_{typical}-\theta_{manged} \leq -M \\ 
+    \quad \quad\quad and\\ 
     \theta_{typical}-\theta_{manged} \geq\ \ M
   \end{cases}
-  \end{equation}\\
-  H_A: -M \leq\ \theta_{typical}-\theta_2 \leq\ M$$
+  \end{equation}\\ H_A: -M \leq\ \theta_{typical}-\theta_2 \leq\ M$$
 
 
 Like inferiority testing, you will need to define a margin of equivalence, but now it will be two-sided. This may be trickier because you may have noticed, that if you set the margin wide enough, anything could be declared equivalent. This is where being a biologist comes in and you need to be able to justify that interval. Likewise, if the uncertainty surrounding a parameter is large, than it will be nearly impossible to determine equivalence (or inferiority for that matter).
