@@ -14,7 +14,7 @@ specified false-positive error rate (i.e. a p-value (P);
 hypothesis, or you fail to reject the null. **FAILURE TO REJECT THE NULL
 IS NOT THE SAME AS CONCLUDING THE NULL IS TRUE**.
 
-\\ H_0: \theta_1-\theta_2=0\\H_A: \theta_1-\theta_2 \neq 0\\
+\\ H_0: \theta_1-\theta_2=0\\ H_A: \theta_1-\theta_2 \neq 0\\
 
 *Equations representing the typical null and alternative hypotheses that
 the difference in two parameters is 0 (null) or not equal to 0.*
@@ -63,7 +63,7 @@ biologists who quickly learn to tap dance, describing their results as
 
 The minimum difference (D) needed to reach tcriticial for a one sample,
 two-tail T test for a given sample size (N); α = 0.05; σ = 10 {.table
-.cl-89e5c18e quarto-disable-processing="true"}
+.cl-30da55b4 quarto-disable-processing="true"}
 
 ## Equivalence/ Superiority/ Non-Inferiority Testing: A more better way to do biology/ecology
 
@@ -157,10 +157,10 @@ go to to in this example. It’s straightforward.
 NHST is appropriate if your question is: “Is nest survival different
 between typical grasslands and managed grasslands?” and is represented
 by the statistical hypotheses: \\ H_0:
-\theta\_{typical}-\theta\_{managed}=0\\H_A:
+\theta\_{typical}-\theta\_{managed}=0\\ H_A:
 \theta\_{typical}-\theta\_{managed} \neq 0\\ Because this is logistic
 regression, the above is more accurately written as: \\ H_0:
-\frac{Odds\_{managed}}{Odds\_{typical}}=1\\H_A:
+\frac{Odds\_{managed}}{Odds\_{typical}}=1\\ H_A:
 \frac{Odds\_{managed}}{Odds\_{typical}} \neq 1\\ The fraction in each
 hypothesis is an odds ratio (\\OR\\). We don’t have time to get into the
 weeds about what odds are, but just know that, because we are working
@@ -270,7 +270,7 @@ worse than “typical”.
 
 Now, the hypotheses change:
 
-\\ H_0: \theta\_{typical}-\theta\_{manged} \geq M \\ H_A:
+\\ H_0:\theta\_{typical}-\theta\_{manged} \geq M\\ H_A:
 \theta\_{typical}-\theta\_{manged} \< M \\
 
 and we need to define \\M\\, or the margin we care about. This is where
@@ -324,9 +324,9 @@ Is this cheating? Maybe, depending on who you talk to. We’ve done two
 things different from NHST. First, we lowered the threshold from 0 to
 -10% (or in \\OR\\ terms, from 1 to 0.8). Second, we are using the same
 \\\alpha=0.05\\ but only performing a one-tail test. Some people see
-this as lowering the bar and would recommend using \\\alpha=0.025\\, but
-I think this is smart. If your question really is about inferiority, why
-do you need a more conservative \\\alpha\\?
+this as lowering the bar and would recommend using \\\alpha=0.025\\.
+Instead, think of it as a reward for having a more appropriately defined
+statistical hypothesis for the problem at hand!
 
 But wait, there is more!
 

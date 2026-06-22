@@ -467,7 +467,7 @@ formatted for use in a nimble model specified below.
 | 11      | 1    | 3     | 0      |
 | 12      | 3    | 25    | 1      |
 
-Table 1. Time to event data format {.table .cl-aa912626
+Table 1. Time to event data format {.table .cl-513084a0
 quarto-disable-processing="true"}
 
 The **Survive”** package in R which would otherwise fit a Cox
@@ -498,7 +498,7 @@ And here is what the GLM Data looks like
 | 2       | 9   | 2        | 1      |
 | 2       | 10  | 1        | 1      |
 
-Table 2. A subset of GLM survival data {.table .cl-aabe2e14
+Table 2. A subset of GLM survival data {.table .cl-51712afa
 quarto-disable-processing="true"}
 
 #### Analysis using a TTE hazards model
@@ -717,7 +717,7 @@ error. Very mindful, very demure.
 
 [TABLE]
 
-Table 3. Survival estimate comparison among methods {.table .cl-ab58d78e
+Table 3. Survival estimate comparison among methods {.table .cl-51f51838
 quarto-disable-processing="true"}
 
 ### Survival as a function of time
@@ -996,14 +996,14 @@ because if you haven’t figured out by now, I’m kind of lazy.
 | "Truth" | 0.9300 | 0.9472 | 0.9603 | 0.9703 | 0.9778 | 0.9835 | 0.9877 | 0.9909 | 0.9932 | 0.9950 | 0.9963 | 0.9972 | 0.9979 | 0.9985 | 0.9989 | 0.9992 | 0.9994 | 0.9995 | 0.9997 | 0.9997 | 0.9998 | 0.9999 | 0.9999 | 0.9999 |
 
 Table 4. Daily survival estimate comparison among methods, (time-varying
-survival). {.table .cl-ad3a5546 quarto-disable-processing="true"}
+survival). {.table .cl-53d9accc quarto-disable-processing="true"}
 
 | Parameter    | Hazard | Logistic exposure | State Space | "Truth" |
 |--------------|--------|-------------------|-------------|---------|
 | 25d survival | 0.803  | 0.695             | 0.798       | 0.753   |
 
 Table 5. Cumulative survival estimate comparison among methods;
-(time-varying survival). {.table .cl-ad56bee8
+(time-varying survival). {.table .cl-53f7d1de
 quarto-disable-processing="true"}
 
 Now the fun part. The differences in the daily survival rates among
