@@ -25,12 +25,11 @@ more details, but it’s bad. The long and short of it is:
   are biased. Think about if you left out a quadratic term of a linear
   model e.g.
 
-\\Y=\beta_0+\beta_1\cdot x_1\\ \\ vs\\ \\ Y=\beta_0+\beta_1\cdot x_1 +
-\beta_2\cdot (x_1)^2\\
+Y=\beta_0+\beta_1\cdot x_1\\ \\ vs\\ \\ Y=\beta_0+\beta_1\cdot x_1 +
+\beta_2\cdot (x_1)^2
 
-Using just the linear term \\(\beta_1)\\ would not accurately describe
-the relationship between \\Y\\ and \\x_1\\ so \\\beta_1\\ would be
-biased.
+Using just the linear term (\beta_1) would not accurately describe the
+relationship between Y and x_1 so \beta_1 would be biased.
 
 - Another common area where this can be an issue is if you use a
   covariate that is an areal measurement or a count of something else
@@ -41,9 +40,9 @@ biased.
 
 - When other assumptions about the model/data aren’t met, such as the
   normal residuals in a LM or mean-equal-to-variance in a Poisson, the
-  sampling distribution of \\\beta\\ is underestimated. This means the
-  reported SE for any particular \\\beta\\ is too small and any
-  resulting confidence interval or p-value will be incorrect.
+  sampling distribution of \beta is underestimated. This means the
+  reported SE for any particular \beta is too small and any resulting
+  confidence interval or p-value will be incorrect.
 
 What to do when you violate these assumptions?
 
@@ -61,7 +60,7 @@ grouping variable (e.g. ignoring the potential for correlated survival
 probability of gamebird chicks in the same brood), or because there are
 more 0’s than expected. If you were to fit a model that ignored these
 factors, you can no longer trust the SE’s , CI’s, or p-values of your
-\\\beta's\\ output by typical routines (e.g. glm in R; [See this
+\beta's output by typical routines (e.g. glm in R; [See this
 section](https://statistics4ecologists-v3.netlify.app/10-maximumlikelihood#sec-profile)
 of Dr. Fieberg’s book for a more in-depth discussion of issues with the
 CI’s and p-values reported in in common software functions) and you
@@ -90,8 +89,7 @@ still have to have deal with issues like linearity, independence, etc.
 either through the model itself and/or via the resampling method. If
 those assumptions can still be met, then the bootstrap allows you to
 estimate the *distribution* of parameters, be they the regression
-coefficients (\\\beta's\\) or other model-based estimates or
-predictions.
+coefficients (\beta's) or other model-based estimates or predictions.
 
 The short version is, you can use the bootstrap to estimate the SE of a
 parameter. How does this work? The brief version is:
@@ -301,9 +299,9 @@ thousands of estimates.
 
 - If it looks normal, you can compute the SE of those bootstrap
   estimates (e.g. `sd(boostrap_estimates$Var1->SE`) and then compute the
-  95% (or some other %) confidence interval as \\\mu\\ \pm\\
-  1.96\times\\ SE\\ where \\\mu\\ again is the estimate from the model
-  using the original data.
+  95% (or some other %) confidence interval as \mu\\ \pm\\ 1.96\times\\
+  SE where \mu again is the estimate from the model using the original
+  data.
 
 - If it shows skew (which it likely will, even if it’s just fat tails),
   you need to use some form of a quantile
@@ -325,8 +323,8 @@ thousands of estimates.
       interval given a table of bootstrapped estimates and the original
       data (`MDChelp::bca_jacknife`). Right now, it’s only been tested
       for creating a table of regression parameter estimates and the
-      CI’s \\(\beta's)\\ but you might be able to get it to do the same
-      for model-based estimates (e.g. marginal means, contrasts, etc.)
+      CI’s (\beta's) but you might be able to get it to do the same for
+      model-based estimates (e.g. marginal means, contrasts, etc.)
       depending on how you identify a parameter of interest in the table
       and the function you provide.
 

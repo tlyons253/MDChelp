@@ -174,7 +174,7 @@ Kaplan-Meier is called a non-parametric method because any of the
 quantities you describe (cumulative survival, period survival) are
 obtained by simple arithmetic where:
 
-\\ S_t=\frac{N\_{alive\\ at\\ t}}{N\_{alive\\ t-1}}\\
+S_t=\frac{N\_{alive\\ at\\ t}}{N\_{alive\\ t-1}}
 
 You’re not using a linear model to estimate parameters. If you only use
 discrete covariates, then a logit model as described above is equivalent
@@ -189,7 +189,7 @@ probability as a function of time in a stair-step pattern. Note that
 this is not implying that survival probability varies with time.
 Kaplan-Meier estimates survival at each time step, but it is visualized
 as the proportion of individuals remaining at time T, which is
-equivalent to \\S^T\\, where \\S\\ is the 1-unit survival probability.
+equivalent to S^T, where S is the 1-unit survival probability.
 
 ![](TTE-Advanced_files/figure-html/unnamed-chunk-4-1.png)
 
@@ -206,19 +206,19 @@ survival probability.
 An alternative to using logit-link regression is to use a log-log link
 or:
 
-\\S=exp(-exp(X\beta))\\ and\\ the\\ inverse\\ X\beta=log(-log(S))\\
+S=exp(-exp(X\beta))\\ and\\ the\\ inverse\\ X\beta=log(-log(S))
 
-where \\S\\ is the survival probability and \\X\beta\\ is the linear
-predictor. This approach gives the same interpretation (hazard ratios)
-of the \\\beta_k\\ regression coefficients as in proportional hazard
-models. Often this is preferable to using the logit link because hazards
-ratios (the relative difference in mortality) don’t change whether your
-model is talking about weekly, monthly, or annual survival. Odds ratios
-will differ, which may be just confusing or worse, misleading. In R, you
-have to use the complementary log-log link, which is equivalent to
-replaceing \\S\\ with \\M\\, as that is what \\X\beta\\ predicts. In R,
-you still code your data as 1=alive, 0=dead, but you are essentially
-modeling the 0’s when using that data structure and the cloglog link.
+where S is the survival probability and X\beta is the linear predictor.
+This approach gives the same interpretation (hazard ratios) of the
+\beta_k regression coefficients as in proportional hazard models. Often
+this is preferable to using the logit link because hazards ratios (the
+relative difference in mortality) don’t change whether your model is
+talking about weekly, monthly, or annual survival. Odds ratios will
+differ, which may be just confusing or worse, misleading. In R, you have
+to use the complementary log-log link, which is equivalent to replaceing
+S with M, as that is what X\beta predicts. In R, you still code your
+data as 1=alive, 0=dead, but you are essentially modeling the 0’s when
+using that data structure and the cloglog link.
 
 Interval censoring can be accommodated when using the logit-link by
 using the logistic-exposure link, and including an offset for the number
@@ -237,27 +237,27 @@ survival in discrete time, the big mental flip for me in wrapping my
 head around this has been stopping thinking about my analyses like
 graphs of DSR and instead, thinking about graphs that show cumulative
 survival. It’s that curve, called a survivor function that TTE is
-estimating. The derivative of that curve at any time point is \\h(t)\\
-or the hazard function.
+estimating. The derivative of that curve at any time point is h(t) or
+the hazard function.
 
 The math to develop the survivor function is fundamentally different
 then using something like logstic (exposure) regression. When using the
 logit link, you can develop the equivalent information by computing the
 product of the logit-transformed linear predictors
 
-\\Discrete\\ time ,\\ logit\\ link\\
+Discrete\\ time ,\\ logit\\ link\\
 S\_{n\|1}=\prod\_{t=1}^{N}S_t=S_1\cdot S_2\cdot S_3...S_n\\
-S_t=\frac{exp(X\beta)}{1+exp(X\beta)}\\
+S_t=\frac{exp(X\beta)}{1+exp(X\beta)}
 
 and what it looks like if we used a proportional hazards model
 
-\\TTE\\ or\\ Continuous\\ Time-Proportional Hazards\\
-S\_{1\|n}=exp(-\sum\_{t=1}^{N}{exp(X\beta)})\\
+TTE\\ or\\ Continuous\\ Time-Proportional Hazards\\
+S\_{1\|n}=exp(-\sum\_{t=1}^{N}{exp(X\beta)})
 
 It doesn’t look like much different, but it makes some math things
 easier. Particularly, as mentioned before, comparing the effect of a
 covariate on the outcome at a different unit than what you initially
-measured \\t\\ on. It also becomes easier to model a wider of nonlinear
+measured t on. It also becomes easier to model a wider of nonlinear
 effects time or age on survival than is typically available in a GLM
 (e.g. linear, quadratic, cubic…). The figure to the right demonstrates
 that. It comes from a TTE workshop at the TWS meeting in Reno in 2019,
@@ -271,12 +271,12 @@ mortality. If the hazard is high, mortality is high and vice versa. TTE
 focuses on estimating the timing of events regardless of actual
 procedure.
 
-The simplest form of a TTE linear model is \\h(t) = \lambda_0 \cdot
-\lambda_t\\ This is the hazard at time \\t\\, is the product of some
-baseline hazard\\\lambda_0\\, and covariates \\\lambda_t\\ that can be
-modeled using a log link.
+The simplest form of a TTE linear model is h(t) = \lambda_0 \cdot
+\lambda_t This is the hazard at time t, is the product of some baseline
+hazard\lambda_0, and covariates \lambda_t that can be modeled using a
+log link.
 
-\\\lambda_t=exp(\beta_1X_1+\beta_2X_2...\beta_kX_k)\\
+\lambda_t=exp(\beta_1X_1+\beta_2X_2...\beta_kX_k)
 
 This particular formulation is a proportional hazards (PH) model.
 Proportional hazards models can be semi-parametric, where you don’t try
@@ -293,15 +293,14 @@ accelerated-failure-time (AFT) model, or something else.
 The semi-parametric hazard model is synonymous with Cox’s proportional
 hazard. It is not, however, the only version of a proportional hazard
 model. Cox gets his name attached because he came up with a slick way to
-estimate the regression coefficients of \\\lambda_t\\ without ever
-having to estimate \\\lambda_0\\, using a partial likelihood. People
-don’t really like trying to have to specify that baseline so it’s often
-preferable to use this approach. However, a true Cox’s proportional
-hazard model doesn’t work with interval censoring, so most applications
-will probably use a parametric hazards model. For example, if you have
-interval censoring and want to use a proportional hazard model, you will
-actually fit a parametric hazard model, using an exponential baseline
-hazard.
+estimate the regression coefficients of \lambda_t without ever having to
+estimate \lambda_0, using a partial likelihood. People don’t really like
+trying to have to specify that baseline so it’s often preferable to use
+this approach. However, a true Cox’s proportional hazard model doesn’t
+work with interval censoring, so most applications will probably use a
+parametric hazards model. For example, if you have interval censoring
+and want to use a proportional hazard model, you will actually fit a
+parametric hazard model, using an exponential baseline hazard.
 
 Important to note, like the cloglog link, you are modeling mortality, so
 negative coefficients (log-hazard ratios) mean a negative association
@@ -325,20 +324,20 @@ Another way to see some of these connections is to re-write the time to
 event model as a linear function of the times of the event, not the
 hazard:
 
-\\log(T)=\beta_0+\beta_1X_1+\beta_2X_2...+\sigma\epsilon\\
+log(T)=\beta_0+\beta_1X_1+\beta_2X_2...+\sigma\epsilon
 
-where an random disturbance term \\\epsilon\\ follows some distribution.
-Most software routines don’t estimate the variance of \\\epsilon\\ but
-hold it constant and estimate \\\sigma\\ as a scaling parameter instead.
-As is described in the Paul Allison SAS survival book, depending on the
-distribution you assume for \\\epsilon\\, there is a corresponding
-hazard function:
+where an random disturbance term \epsilon follows some distribution.
+Most software routines don’t estimate the variance of \epsilon but hold
+it constant and estimate \sigma as a scaling parameter instead. As is
+described in the Paul Allison SAS survival book, depending on the
+distribution you assume for \epsilon, there is a corresponding hazard
+function:
 
-1.  if \\\epsilon\\ is extreme-value (exponential distribution) and
-    \\\sigma\\ is fixed at one then T is exponentially distributed and
-    gives a hazard function:
+1.  if \epsilon is extreme-value (exponential distribution) and \sigma
+    is fixed at one then T is exponentially distributed and gives a
+    hazard function:
 
-\\log(h(t))=\beta_0^\*+\beta_1^\*X_1...\beta_k^\*X_k\\
+log(h(t))=\beta_0^\*+\beta_1^\*X_1...\beta_k^\*X_k
 
 This is the functionally the same hazard model used in Cox’s PH but now
 with an intercept. This is an exponential model, or a constant hazard
@@ -346,41 +345,41 @@ because nothing in here specifically models the hazard as a function of
 time. If we did have a term here that was a function of time, it would
 be an AFT model.
 
-2.  if \\\epsilon\\ is extreme-value (exponential distribution) but
-    \\\sigma\\ isn’t fixed at 1, then T follows a Weibull distribution
-    and, per the SAS survival book:
+2.  if \epsilon is extreme-value (exponential distribution) but \sigma
+    isn’t fixed at 1, then T follows a Weibull distribution and, per the
+    SAS survival book:
 
-\\log(h(t))=\alpha\log(t)+\beta_0^\*+\beta_1^\*X_1...\beta_k^\*X_k\\
+log(h(t))=\alpha\log(t)+\beta_0^\*+\beta_1^\*X_1...\beta_k^\*X_k
 
-This is now an AFT, depending on the parameter value of \\\alpha\\(see
-pp. 20-21 in SAS survival book). In this case, \\\alpha\\ controls how
-the hazard varies across time, ensuring that the event times T follow a
-Weibull distribution. If \\\alpha\\ is just 0, then the hazard is
-constant through time and we’re back at the exponential distribution.
+This is now an AFT, depending on the parameter value of \alpha(see
+pp. 20-21 in SAS survival book). In this case, \alpha controls how the
+hazard varies across time, ensuring that the event times T follow a
+Weibull distribution. If \alpha is just 0, then the hazard is constant
+through time and we’re back at the exponential distribution.
 
 Fun fact, the Weibull above is both and AFT and a PH model, and it’s the
 only form that can be both. That’s because, in the equation above, you
-could think of the \\\alpha\log(t)\\ as a baseline hazard
+could think of the \alpha\log(t) as a baseline hazard
 
 Another way to write the Weibull hazard can be found in handout 9
 [here](NA) is as:
 
-\\h(t)=\lambda p t^{p-1}\\ log(h(t))=log(\lambda)+log(p)+(p-1)log(t)\\
-log(h(t))=\alpha\\ log(t) +\beta_0^\*+\beta_1^\*X_1...\beta_k^\*X_k\\
+h(t)=\lambda p t^{p-1}\\ log(h(t))=log(\lambda)+log(p)+(p-1)log(t)\\
+log(h(t))=\alpha\\ log(t) +\beta_0^\*+\beta_1^\*X_1...\beta_k^\*X_k
 
-where \\p\\ is \\\frac{1}{\sigma}\\ from the \\log(T)\\ equation above.
-So it looks like the difference between the two resources is \\\alpha
-\sim p-1\\ and the value of log(p) seems to end up in the \\\beta_0\\?
+where p is \frac{1}{\sigma} from the log(T) equation above. So it looks
+like the difference between the two resources is \alpha \sim p-1 and the
+value of log(p) seems to end up in the \beta_0?
 
 Other forms include the Log logistic
 
-\\h(t)=\frac{\lambda p t^{p-1}}{1+\lambda t^p}\\ which gives a
-proportional odds model. All of these are AFT models
+h(t)=\frac{\lambda p t^{p-1}}{1+\lambda t^p} which gives a proportional
+odds model. All of these are AFT models
 
 Typically, however, when you are fitting an AFT model you’re not writing
-a linear model for the hazard, your linear model is for \\log(T)\\ and
-you coefficients will be expressed as their effect on survival time, not
-the hazard.
+a linear model for the hazard, your linear model is for log(T) and you
+coefficients will be expressed as their effect on survival time, not the
+hazard.
 
 #### What makes a model an AFT and/or PH?
 
@@ -403,7 +402,7 @@ code it up (or an existing package) where you put your linear model on
 survival time, not the hazard. This is because anything other than an
 exponential distribution gets really messy looking on the hazard scale.
 You can still derive it, but it’s more straight forward to write the
-linear model for \\T\\, not \\h(t)\\
+linear model for T, not h(t)
 
 **Some** AFT models are also PH models (e.g. Weibull), but most aren’t.
 They don’t need to be. The whole value of AFT models are for when you do
@@ -467,7 +466,7 @@ formatted for use in a nimble model specified below.
 | 11      | 1    | 3     | 0      |
 | 12      | 3    | 25    | 1      |
 
-Table 1. Time to event data format {.table .cl-513084a0
+Table 1. Time to event data format {.table .cl-a463cf86
 quarto-disable-processing="true"}
 
 The **Survive”** package in R which would otherwise fit a Cox
@@ -498,7 +497,7 @@ And here is what the GLM Data looks like
 | 2       | 9   | 2        | 1      |
 | 2       | 10  | 1        | 1      |
 
-Table 2. A subset of GLM survival data {.table .cl-51712afa
+Table 2. A subset of GLM survival data {.table .cl-a4a74c2a
 quarto-disable-processing="true"}
 
 #### Analysis using a TTE hazards model
@@ -593,11 +592,10 @@ gamma, but it could include other terms). But this isn’t the surival
 probability, it’s the mortality probability. So the true transformation
 is:
 
-\\S=1-exp(\gamma_0)\\ or\\
-S=1-exp(\gamma_0+\gamma_1X_1+\gamma_2X_2...)\\
+S=1-exp(\gamma_0)\\ or\\ S=1-exp(\gamma_0+\gamma_1X_1+\gamma_2X_2...)
 
-if there are covariates, where all the \\\gamma_k\\ are log hazard
-ratios (the equivalent of a \\\beta\\ in a GLM).
+if there are covariates, where all the \gamma_k are log hazard ratios
+(the equivalent of a \beta in a GLM).
 
 This means the estimated daily survival from the TTE model is 0.984.
 
@@ -711,13 +709,13 @@ Now compare among the methods
 
 See how they are all very similar to one another and less than 0.005
 different than the data-generating value of 0.985? See how it only has a
-small effect on the cumulative survival probability \\(DSR^{24})\\ (24
+small effect on the cumulative survival probability (DSR^{24}) (24
 survival periods to survive 25 days), which could just be sampling
 error. Very mindful, very demure.
 
 [TABLE]
 
-Table 3. Survival estimate comparison among methods {.table .cl-51f51838
+Table 3. Survival estimate comparison among methods {.table .cl-a5226068
 quarto-disable-processing="true"}
 
 ### Survival as a function of time
@@ -996,14 +994,14 @@ because if you haven’t figured out by now, I’m kind of lazy.
 | "Truth" | 0.9300 | 0.9472 | 0.9603 | 0.9703 | 0.9778 | 0.9835 | 0.9877 | 0.9909 | 0.9932 | 0.9950 | 0.9963 | 0.9972 | 0.9979 | 0.9985 | 0.9989 | 0.9992 | 0.9994 | 0.9995 | 0.9997 | 0.9997 | 0.9998 | 0.9999 | 0.9999 | 0.9999 |
 
 Table 4. Daily survival estimate comparison among methods, (time-varying
-survival). {.table .cl-53d9accc quarto-disable-processing="true"}
+survival). {.table .cl-a7068c60 quarto-disable-processing="true"}
 
 | Parameter    | Hazard | Logistic exposure | State Space | "Truth" |
 |--------------|--------|-------------------|-------------|---------|
 | 25d survival | 0.803  | 0.695             | 0.798       | 0.753   |
 
 Table 5. Cumulative survival estimate comparison among methods;
-(time-varying survival). {.table .cl-53f7d1de
+(time-varying survival). {.table .cl-a7230714
 quarto-disable-processing="true"}
 
 Now the fun part. The differences in the daily survival rates among

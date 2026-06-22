@@ -6,13 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Capture-Recapture: Closed Capture Abundance - Marked Individuals • MDChelp</title>
-<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
-  window.MathJax = {
-    chtml: {
-      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
-    }
-  };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -73,11 +68,11 @@
 populations are strictly used for estimating the abundance of critters.
 Though many abundance estimation methods have, at their core, some kind
 of closed population capture-recapture framework, these methods below
-are typically applied to strictly estimate abundance <span class="math inline">\(\hat{N}\)</span>. There have been limited
-applications of these methods beyond obtaining a point estimate for a
-location, at a single point in time, and none that robustly address
-abundance-habitat relationships, though expanding the model development
-to address these questions using Bayesian methods (or spatially explicit
+are typically applied to strictly estimate abundance <span class="math inline">\hat{N}</span>. There have been limited applications
+of these methods beyond obtaining a point estimate for a location, at a
+single point in time, and none that robustly address abundance-habitat
+relationships, though expanding the model development to address these
+questions using Bayesian methods (or spatially explicit
 capture-recapture) are possibilities.</p>
 <p>Below are several common capture-recapture abundance estimation
 methods suitable for <strong>closed populations</strong>, often
@@ -88,12 +83,12 @@ appropriate for “marked” individuals. That is, these assume you are
 physically capturing and marking individuals. Another document will
 cover abundance estimation in closed populations for individuals you can
 uniquely identify, but are not physically marking them.</p>
-<p>Fundamentally, we’re trying to solve this equation: <span class="math display">\[
+<p>Fundamentally, we’re trying to solve this equation: <span class="math display">
 N=\frac{n}{p}
-\]</span> Where <span class="math inline">\(N\)</span> is the unknown
-abundance,<span class="math inline">\(n\)</span> is the number of unique
-individuals we know about, and <span class="math inline">\(p\)</span> is
-the capture probability.</p>
+</span> Where <span class="math inline">N</span> is the unknown
+abundance,<span class="math inline">n</span> is the number of unique
+individuals we know about, and <span class="math inline">p</span> is the
+capture probability.</p>
 <p>Probably the most important thing to recognize about these models is,
 aside from needing to meet the closure assumption, all methods are
 <strong>very, very, sensitive to violations of assumptions about capture
@@ -107,7 +102,7 @@ defined stream reaches, capturing waterfowl within a spatially defined
 breeding population). Again, having demographic closure is of key
 importance here; if animals are moving in and out of the study area or
 the size of the study area keeps changing (due to sampling effort) then
-your estimate of <span class="math inline">\(N\)</span> becomes somewhat
+your estimate of <span class="math inline">N</span> becomes somewhat
 useless.</p>
 
 
@@ -132,17 +127,16 @@ occasion when you mark and release animals, and an additional occasion
 when you recapture them. That’s it. Additionally, the individuals you
 mark do not need to be uniquely identifiable. You just need to know if
 they were captured previously or not.</p>
-<p>The LP estimator calculates abundance as: <span class="math display">\[N=\frac{n_1\times \ n_2}{k}\]</span></p>
+<p>The LP estimator calculates abundance as: <span class="math display">N=\frac{n_1\times \ n_2}{k}</span></p>
 <ul>
-<li><p><span class="math inline">\(n_1\)</span> the number of animals
+<li><p><span class="math inline">n_1</span> the number of animals
 encountered on the first occasion. All encountered animals are marked
 and released.</p></li>
-<li><p><span class="math inline">\(n_2\)</span> the
-<u><em>total</em></u> number of animals encountered on the second
-occasion.</p></li>
-<li><p><span class="math inline">\(k\)</span> is the number of marked
-individuals from <span class="math inline">\(n_1\)</span>, captured
-again and included in <span class="math inline">\(n_2\)</span>.</p></li>
+<li><p><span class="math inline">n_2</span> the <u><em>total</em></u>
+number of animals encountered on the second occasion.</p></li>
+<li><p><span class="math inline">k</span> is the number of marked
+individuals from <span class="math inline">n_1</span>, captured again
+and included in <span class="math inline">n_2</span>.</p></li>
 </ul>
 <p>This is a very simple equation, but it’s not the one actually used in
 practice. If you do end up using a LP, you will most likely use the
@@ -194,10 +188,12 @@ capture, marking and release, but the recapture is a dead recovery
 </ul>
 </li>
 <li><p>LP methods perform poorly when fewer than 50 individuals are
-marked ( ideally, mark &gt; 100) or <span class="math inline">\(p\)</span> is small. This is important if there is
-group-level heterogeneity in capture probability. If capture probability
-differs between male/ female or adult/juvenile, you “bin” individuals in
-each group separately which can lead to small <span class="math inline">\(n_1\)</span> for any group</p></li>
+marked ( ideally, mark &gt; 100) or <span class="math inline">p</span>
+is small. This is important if there is group-level heterogeneity in
+capture probability. If capture probability differs between male/ female
+or adult/juvenile, you “bin” individuals in each group separately which
+can lead to small <span class="math inline">n_1</span> for any
+group</p></li>
 </ul>
 </div>
 <div class="section level4">
@@ -234,14 +230,14 @@ an encounter history. We now have several parameters that get used to
 describe these encounter or capture histories.</p>
 <ul>
 <li>
-<span class="math inline">\(\hat{N}\)</span> the estimated
+<span class="math inline">\hat{N}</span> the estimated
 abundance</li>
 <li>
-<span class="math inline">\(p\)</span> the capture and/or recapture
+<span class="math inline">p</span> the capture and/or recapture
 probability.</li>
 <li>
-<span class="math inline">\(c\)</span> the recapture probability, if
-different from <span class="math inline">\(p\)</span>
+<span class="math inline">c</span> the recapture probability, if
+different from <span class="math inline">p</span>
 </li>
 </ul>
 <p>These are not the only parameters you may come across if you end up
@@ -259,28 +255,28 @@ into these methods, but also represent some important practical issues
 you should consider with your own data. Unless noted, these variations
 exist for both full-likelihood and Huggins methods.</p>
 <ul>
-<li><p><strong>Behavioral response to trapping:</strong> Use <span class="math inline">\(p\)</span> and <span class="math inline">\(c\)</span> to account for trap happiness or trap
-shyness</p></li>
-<li><p><strong>Temporal variation in capture probability:</strong> <span class="math inline">\(p\)</span> and/or <span class="math inline">\(c\)</span> varies among encounter events</p></li>
+<li><p><strong>Behavioral response to trapping:</strong> Use <span class="math inline">p</span> and <span class="math inline">c</span> to
+account for trap happiness or trap shyness</p></li>
+<li><p><strong>Temporal variation in capture probability:</strong> <span class="math inline">p</span> and/or <span class="math inline">c</span>
+varies among encounter events</p></li>
 <li><p><strong>Heterogeneity via “mixtures”:</strong> There are groups
-of individuals with different <span class="math inline">\(p\)</span> or
-<span class="math inline">\(c\)</span>, but you can’t identify them in
-the field. We can use a “mixture model” that introduces another
-parameter <span class="math inline">\(\pi\)</span> that represents the
-probability an individual belongs to one unobservable group or the
-other. Groups have different <span class="math inline">\(p/c\)</span>
-parameters, but individuals within groups are assumed
-homogeneous.</p></li>
+of individuals with different <span class="math inline">p</span> or
+<span class="math inline">c</span>, but you can’t identify them in the
+field. We can use a “mixture model” that introduces another parameter
+<span class="math inline">\pi</span> that represents the probability an
+individual belongs to one unobservable group or the other. Groups have
+different <span class="math inline">p/c</span> parameters, but
+individuals within groups are assumed homogeneous.</p></li>
 <li><p><strong>Heterogeneity as individual random effects:</strong> Is
 only feasible with the Huggins model. Rather than grouping individuals,
 or assuming individuals within groups are homogeneous, we can treat all
 critters as being different from one another via an individual random
 effect. Like random effects in linear models, there is some “average”
-<span class="math inline">\(p/c\)</span> but individuals deviate from
-this average. Those deviations follow a normal distribution.</p></li>
+<span class="math inline">p/c</span> but individuals deviate from this
+average. Those deviations follow a normal distribution.</p></li>
 </ul>
 <p>These variations are an important extension. As mentioned before,
-estimates of abundance are sensitive to assumptions about <span class="math inline">\(p/c\)</span>, whether they are the same among
+estimates of abundance are sensitive to assumptions about <span class="math inline">p/c</span>, whether they are the same among
 individuals, vary among individuals, vary across capture events, etc.
 Appropriately accounting for these possibilities is critical to
 obtaining accurate and unbiased estimates of abundance.</p>
@@ -291,31 +287,31 @@ obtaining accurate and unbiased estimates of abundance.</p>
 <p>There are a few common criticisms or complications that arise with
 the use of likelihood-based closed-capture methods</p>
 <ul>
-<li><p><span class="math inline">\(N\)</span> is only an estimate of the
+<li><p><span class="math inline">N</span> is only an estimate of the
 population size vulnerable to capture. If you sample more area
-(intentionally or unintentionally), your estimate of <span class="math inline">\(N\)</span> increases. Other methods focus on
+(intentionally or unintentionally), your estimate of <span class="math inline">N</span> increases. Other methods focus on
 estimating density try to address this problem (e.g. spatially-explicit
 capture-recapture; SECR).</p></li>
 <li><p>Most applications do not try to address or estimate what causes
-variation in <span class="math inline">\(N\)</span>-it’s possible, but
+variation in <span class="math inline">N</span>-it’s possible, but
 likely logistically challenging (trapping effort in multiple areas) and
 still suffers from the above issue.</p></li>
 <li><p>Because of this, it’s typically suggested to use a SECR approach
 if possible. It results in an exactly defined spatial extent, making
-<span class="math inline">\(N\)</span> more reliable and can more easily
+<span class="math inline">N</span> more reliable and can more easily
 incorporate/ test for environmental variables affecting
 abundance.</p></li>
 <li><p>Other methods have you sample smaller, but still defined areas to
 estimate density in a model-based approach. It’s much simpler to
 incorporate information about</p></li>
 <li><p>If you can exactly define the extent of the space being sampled,
-<span class="math inline">\(N\)</span> represents a
+<span class="math inline">N</span> represents a
 <strong>realized</strong> estimate of abundance, that is the estimate of
 the number of critters actually running around at that time. Other
-methods may provide model-based estimates of <span class="math inline">\(N\)</span> or both. Model-based estimates provide
-the expected abundance, given information about things like habitat or
-other environmental covariates. These are not the same quantity and
-which one you should use will depend on your question.</p></li>
+methods may provide model-based estimates of <span class="math inline">N</span> or both. Model-based estimates provide the
+expected abundance, given information about things like habitat or other
+environmental covariates. These are not the same quantity and which one
+you should use will depend on your question.</p></li>
 </ul>
 </div>
 </div>
@@ -328,11 +324,11 @@ your particular question, below are some general, practical points about
 closed-capture methods that may be helpful.</p>
 <ul>
 <li><p>The closed capture methods described above are best suited when
-getting an estimate of <span class="math inline">\(N\)</span> is of
+getting an estimate of <span class="math inline">N</span> is of
 interest, not understanding various factors responsible for variation in
-<span class="math inline">\(N\)</span>.</p></li>
+<span class="math inline">N</span>.</p></li>
 <li><p>Because of the strict assumptions, it’s probably best not to
-think of <span class="math inline">\(N\)</span> as a “true” estimate of
+think of <span class="math inline">N</span> as a “true” estimate of
 abundance, unless you can guarantee all individuals are vulnerable to
 capture. If you can at least ensure a representative sample, it provides
 a very good index.</p></li>
@@ -340,7 +336,7 @@ a very good index.</p></li>
 (e.g. not part of a robust design or other integrated method) will
 probably be for simple monitoring and status and trend
 assessment.</p></li>
-<li><p>Some specifics like distinction between <span class="math inline">\(p/c\)</span> are specific to physically capturing
+<li><p>Some specifics like distinction between <span class="math inline">p/c</span> are specific to physically capturing
 animals, but closed-capture methods are a very general concept that most
 other capture-recapture methods are based on.</p></li>
 </ul>

@@ -20,9 +20,9 @@ manner similar to capture probability but it starts to encompass more
 really a composite of several processes. They are classified into one or
 two (or three) groups that are recognized as combining to affect
 detection probability: availability and sightability. You may then see
-notation in some articles that present detection probability, \\p\_.\\,
-as a product of the two processes: \\ p\_.=p\_{\\ availability} \times
-p\_{\\ sightability} \\
+notation in some articles that present detection probability, p\_., as a
+product of the two processes: p\_.=p\_{\\ availability} \times p\_{\\
+sightability}
 
 #### Availability
 
@@ -44,16 +44,15 @@ An animal that is not present, because they’re not inside the study
 area, hibernating in a den, etc., has a detection/capture probability of
 0. More commonly, whether or not an animal is available varies. If an
 animal is moving in and out of the study area during surveys or
-captures, their capture/detection probability changes between \\p\\ and
-\\0\\. They are sometimes available and sometimes not. This process is
-often called **temporary emigration**. This is most often associated
-with physical presence in a study area, but need not always be. The best
-way to differentiate this form of availability from the next is
-recognizing that availability has two discrete states: \\ \left\\
-\begin{aligned} unavailable: p=0 \\ available: p\>0
-\end{aligned}\right\\ \\ This form of availability applies both to
-traditional or physical capture-recapture methods as well as surveys of
-unmarked individuals.
+captures, their capture/detection probability changes between p and 0.
+They are sometimes available and sometimes not. This process is often
+called **temporary emigration**. This is most often associated with
+physical presence in a study area, but need not always be. The best way
+to differentiate this form of availability from the next is recognizing
+that availability has two discrete states: \left\\ \begin{aligned}
+unavailable: p=0 \\ available: p\>0 \end{aligned}\right\\ This form of
+availability applies both to traditional or physical capture-recapture
+methods as well as surveys of unmarked individuals.
 
 ##### Behavior
 
@@ -61,14 +60,14 @@ The second form of availability (and possible third group) is related to
 animal behavior, not their physical presence; is the animal behaving in
 a way that makes them observable? Unlike temporary emigration, these
 differences don’t always result in a bifurcation of detection probabilty
-(i.e., \\0\\ or \\p \> 0\\). For example, calling by frogs is sensitive
-to precipitation and temperature. Trying to perform counts of frogs
-during drought or cold weather will likely have fewer individuals
-available to be observed than during warmer and wetter weather.
-Availability in this second form is more of a continuous scale, and not
-a discrete yes/no like with temporary emigration, but an animal must
-still be behaving in a way that makes them available in order for an
-observer to detect them (Farnsworth 2002)[^1].
+(i.e., 0 or p \> 0). For example, calling by frogs is sensitive to
+precipitation and temperature. Trying to perform counts of frogs during
+drought or cold weather will likely have fewer individuals available to
+be observed than during warmer and wetter weather. Availability in this
+second form is more of a continuous scale, and not a discrete yes/no
+like with temporary emigration, but an animal must still be behaving in
+a way that makes them available in order for an observer to detect them
+(Farnsworth 2002)[^1].
 
 #### Sightability/ perceptability
 
@@ -178,11 +177,11 @@ most common to model detection probability as a composite process,
 rather than separate processes. In these cases, a linear model is
 constructed for detection that includes covariates related to
 sightability along with availability. In the frog example, you might
-include covariates for rain as well as the observer and road noise: \\
-p. = \mu+\beta_1X\_{rain}+\beta_2X\_{road\\ noise}+e\_{observer} \\ In
-this approach, you do not model availability and sightability
-separately. It’s not “correct” despite frequently being done this way,
-but it’s still a step in the right direction when dealing with imperfect
+include covariates for rain as well as the observer and road noise: p. =
+\mu+\beta_1X\_{rain}+\beta_2X\_{road\\ noise}+e\_{observer} In this
+approach, you do not model availability and sightability separately.
+It’s not “correct” despite frequently being done this way, but it’s
+still a step in the right direction when dealing with imperfect
 detection and well accepted. More complex methods that tackle temporary
 immigration, or explicitly model sightability and availability
 separately do exist. For example, using a robust design with removal,

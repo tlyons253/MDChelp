@@ -128,9 +128,9 @@ carefully.
 Next, prepare the data. For data, Nimble is different from JAGS in that
 it makes a distinction between constants and data. Data are exclusively
 quantities that come from stochastic nodes. In our model above, the only
-data we are supplying is the observed outcomes \\y_i\\. The covariates
-we measured \\x\_{1i},x\_{2i}\\ get supplied as constants. Any variable
-we want to use for indexing (**n** above, in the **for** loop) is also a
+data we are supplying is the observed outcomes y_i. The covariates we
+measured x\_{1i},x\_{2i} get supplied as constants. Any variable we want
+to use for indexing (**n** above, in the **for** loop) is also a
 constant.
 
 ``` r
@@ -215,11 +215,11 @@ but with simpler models, we can try. You can also check particular nodes
 to see which are giving you trouble.
 
 We know from **intializeInfo()** that the NA is because we didn’t
-provide a value for \\epsilon\\ in the initial values. Sometimes though,
-you will still get an NA even if you have provided a starting value. If
-that happens, you’ll need to check individual nodes to determine which
-are giving you trouble and make adjustments to the prior, initial value,
-or both. This may require overwriting (re-run) the **nimbleCode** and/or
+provide a value for epsilon in the initial values. Sometimes though, you
+will still get an NA even if you have provided a starting value. If that
+happens, you’ll need to check individual nodes to determine which are
+giving you trouble and make adjustments to the prior, initial value, or
+both. This may require overwriting (re-run) the **nimbleCode** and/or
 **nimbleModel** objects repeatedly.
 
 Just for the sake of demonstration, we’ll fix our above issue by

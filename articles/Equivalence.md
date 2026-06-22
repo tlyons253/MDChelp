@@ -9,12 +9,12 @@ way. As a recap, under this approach, you assume the the effect of a
 covariate or the difference between treatments, groups, etc., is 0. That
 is the null hypothesis. The alternative is the difference or effect is
 not zero. In a grossly simplified example, you collect data and, with a
-specified false-positive error rate (i.e. a p-value (P);
-\\\alpha\\=0.05) determine you either have evidence to reject the null
-hypothesis, or you fail to reject the null. **FAILURE TO REJECT THE NULL
-IS NOT THE SAME AS CONCLUDING THE NULL IS TRUE**.
+specified false-positive error rate (i.e. a p-value (P); \alpha=0.05)
+determine you either have evidence to reject the null hypothesis, or you
+fail to reject the null. **FAILURE TO REJECT THE NULL IS NOT THE SAME AS
+CONCLUDING THE NULL IS TRUE**.
 
-\\ H_0: \theta_1-\theta_2=0\\ H_A: \theta_1-\theta_2 \neq 0\\
+H_0: \theta_1-\theta_2=0\\ H_A: \theta_1-\theta_2 \neq 0
 
 *Equations representing the typical null and alternative hypotheses that
 the difference in two parameters is 0 (null) or not equal to 0.*
@@ -47,11 +47,11 @@ This concept of testing a null hypothesis is especially problematic when
 considering that in the above framework, P values are a product of
 sample size. This means that, under small samples, it becomes nearly
 impossible to detect anything but a very large difference, meaning you
-will likely fail to reject \\H_0\\. Conversely, if you have a large
-sample size, you can detect very small differences and will frequently
-reject \\H_0\\. This may lead to odd or inconvenient results for
-biologists who quickly learn to tap dance, describing their results as
-“statistically significant” but not “biologically significant.”
+will likely fail to reject H_0. Conversely, if you have a large sample
+size, you can detect very small differences and will frequently reject
+H_0. This may lead to odd or inconvenient results for biologists who
+quickly learn to tap dance, describing their results as “statistically
+significant” but not “biologically significant.”
 
 | N   | D     | N   | D    | N   | D    |
 |-----|-------|-----|------|-----|------|
@@ -63,7 +63,7 @@ biologists who quickly learn to tap dance, describing their results as
 
 The minimum difference (D) needed to reach tcriticial for a one sample,
 two-tail T test for a given sample size (N); α = 0.05; σ = 10 {.table
-.cl-30da55b4 quarto-disable-processing="true"}
+.cl-855ab24e quarto-disable-processing="true"}
 
 ## Equivalence/ Superiority/ Non-Inferiority Testing: A more better way to do biology/ecology
 
@@ -114,8 +114,8 @@ daily.
 Next, we will demonstrate what is really being tested under the 4
 possible statistical hypotheses and try to help clarify which approaches
 are suitable when. In each example, nest survival in a typical field
-will be \\\theta\_{typical}\\ and nest survival in a managed field is
-\\\theta\_{managed}\\. Let’s assume too, that nest survival in a managed
+will be \theta\_{typical} and nest survival in a managed field is
+\theta\_{managed}. Let’s assume too, that nest survival in a managed
 field is ~50%. We will assume we observe 60 nests in each type of field.
 
 - Data Simulation
@@ -156,13 +156,13 @@ go to to in this example. It’s straightforward.
 
 NHST is appropriate if your question is: “Is nest survival different
 between typical grasslands and managed grasslands?” and is represented
-by the statistical hypotheses: \\ H_0:
+by the statistical hypotheses: H_0:
 \theta\_{typical}-\theta\_{managed}=0\\ H_A:
-\theta\_{typical}-\theta\_{managed} \neq 0\\ Because this is logistic
-regression, the above is more accurately written as: \\ H_0:
+\theta\_{typical}-\theta\_{managed} \neq 0 Because this is logistic
+regression, the above is more accurately written as: H_0:
 \frac{Odds\_{managed}}{Odds\_{typical}}=1\\ H_A:
-\frac{Odds\_{managed}}{Odds\_{typical}} \neq 1\\ The fraction in each
-hypothesis is an odds ratio (\\OR\\). We don’t have time to get into the
+\frac{Odds\_{managed}}{Odds\_{typical}} \neq 1 The fraction in each
+hypothesis is an odds ratio (OR). We don’t have time to get into the
 weeds about what odds are, but just know that, because we are working
 with logistic regression, one of the quantities we will be interested in
 will be the odds ratio and that this representation is the same as the
@@ -192,9 +192,9 @@ exp(confint(mod.nhst))
 The estimate listed for `trtmanaged` is the log odds ratio of the effect
 of management. It effectively represents the difference between survival
 in typical vs managed fields, on a transformed scale. Therefore, if this
-quantity is different from 0, then \\H_A\\ is true. To get the \\OR\\,
-all we have to do is exponentiate the estimate (\\e^{estimate}\\). Now
-we want to see if the confidence interval around the \\OR\\ includes 1.
+quantity is different from 0, then H_A is true. To get the OR, all we
+have to do is exponentiate the estimate (e^{estimate}). Now we want to
+see if the confidence interval around the OR includes 1.
 
 ``` r
 
@@ -204,12 +204,12 @@ exp(confint(mod.nhst))
 #> trtmanaged  0.7818544 3.3776999
 ```
 
-We can see the 95% confidence interval of the \\OR\\ includes 1. So
-under NHST, we would fail to reject the null hypothesis. You may have
-noticed the the `p.value` for `trtmanaged` was \>0.05. That’s a quick
-way to arrive at the same conclusion. We go through the steps of talking
-about the \\OR\\ though, because it will become more relevant later on.
-But under NHST, looking at that `p.value`, in this example, works too.
+We can see the 95% confidence interval of the OR includes 1. So under
+NHST, we would fail to reject the null hypothesis. You may have noticed
+the the `p.value` for `trtmanaged` was \>0.05. That’s a quick way to
+arrive at the same conclusion. We go through the steps of talking about
+the OR though, because it will become more relevant later on. But under
+NHST, looking at that `p.value`, in this example, works too.
 
 We simulated data with a 15% difference in survival, but failed to
 detect a difference. This is a type II error. But it’s just one possible
@@ -270,26 +270,30 @@ worse than “typical”.
 
 Now, the hypotheses change:
 
-\\ H_0:\theta\_{typical}-\theta\_{manged} \geq M\\ H_A:
-\theta\_{typical}-\theta\_{manged} \< M \\
+H_0:\theta\_{typical}-\theta\_{manged} \geq M\\ H_A:
+\theta\_{typical}-\theta\_{manged} \< M
 
-and we need to define \\M\\, or the margin we care about. This is where
-people get squeamish. In practice, \\M\\ typically isn’t 0 (or 1 for an
-\\OR\\). There is typically uncertainty in \\\theta\_{typical}\\ and we
-never actually expect a difference to be 0. M is usually some difference
-that we think is negligible. So how much worse, does the alternative
-really need to be before we care? Defining that makes people squeamish,
-but it’s likely folks can identify some threshold. In cases where you
-really want to sit in the fence and not use your ecological/biological
-knowledge to define the threshold, \\M\\ could be set relative to the
-upper confidence limit of \\\theta\_{typical}\\. This suggests the
-difference between the two parameters needs to exceed the uncertainty in
-the control or reference group.
+and we need to define M, or the margin we care about. This is where
+people get squeamish. In practice, M typically isn’t 0 (or 1 for an OR).
+There is typically uncertainty in \theta\_{typical} and we never
+actually expect a difference to be 0. M is usually some difference that
+we think is negligible. So how much worse, does the alternative really
+need to be before we care? Defining that makes people squeamish, but
+it’s likely folks can identify some threshold. In cases where you really
+want to sit in the fence and not use your ecological/biological
+knowledge to define the threshold, M could be set relative to the upper
+confidence limit of \theta\_{typical}. This suggests the difference
+between the two parameters needs to exceed the uncertainty in the
+control or reference group.
 
-In the pheasant example, maybe we are ok as long as
-\\\theta\_{managed}\\ isn’t more than 10% less than
-\\\theta\_{typical}\\. This corresponds to an threshold \\OR\sim0.8\\. A
-fun fact about non-inferiority tests, they are one-tailed while
+In the pheasant example, maybe we are ok as long as \theta\_{managed}
+isn’t more than 10% less than \theta\_{typical}. This corresponds to an
+threshold OR\sim0.8 and statistical hypotheses:
+
+H_0:\frac{\theta\_{typical}}{\theta\_{managed}} \leq\\ 0.8\\ H_A:\\
+\frac{\theta\_{typical}}{\theta\_{managed}}\\ \>\\ 0.8
+
+A fun fact about non-inferiority tests, they are one-tailed while
 tradition NHST is two-tailed. If we were to keep our type I error rate
 the same as NHST, that means we now can use a 90% confidence interval
 and test whether the lower bound of our CI includes 0.8.
@@ -309,24 +313,29 @@ the null ~ 60% of the time.
 
 ``` r
 
-map_dbl(1:1000,~res.sim(threshold=0.8,alpha=0.9))%>%
+map_dbl(1:1000,~res.sim(threshold=0.8,alpha=0.1))%>%
   sum()/1000
-#> [1] 0.001
+#> [1] 0.24
 ```
 
-So now we only fail to reject the null 40% of the time. In practical
-terms, under NHST, we select the true hypothesis (a difference exists),
-only ~ 40% of the time, but under non-inferiority, we select the true
-hypothesis ~ 60% of the time. We have more power (although neither is
-still great).
+So now we fail to reject the null (not inferior) only about 24% of the
+time. In practical terms, under NHST, we select the true hypothesis (a
+difference exists), only ~ 40% of the time, but under non-inferiority,
+we select the true hypothesis (non-inferior) about 75% of the time.
 
-Is this cheating? Maybe, depending on who you talk to. We’ve done two
-things different from NHST. First, we lowered the threshold from 0 to
--10% (or in \\OR\\ terms, from 1 to 0.8). Second, we are using the same
-\\\alpha=0.05\\ but only performing a one-tail test. Some people see
-this as lowering the bar and would recommend using \\\alpha=0.025\\.
-Instead, think of it as a reward for having a more appropriately defined
-statistical hypothesis for the problem at hand!
+Is this cheating? No, but there is an important caveat here. You really
+ought to be interested in demonstrating non-inferiority and not framing
+a real expectation of a difference as just not inferior.
+
+Still the swing in selecting the correct hypothesis was large, but
+that’s because we’ve done a few things different from NHST. First, there
+is a real difference of 0.15, and we are only interested in knowing if
+that difference is \> -0.1. Second, we lowered the threshold from 0 to
+-10% (or in OR terms, from 1 to 0.8). Third, we are using the same
+\alpha=0.05 but only performing a one-tail test. Some people see this as
+lowering the bar and would recommend using \alpha=0.025. Instead, think
+of it as a reward for having a more appropriately defined statistical
+hypothesis for the problem at hand!
 
 But wait, there is more!
 
@@ -339,10 +348,10 @@ use this when you **want** to demonstrate equivalence. You still can’t
 conclude difference (can’t prove a null hypothesis). Our statistical
 hypotheses are now written as:
 
-\\ \begin{equation} H_0: \begin{cases}
-\theta\_{typical}-\theta\_{manged} \leq -M \\ \quad \quad\quad and\\
-\theta\_{typical}-\theta\_{manged} \geq\\ \\ M \end{cases}
-\end{equation}\\ H_A: -M \leq\\ \theta\_{typical}-\theta_2 \leq\\ M\\
+\begin{equation} H_0: \begin{cases} \theta\_{typical}-\theta\_{manged}
+\leq -M \\ \quad \quad\quad and\\ \theta\_{typical}-\theta\_{manged}
+\geq\\ \\ M \end{cases} \end{equation}\\ H_A: -M \leq\\
+\theta\_{typical}-\theta_2 \leq\\ M
 
 Like inferiority testing, you will need to define a margin of
 equivalence, but now it will be two-sided. This may be trickier because
@@ -363,14 +372,14 @@ to make sure there aren’t too many pheasants with successful nests?
 Lets consider a 10% difference in survival as our equivalence region.
 It’s common to make this a symmetrical difference but need not be. So in
 our case, if nest survival of managed fields is within a range of
-0.25-0.45 (\\0.1\\ \pm\\ \theta\_{typical}\\), we would consider them
-the same. This corresponds to an \\OR\\ ~ 0.62 - 1.52. If we calculate
-the confidence interval for our \\OR\\ and it fits entirely within that
+0.25-0.45 (0.1\\ \pm\\ \theta\_{typical}), we would consider them the
+same. This corresponds to an OR ~ 0.62 - 1.52. If we calculate the
+confidence interval for our OR and it fits entirely within that
 interval, we would declare that managed is the same as typical. However,
-if we want to test at \\\alpha=0.05\\ we actually do so by computing the
-90% confidence interval. Don’t worry about the derivation right now,
-just know that equivalence testing has a type I error rate of \\\alpha\\
-by constructing a \\1-2\alpha\\ interval.
+if we want to test at \alpha=0.05 we actually do so by computing the 90%
+confidence interval. Don’t worry about the derivation right now, just
+know that equivalence testing has a type I error rate of \alpha by
+constructing a 1-2\alpha interval.
 
 ``` r
 
@@ -392,7 +401,7 @@ cases where there is an exception[^4], but it’s very unlikely.
 
 However, this does demonstrate that, if you have *a priori* reasons for
 defining the equivalence range (and not basing it on the SE of
-\\\theta\_{typical}\\ that you might improve your power increasing your
+\theta\_{typical} that you might improve your power increasing your
 sample in the alternative treatment category. That can be a useful
 option in study design.
 
@@ -404,23 +413,23 @@ philosophical and statistical reasons. First, it requires you to define
 “how much” better something has to be. This avoids the tap dance of
 biological vs. statistical difference if you are blessed with a large
 sample size. Second, this is technically a one-tail test. So testing at
-\\\alpha=0.05\\ in a one tail test has a little more power for the same
+\alpha=0.05 in a one tail test has a little more power for the same
 sample size. Because of this, some folks will recommend using an
-\\\alpha=0.025\\, to make it more like two-tailed test, but you don’t
-need to.
+\alpha=0.025, to make it more like two-tailed test, but you don’t need
+to.
 
-In superiority testing, our statistical hypotheses are: \\ H_0:
+In superiority testing, our statistical hypotheses are: H_0:
 \theta\_{manged}-\theta\_{typical} \leq M \\ H_A:
-\theta\_{manged}-\theta\_{typical} \> M\\ Where, like other tests, \\M\\
-is some minimum difference we thing is trivial. In the pheasant example,
-maybe we wish to demonstrate that forb interseeding
-(\\\theta\_{managed}\\) improves nest survival compared to a typical
-brome field (\\\theta\_{typical}\\). Given the cost of forb seed, maybe
-we need to make sure it’s at least 5% higher before we are willing to
-adopt it. We can again use a confidence interval to test this. Now, our
-\\OR\\ needs to not include ~1.23. But because we are using a one-tail
-test, we can use the 90% confidence interval and only look at whether
-the lower bound is less than 1.23
+\theta\_{manged}-\theta\_{typical} \> M Where, like other tests, M is
+some minimum difference we thing is trivial. In the pheasant example,
+maybe we wish to demonstrate that forb interseeding (\theta\_{managed})
+improves nest survival compared to a typical brome field
+(\theta\_{typical}). Given the cost of forb seed, maybe we need to make
+sure it’s at least 5% higher before we are willing to adopt it. We can
+again use a confidence interval to test this. Now, our OR needs to not
+include ~1.23. But because we are using a one-tail test, we can use the
+90% confidence interval and only look at whether the lower bound is less
+than 1.23
 
 ``` r
 
@@ -430,48 +439,57 @@ exp(confint(mod.nhst,level=0.90))
 #> trtmanaged  0.8784433 2.9961480
 ```
 
-Unfortunately, we can’t declare \\\theta\_{managed}\\ is superior to
-\\\theta\_{typical}\\, despite that being how we simulated the data. But
-how does power compare to NHST?
+Unfortunately, we can’t declare \theta\_{managed} is superior to
+\theta\_{typical}, despite that being how we simulated the data. But how
+does power compare to NHST?
 
 ``` r
 
-map_dbl(1:1000,~res.sim(threshold=1.23,alpha=0.9))%>%
+map_dbl(1:1000,~res.sim(threshold=1.23,alpha=0.1))%>%
   sum()/1000
-#> [1] 0.046
+#> [1] 0.697
 ```
 
-Despite performing a one-tail test, it’s actually worse! what gives?
-Well, we specified a difference larger than 0 now, so there may have
-been instances where simulated data estimated an \\OR\\ \>0 but less
+Despite performing a one-tail test, it’s actually worse! what gives? In
+NHST we failed to reject the null ~60% of the time, but now it’s almost
+70%! Well, we specified a difference larger than 0 now, so there may
+have been instances where simulated data estimated an OR \>1 but less
 than 1.23. If we wanted the one-tailed equivalent from NHST, we could
 just examine whether the lower bound of 1 fell within a 90% CI.
 
 ``` r
 
-map_dbl(1:1000,~res.sim(threshold=1,alpha=0.9))%>%
+map_dbl(1:1000,~res.sim(threshold=1,alpha=0.1))%>%
   sum()/1000
-#> [1] 0.019
+#> [1] 0.445
 ```
 
-Now it seems that only 2% of the time, do we find that an \\OR\\ of 1
+So, under NHST with a one-tail test, we improve from failing to reject
+the null about ~60% (selecting the correct hypothesis ~40%) of the time
+to only about 45% of the time (selecting the correct hypothesis 55% of
+the time). Again, this has better power (55% vs 40%) because it is
+one-tailed. It’s also better than the superiority test (55% vs 30%
+power) but in that case, it’s because our OR threshold is 1 under NHST
+vs 1.23 under superiority testing.
 
 ## Summary
 
 For better or worse, statistical hypothesis testing is part of the
-statistical milleau. Typical NHST sets a pretty high bar for rejecting a
-null hypothesis, but more importantily, is incongruent with our
-understanding of biology/ecology and reduces our need to think
-critically about our problem. Equivalence testing offers an alternative
-framework that requires us to be specific about how much of a difference
-we consider to be biologically relevant. It also is the only correct way
-to provide evidence that two quantites are “functionally equivalent.”…
+milleau that is data analysis. Typical NHST sets a pretty high bar for
+rejecting a null hypothesis, but more importantly, it is incongruent
+with our understanding of biology/ecology and reduces our need to think
+critically about our problem. Equivalence testing and
+superiority/inferiority testing offer an alternative framework that
+requires us to be specific about how much of a difference we consider to
+be biologically relevant. These alternatives alter traditional H_0 and
+H_A hypotheses and provide the only legitimate framework for testing
+whether two quantities are “similar enough.”
 
 [^1]: Johnson, D. H. The insignificance of statistical significance
     testing. *Journal of Wildlife Management*. 63:763-772.
 
-[^2]: Fisher picked the cutoff \\\alpha = 0.05\\ because it corresponds
-    to two standard deviations. It was convenient, had some kind of
+[^2]: Fisher picked the cutoff \alpha = 0.05 because it corresponds to
+    two standard deviations. It was convenient, had some kind of
     justification, but was never meant to exclude other levels or become
     so dogmatic
 

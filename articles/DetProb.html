@@ -6,13 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Detection Probability • MDChelp</title>
-<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
-  window.MathJax = {
-    chtml: {
-      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
-    }
-  };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -88,10 +83,9 @@ probability does. Detection probability is really a composite of several
 processes. They are classified into one or two (or three) groups that
 are recognized as combining to affect detection probability:
 availability and sightability. You may then see notation in some
-articles that present detection probability, <span class="math inline">\(p_.\)</span>, as a product of the two processes:
-<span class="math display">\[
+articles that present detection probability, <span class="math inline">p_.</span>, as a product of the two processes: <span class="math display">
 p_.=p_{\ availability} \times p_{\ sightability}
-\]</span></p>
+</span></p>
 <div class="section level4">
 <h4 id="availability">Availability<a class="anchor" aria-label="anchor" href="#availability"></a>
 </h4>
@@ -114,18 +108,18 @@ considered available.</p>
 area, hibernating in a den, etc., has a detection/capture probability of
 0. More commonly, whether or not an animal is available varies. If an
 animal is moving in and out of the study area during surveys or
-captures, their capture/detection probability changes between <span class="math inline">\(p\)</span> and <span class="math inline">\(0\)</span>. They are sometimes available and
-sometimes not. This process is often called <strong>temporary
-emigration</strong>. This is most often associated with physical
-presence in a study area, but need not always be. The best way to
-differentiate this form of availability from the next is recognizing
-that availability has two discrete states: <span class="math display">\[
+captures, their capture/detection probability changes between <span class="math inline">p</span> and <span class="math inline">0</span>.
+They are sometimes available and sometimes not. This process is often
+called <strong>temporary emigration</strong>. This is most often
+associated with physical presence in a study area, but need not always
+be. The best way to differentiate this form of availability from the
+next is recognizing that availability has two discrete states: <span class="math display">
 \left\{
 \begin{aligned}
 unavailable: p=0 \\
 available: p&gt;0
 \end{aligned}\right\}
-\]</span> This form of availability applies both to traditional or
+</span> This form of availability applies both to traditional or
 physical capture-recapture methods as well as surveys of unmarked
 individuals.</p>
 </div>
@@ -136,14 +130,15 @@ individuals.</p>
 to animal behavior, not their physical presence; is the animal behaving
 in a way that makes them observable? Unlike temporary emigration, these
 differences don’t always result in a bifurcation of detection probabilty
-(i.e., <span class="math inline">\(0\)</span> or <span class="math inline">\(p &gt; 0\)</span>). For example, calling by frogs
-is sensitive to precipitation and temperature. Trying to perform counts
-of frogs during drought or cold weather will likely have fewer
-individuals available to be observed than during warmer and wetter
-weather. Availability in this second form is more of a continuous scale,
-and not a discrete yes/no like with temporary emigration, but an animal
-must still be behaving in a way that makes them available in order for
-an observer to detect them (Farnsworth 2002)<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Farnsworth, G. et al. 2002. A removal model for
+(i.e., <span class="math inline">0</span> or <span class="math inline">p
+&gt; 0</span>). For example, calling by frogs is sensitive to
+precipitation and temperature. Trying to perform counts of frogs during
+drought or cold weather will likely have fewer individuals available to
+be observed than during warmer and wetter weather. Availability in this
+second form is more of a continuous scale, and not a discrete yes/no
+like with temporary emigration, but an animal must still be behaving in
+a way that makes them available in order for an observer to detect them
+(Farnsworth 2002)<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Farnsworth, G. et al. 2002. A removal model for
 estimating detection probabilities from point-count surveys.
 &lt;em&gt;Auk&lt;/em&gt;. 119:414-425.&lt;/p&gt;"><sup>1</sup></a>.</p>
 </div>
@@ -264,19 +259,19 @@ rather than separate processes. In these cases, a linear model is
 constructed for detection that includes covariates related to
 sightability along with availability. In the frog example, you might
 include covariates for rain as well as the observer and road noise:
-<span class="math display">\[
+<span class="math display">
 p. = \mu+\beta_1X_{rain}+\beta_2X_{road\ noise}+e_{observer}
-\]</span> In this approach, you do not model availability and
-sightability separately. It’s not “correct” despite frequently being
-done this way, but it’s still a step in the right direction when dealing
-with imperfect detection and well accepted. More complex methods that
-tackle temporary immigration, or explicitly model sightability and
-availability separately do exist. For example, using a robust design
-with removal, double observer, or repeated counts, one can account for
-temporary immigration and availability (Chandler et al. 2011)<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Chandler et al. Inference about density and temporary
-emigration in unmarked populations. &lt;em&gt;Ecology&lt;/em&gt;. 92:1429-1435.&lt;/p&gt;"><sup>5</sup></a>. Using
-distance sampling methods and removal methods, you can separately (and
-“more correctly”) account for availability and sightability (Amundson et
+</span> In this approach, you do not model availability and sightability
+separately. It’s not “correct” despite frequently being done this way,
+but it’s still a step in the right direction when dealing with imperfect
+detection and well accepted. More complex methods that tackle temporary
+immigration, or explicitly model sightability and availability
+separately do exist. For example, using a robust design with removal,
+double observer, or repeated counts, one can account for temporary
+immigration and availability (Chandler et al. 2011)<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Chandler et al. Inference about density and temporary
+emigration in unmarked populations. &lt;em&gt;Ecology&lt;/em&gt;. 92:1429-1435.&lt;/p&gt;"><sup>5</sup></a>. Using distance
+sampling methods and removal methods, you can separately (and “more
+correctly”) account for availability and sightability (Amundson et
 al. 2014)<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Amundson et al. 2014. A hierarchical model combining
 distance sampling and time removal point counts. &lt;em&gt;Auk&lt;/em&gt;.
 131:476-494.&lt;/p&gt;"><sup>6</sup></a>. Given the advancement of methods for

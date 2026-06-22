@@ -6,13 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Capture-Recapture: Closed Population Abundance Estimation- Unmarked Individuals • MDChelp</title>
-<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
-  window.MathJax = {
-    chtml: {
-      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
-    }
-  };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -360,56 +355,56 @@ to account for imperfect detection, converting surveys that would
 otherwise produce a population index, to an estimate of abundance.</p>
 <p><br><!-- table of strengths/ assumptions --></p>
 <div class="tabwid">
-<style>.cl-2d0598e0{}.cl-2cfc9da8{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-2cfc9dbc{font-family:'DejaVu Sans';font-size:6.6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;vertical-align:super;}.cl-2cfc9dc6{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-2cfc9dd0{font-family:'DejaVu Sans';font-size:6.6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;vertical-align:super;}.cl-2d00630c{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-2d006320{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:4pt;padding-top:4pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-2d00632a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-2d009c8c{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009c96{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009ca0{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009ca1{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009caa{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009cab{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009cac{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009cb4{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009cbe{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2d009cbf{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-2d0598e0">
+<style>.cl-818e6c50{}.cl-8185a52a{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8185a53e{font-family:'DejaVu Sans';font-size:6.6pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;vertical-align:super;}.cl-8185a548{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8185a552{font-family:'DejaVu Sans';font-size:6.6pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;vertical-align:super;}.cl-81893d48{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-81893d52{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:4pt;padding-top:4pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-81893d5c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2pt;padding-top:2pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-81897bbe{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897bc8{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897bc9{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897bd2{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897bdc{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897bdd{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897be6{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897bf0{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897bf1{width:1.717in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-81897bfa{width:1.3in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-818e6c50">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-2d009c8c"><p class="cl-2d00630c"><span class="cl-2cfc9da8"></span></p></th>
-<th class="cl-2d009c96"><p class="cl-2d00630c"><span class="cl-2cfc9da8">Single visit?</span><span class="cl-2cfc9dbc">a</span></p></th>
-<th class="cl-2d009c96"><p class="cl-2d00630c"><span class="cl-2cfc9da8">Multiple visits?</span><span class="cl-2cfc9dbc">b</span></p></th>
-<th class="cl-2d009c96"><p class="cl-2d00630c"><span class="cl-2cfc9da8">Heterogeneity in detection?</span><span class="cl-2cfc9dbc">c</span></p></th>
-<th class="cl-2d009c96"><p class="cl-2d00630c"><span class="cl-2cfc9da8">Observer differences?</span><span class="cl-2cfc9dbc">d</span></p></th>
-<th class="cl-2d009c96"><p class="cl-2d00630c"><span class="cl-2cfc9da8">Sightability/ Availability?</span><span class="cl-2cfc9dbc">e</span></p></th>
+<th class="cl-81897bbe"><p class="cl-81893d48"><span class="cl-8185a52a"></span></p></th>
+<th class="cl-81897bc8"><p class="cl-81893d48"><span class="cl-8185a52a">Single visit?</span><span class="cl-8185a53e">a</span></p></th>
+<th class="cl-81897bc8"><p class="cl-81893d48"><span class="cl-8185a52a">Multiple visits?</span><span class="cl-8185a53e">b</span></p></th>
+<th class="cl-81897bc8"><p class="cl-81893d48"><span class="cl-8185a52a">Heterogeneity in detection?</span><span class="cl-8185a53e">c</span></p></th>
+<th class="cl-81897bc8"><p class="cl-81893d48"><span class="cl-8185a52a">Observer differences?</span><span class="cl-8185a53e">d</span></p></th>
+<th class="cl-81897bc8"><p class="cl-81893d48"><span class="cl-8185a52a">Sightability/ Availability?</span><span class="cl-8185a53e">e</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-2d009ca0"><p class="cl-2d006320"><span class="cl-2cfc9dc6">Time of Detection</span></p></td>
-<td class="cl-2d009ca1"><p class="cl-2d006320"><span class="cl-2cfc9dc6">+</span></p></td>
-<td class="cl-2d009ca1"><p class="cl-2d006320"><span class="cl-2cfc9dc6"></span></p></td>
-<td class="cl-2d009ca1"><p class="cl-2d006320"><span class="cl-2cfc9dc6">+</span></p></td>
-<td class="cl-2d009ca1"><p class="cl-2d006320"><span class="cl-2cfc9dc6"></span></p></td>
-<td class="cl-2d009ca1"><p class="cl-2d006320"><span class="cl-2cfc9dc6">C</span></p></td>
+<td class="cl-81897bc9"><p class="cl-81893d52"><span class="cl-8185a548">Time of Detection</span></p></td>
+<td class="cl-81897bd2"><p class="cl-81893d52"><span class="cl-8185a548">+</span></p></td>
+<td class="cl-81897bd2"><p class="cl-81893d52"><span class="cl-8185a548"></span></p></td>
+<td class="cl-81897bd2"><p class="cl-81893d52"><span class="cl-8185a548">+</span></p></td>
+<td class="cl-81897bd2"><p class="cl-81893d52"><span class="cl-8185a548"></span></p></td>
+<td class="cl-81897bd2"><p class="cl-81893d52"><span class="cl-8185a548">C</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-2d009caa"><p class="cl-2d006320"><span class="cl-2cfc9dc6">Double Observer</span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6">+</span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6"></span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6"></span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6">+</span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6">C</span></p></td>
+<td class="cl-81897bdc"><p class="cl-81893d52"><span class="cl-8185a548">Double Observer</span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548">+</span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548"></span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548"></span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548">+</span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548">C</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-2d009caa"><p class="cl-2d006320"><span class="cl-2cfc9dc6">Distance Sampling</span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6">+</span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6"></span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6">+</span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6"></span></p></td>
-<td class="cl-2d009cab"><p class="cl-2d006320"><span class="cl-2cfc9dc6">S</span></p></td>
+<td class="cl-81897bdc"><p class="cl-81893d52"><span class="cl-8185a548">Distance Sampling</span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548">+</span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548"></span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548">+</span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548"></span></p></td>
+<td class="cl-81897bdd"><p class="cl-81893d52"><span class="cl-8185a548">S</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-2d009cac"><p class="cl-2d006320"><span class="cl-2cfc9dc6">Removal Methods</span></p></td>
-<td class="cl-2d009cb4"><p class="cl-2d006320"><span class="cl-2cfc9dc6">+</span></p></td>
-<td class="cl-2d009cb4"><p class="cl-2d006320"><span class="cl-2cfc9dc6">+</span></p></td>
-<td class="cl-2d009cb4"><p class="cl-2d006320"><span class="cl-2cfc9dc6"></span></p></td>
-<td class="cl-2d009cb4"><p class="cl-2d006320"><span class="cl-2cfc9dc6"></span></p></td>
-<td class="cl-2d009cb4"><p class="cl-2d006320"><span class="cl-2cfc9dc6">C</span></p></td>
+<td class="cl-81897be6"><p class="cl-81893d52"><span class="cl-8185a548">Removal Methods</span></p></td>
+<td class="cl-81897bf0"><p class="cl-81893d52"><span class="cl-8185a548">+</span></p></td>
+<td class="cl-81897bf0"><p class="cl-81893d52"><span class="cl-8185a548">+</span></p></td>
+<td class="cl-81897bf0"><p class="cl-81893d52"><span class="cl-8185a548"></span></p></td>
+<td class="cl-81897bf0"><p class="cl-81893d52"><span class="cl-8185a548"></span></p></td>
+<td class="cl-81897bf0"><p class="cl-81893d52"><span class="cl-8185a548">C</span></p></td>
 </tr>
 </tbody>
 <tfoot>
-<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-2d009cbe"><p class="cl-2d00632a"><span class="cl-2cfc9dd0">a</span><span class="cl-2cfc9dc6">Can be performed with a single visit</span></p></td></tr>
-<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-2d009cbe"><p class="cl-2d00632a"><span class="cl-2cfc9dd0">b</span><span class="cl-2cfc9dc6">Can be perfomed across multiple visits</span></p></td></tr>
-<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-2d009cbe"><p class="cl-2d00632a"><span class="cl-2cfc9dd0">c</span><span class="cl-2cfc9dc6">Method accounts for heterogeneity in detection</span></p></td></tr>
-<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-2d009cbe"><p class="cl-2d00632a"><span class="cl-2cfc9dd0">d</span><span class="cl-2cfc9dc6">Can account for differences among observers</span></p></td></tr>
-<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-2d009cbe"><p class="cl-2d00632a"><span class="cl-2cfc9dd0">e</span><span class="cl-2cfc9dc6">How are sightability/ availability handled; C= combined, S= sightability only</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-81897bf1"><p class="cl-81893d5c"><span class="cl-8185a552">a</span><span class="cl-8185a548">Can be performed with a single visit</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-81897bf1"><p class="cl-81893d5c"><span class="cl-8185a552">b</span><span class="cl-8185a548">Can be perfomed across multiple visits</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-81897bf1"><p class="cl-81893d5c"><span class="cl-8185a552">c</span><span class="cl-8185a548">Method accounts for heterogeneity in detection</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-81897bf1"><p class="cl-81893d5c"><span class="cl-8185a552">d</span><span class="cl-8185a548">Can account for differences among observers</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-81897bf1"><p class="cl-81893d5c"><span class="cl-8185a552">e</span><span class="cl-8185a548">How are sightability/ availability handled; C= combined, S= sightability only</span></p></td></tr>
 </tfoot>
 </table>
 </div>
